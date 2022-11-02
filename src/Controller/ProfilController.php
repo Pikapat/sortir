@@ -22,13 +22,11 @@ class ProfilController extends AbstractController
     {
         // récupére le profil et affiche dan sle formulaire
         $user = $repository->find($id);
-
         $userForm = $this->createForm(ProfilType::class, $user);
 
         $userForm->handleRequest($request);
 
         if ($userForm->isSubmitted()){
-
             if($userForm->get('password')->isEmpty()){
                 $userForm->get('password')->setData($user->getPassword());
             }
@@ -36,7 +34,6 @@ class ProfilController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush($user);
         }
-
 
         return $this->render('user/profil.html.twig', [
             'user_profil' => $userForm->createView(),

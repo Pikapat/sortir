@@ -11,8 +11,11 @@
             {{ form_start(user_profil) }}
                 {{ form_widget(user_profil) }}
 
+            {% if app.user.id == user.id %}
                 <button>Enregistrer</button>
-                 <input type="reset">
+                <input type="reset">
+            {% endif %}
+
             {{ form_end(user_profil) }}
 
         </div>
