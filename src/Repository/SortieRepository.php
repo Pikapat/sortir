@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,59 @@ class SortieRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByFilters(
+        int $campusId,
+        string $textfilter = null,
+        \DateTime $dateDebut = null,
+        \DateTime $dateFin = null,
+        bool $userOrga,
+        bool $userInscrit,
+        bool $userNonInscrit,
+        bool $sortiePassee,
+        User $currentUser)
+    {
+        //Query Builder
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->andWhere("s.siteOrganisateur = :campusId")
+            ->setParameter('campusId', $campusId);
+
+        if ($textfilter != null)
+        {
+            $qb->andWhere("s.titre LIKE %:textfilter%")
+                ->setParameter('textfilter', $textfilter);
+        }
+
+        if ($dateDebut != null && $dateFin != null)
+        {
+            $qb->andWhere("s.dateHeureDebut BETWEEN :dateDebut AND :dateFin")
+                ->setParameter('dateDebut', $dateDebut)
+                ->setParameter('dateFin', $dateFin);
+        }
+
+        if ($userOrga)
+        {
+            $qb->andWhere("s.organisateur = :orga")
+                ->setParameter('orga', $currentUser->getId());
+        }
+
+        if($userInscrit)
+        {
+            $qb->innerJoin('User', 'u')
+                ->where('s.usersInscrits LIKE %u.id%');
+        }
+
+        if($userNonInscrit)
+        {
+        }
+
+        if($sortiePassee)
+        {
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

@@ -1,4 +1,4 @@
 function changeLieu(){
-    console.log('bon')
-    // alert(document.getElementById(ajouter_sortie_ville))
+    let idLieu = document.getElementById('ajouter_sortie_lieu').value;
+    let selectVille = document.getElementById('ajouter_sortie_ville');
 }
