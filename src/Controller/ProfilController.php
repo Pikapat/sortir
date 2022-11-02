@@ -16,11 +16,8 @@ class ProfilController extends AbstractController
     #[Route('/profil', name: 'app_profil')]
     public function profilTest(UserRepository $repository): Response
     {
-
         $user= new User();
         $userForm = $this->createForm(ProfilType::class, $user);
-
-
 
         return $this->render('user/profil.html.twig', [
             'user_profil' => $userForm->createView()
