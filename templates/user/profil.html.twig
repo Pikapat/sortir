@@ -6,17 +6,29 @@
 
 {% block body %}
     <section>
-        <h1>Mon profil</h1>
+
         <div>
-            {{ form_start(user_profil) }}
-                {{ form_widget(user_profil) }}
+
+        {#decomposer les forulaires pour ne pas afficher le campus en liste deroulante  #}
+
 
             {% if app.user.id == user.id %}
+
+                <h1>Mon profil</h1>
+
+                {{ form_start(user_profil) }}
+                {{ form_widget(user_profil) }}
+                {{ form_end(user_profil) }}
+
                 <button>Enregistrer</button>
                 <input type="reset">
-            {% endif %}
+                {% else %}
 
-            {{ form_end(user_profil) }}
+{#                    <h1>{{ path('profil', 'id'= {$id}) }}</h1>#}
+
+                 {% endif %}
+
+
 
         </div>
     </section>

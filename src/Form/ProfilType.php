@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\User;
-use App\Repository\UserRepository;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,14 +25,25 @@ class ProfilType extends AbstractType
             ->add('email')
             ->add('password', RepeatedType::class, [
                 'required' =>'false',
+
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirmation'],
                 ])
-//
-//            ->add('campus')
+
+
+            ->add('campus', EntityType::class, [
+                'label' => 'Campus : ',
+                "class" => Campus::class,
+                "query_builder" => function(EntityRepository $er){
+                    return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
+                },
+                "choice_label" => "nom",
+                "expanded" => false,
+                "multiple" => false
+            ])
 
         ;
     }

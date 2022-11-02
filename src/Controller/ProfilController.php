@@ -22,6 +22,7 @@ class ProfilController extends AbstractController
     {
         // récupére le profil et affiche dan sle formulaire
         $user = $repository->find($id);
+        $user->getCampus();
         $userForm = $this->createForm(ProfilType::class, $user);
 
         $userForm->handleRequest($request);
