@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
+use App\Form\ProfilType;
+use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +21,12 @@ class SortieController extends AbstractController
     #[Route('/', name: 'sorties')]
     public function list(SortieRepository $sortieRepository): Response
     {
+        $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class);
+
         $sorties = $sortieRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
+            'sortiesFiltersForm' => $sortiesFilterForm->createView(),
             'sorties' => $sorties
         ]);
     }

@@ -9,6 +9,7 @@
     {#    Font imports #}
 
     {#    CSS imports #}
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/baseStyle.css') }}">
 
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -24,6 +25,10 @@
 <div class="container">
 
     <body>
+
+    <header>
+        {% include 'inc/_nav.html.twig' %}
+    </header>
 
     <main>
         {% block body %}{% endblock %}
