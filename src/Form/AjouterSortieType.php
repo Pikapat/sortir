@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -52,7 +53,19 @@ class AjouterSortieType extends AbstractType
                 },
                 "choice_label" => "nom",
                 "expanded" => false,
-                "multiple" => false
+                "multiple" => false,
+
+            ])
+            ->add('ville', EntityType::class,  [
+                    'mapped' => false,
+                    'label' => 'Ville : ',
+                    'class' => Ville::class,
+                    "query_builder" => function(EntityRepository $er){
+                        return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
+                    },
+                    "choice_label" => "nom",
+                    "expanded" => false,
+                    "multiple" => false,
             ])
             ->add('lieu', EntityType::class, [
                     'label' => 'Lieu : ',
@@ -62,7 +75,9 @@ class AjouterSortieType extends AbstractType
                     },
                     "choice_label" => "nom",
                     "expanded" => false,
-                    "multiple" => false
+                    "multiple" => false,
+                    'attr' => ['onChange' => 'changeLieu()']
+
                 ])
 
             ->add('enregistrer', SubmitType::class, [
@@ -72,6 +87,7 @@ class AjouterSortieType extends AbstractType
             ->add('annuler', ResetType::class,[
 
             ])
+
             ;
 
                 }
