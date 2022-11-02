@@ -18,6 +18,7 @@ class Etat
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
+    #[ORM\Column(nullable: true)]
     #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sorties;
 

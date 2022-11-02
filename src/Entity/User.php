@@ -49,9 +49,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
+    #[ORM\Column(nullable: true)]
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'usersInscrits')]
     private Collection $sortiesInscrits;
 
+    #[ORM\Column(nullable: true)]
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sortiesOrganisees;
 

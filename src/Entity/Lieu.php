@@ -27,6 +27,7 @@ class Lieu
     #[ORM\Column(nullable: true)]
     private ?float $longitude = null;
 
+    #[ORM\Column(nullable: true)]
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
     private Collection $sorties;
 
@@ -133,4 +134,6 @@ class Lieu
 
         return $this;
     }
+
+
 }
