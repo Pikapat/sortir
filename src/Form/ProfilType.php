@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -19,12 +20,11 @@ class ProfilType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('email')
-            ->add('password')
-            ->add('password')
             ->add('password', RepeatedType::class, [
+                'required' =>'false',
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
-//                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'password-field']],
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirmation'],
                 ])
