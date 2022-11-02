@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} -Profil
+{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Mon profil</h1>
+        <div>
+            {{ form_start(user_profil) }}
+                {{ form_widget(user_profil) }}
+                <button>Enregistrer</button>
+                 <input type="reset">
+            {{ form_end(user_profil) }}
+
+        </div>
+    </section>
+{% endblock %}
