@@ -8,6 +8,7 @@ use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
@@ -30,6 +31,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $user->setPseudo('admin');
          $user->setTelephone('0606060606');
          $user->setActif(true);
+
 
          $this->addReference('admin', $user);
 

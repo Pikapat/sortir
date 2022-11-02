@@ -22,7 +22,7 @@ class Campus
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: User::class)]
     private Collection $users;
 
-    #[ORM\Column(nullable: true)]
+
     #[ORM\OneToMany(mappedBy: 'siteOrganisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sorties;
 

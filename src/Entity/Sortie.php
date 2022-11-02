@@ -34,7 +34,7 @@ class Sortie
     #[ORM\Column(type: Types::TEXT)]
     private ?string $infosSortie = null;
 
-    #[ORM\Column(nullable: true)]
+
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sortiesInscrits')]
     private Collection $usersInscrits;
 
