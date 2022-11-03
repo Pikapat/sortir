@@ -54,7 +54,57 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie3->setOrganisateur($this->getReference('admin'));
         $manager->persist($sortie3);
 
+        $sortie4 = new Sortie();
+        $sortie4->setTitre('Bar');
+        $sortie4->setDateHeureDebut(new \DateTime("12/20/2022"));
+        $sortie4->setDateLimiteInscription(new \DateTime("11/20/2022"));
+        $sortie4->setDuree(3);
+        $sortie4->setInfosSortie('une bonne binouze au V&B');
+        $sortie4->setNbInscriptionsMax(15);
+        $sortie4->setSiteOrganisateur($this->getReference('campus-rennes'));
+        $sortie4->setLieu($this->getReference('V&B'));
+        $sortie4->setEtat($this->getReference('enregistrer'));
+        $sortie4->setOrganisateur($this->getReference('user'));
+        $manager->persist($sortie4);
 
+        $sortie5 = new Sortie();
+        $sortie5->setTitre('Cinéma');
+        $sortie5->setDateHeureDebut(new \DateTime("10/21/2022"));
+        $sortie5->setDateLimiteInscription(new \DateTime("10/20/2022"));
+        $sortie5->setDuree(2);
+        $sortie5->setInfosSortie('Avatar');
+        $sortie5->setNbInscriptionsMax(20);
+        $sortie5->setSiteOrganisateur($this->getReference('campus-nantes'));
+        $sortie5->setLieu($this->getReference('gaumont'));
+        $sortie5->setEtat($this->getReference('cloturer'));
+        $sortie5->setOrganisateur($this->getReference('nino'));
+        $manager->persist($sortie5);
+
+        $sortie6 = new Sortie();
+        $sortie6->setTitre('Ballade');
+        $sortie6->setDateHeureDebut(new \DateTime("08/21/2022"));
+        $sortie6->setDateLimiteInscription(new \DateTime("07/21/2022"));
+        $sortie6->setDuree(3);
+        $sortie6->setInfosSortie('promener Tanguy');
+        $sortie6->setNbInscriptionsMax(5);
+        $sortie6->setSiteOrganisateur($this->getReference('campus-rennes'));
+        $sortie6->setLieu($this->getReference('pont-caf'));
+        $sortie6->setEtat($this->getReference('publier'));
+        $sortie6->setOrganisateur($this->getReference('user'));
+        $manager->persist($sortie6);
+
+        $sortie7 = new Sortie();
+        $sortie7->setTitre('Cinéma');
+        $sortie7->setDateHeureDebut(new \DateTime());
+        $sortie7->setDateLimiteInscription(new \DateTime("11/02/2022"));
+        $sortie7->setDuree(2);
+        $sortie7->setInfosSortie('film 3d');
+        $sortie7->setNbInscriptionsMax(20);
+        $sortie7->setSiteOrganisateur($this->getReference('campus-rennes'));
+        $sortie7->setLieu($this->getReference('gaumont'));
+        $sortie7->setEtat($this->getReference('en-cours'));
+        $sortie7->setOrganisateur($this->getReference('nino'));
+        $manager->persist($sortie7);
 
         $manager->flush();
     }
