@@ -42,8 +42,12 @@ nav {
     justify-content: space-between;
 }
 
-.formPopUp{
-    display: none;
+.adminVille{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
 }
 
 @media screen and (min-width: 700px) {

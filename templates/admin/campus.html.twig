@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Campus
+{% endblock %}
+
+{% block body %}
+    <h1>Gérer les campus</h1>
+
+    <h2>Filtrer les campus</h2>
+
+
+    {% for camp in campus %}
+        {#        Nom des campus#}
+        <div class="adminVille">
+            <p>
+                {{ camp.nom }}
+            </p>
+
+
+            <form action="{{ path('campus_delete', {'id' : camp.id}) }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ camp.id) }}">
+                <button>Modifier</button>
+                -
+                <button>Supprimer</button></form>
+
+        </div>
+
+    {% endfor %}
+
+
+    {{ form_start(campusForm) }}
+    <div class="adminVille">
+        <p>
+            {{ form_label(campusForm.nom) }}
+            {{ form_widget(campusForm.nom) }}
+            {{ form_errors(campusForm.nom) }}
+        </p>
+        <p>
+            {{ form_label(campusForm.ajouter) }}
+            {{ form_widget(campusForm.ajouter) }}
+
+        </p>
+
+
+    </div>
+
+    {{ form_end(campusForm) }}
+
+
+
+{% endblock %}
+
+
+

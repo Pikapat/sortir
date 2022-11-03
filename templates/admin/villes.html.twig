@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    - Villes
+{% endblock %}
+
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    <h2>Filtrer les villes</h2>
+
+
+    {% for ville in villes %}
+{#        Nom des villes + code postal#}
+        <div class="adminVille">
+        <p>
+        {{ ville.nom }}
+        </p>
+        <p>
+        {{ ville.codePostal }}
+        </p>
+
+
+            <form action="{{ path('ville_delete', {'id' : ville.id}) }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
+                <button>Modifier</button>
+                -
+                <button>Supprimer</button></form>
+
+        </div>
+
+    {% endfor %}
+
+
+            {{ form_start(villesForm) }}
+    <div class="adminVille">
+        <p>
+            {{ form_label(villesForm.nom) }}
+            {{ form_widget(villesForm.nom) }}
+            {{ form_errors(villesForm.nom) }}
+        </p>
+        <p>
+            {{ form_label(villesForm.codePostal) }}
+            {{ form_widget(villesForm.codePostal) }}
+            {{ form_errors(villesForm.codePostal) }}
+        </p>
+        <p>
+            {{ form_label(villesForm.ajouter) }}
+            {{ form_widget(villesForm.ajouter) }}
+
+        </p>
+
+
+    </div>
+
+            {{ form_end(villesForm) }}
+
+    
+
+{% endblock %}
+
+
+
