@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -19,7 +20,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'l\'email ne peut pas être vide')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Email(message: 'l\'email saisi n\'est pas valide.')]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -29,18 +32,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
-    private ?string $password = null;
 
+//    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
+//    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$', message: 'le mot de passe doit avoir au moins
+//    5 caractères dont au moins un chiffre et une lettre')]
+    #[ORM\Column]
+        private ?string $password = null;
+
+    #[Assert\NotBlank(message: 'le nom ne peut pas être vide')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Length(
+        min: 2,
+        max: 15,
+        minMessage: 'Votre nom doit contenir au moins 2 caractères',
+        maxMessage: 'Votre nom ne peut pas contenir plus de 15 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+
+    #[Assert\Length(
+        min: 2,
+        max: 15,
+        minMessage: 'Votre prénom doit contenir au moins 2 caractères',
+        maxMessage: 'Votre prénom ne peut pas contenir plus de 15 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
+//    #[Assert\Regex(pattern:'^(?:(?:\+|00)33|0)\s*[1-9](from 1 to 9)(?:[\s.-]*\d{2}){4}$)')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telephone = null;
 
+    #[Assert\NotBlank(message: 'le pseudo ne peut pas être vide')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Length(
+        min: 2,
+        max: 10,
+        minMessage: 'Votre nom doit contenir au moins 2 caractères',
+        maxMessage: 'Votre nom ne peut pas contenir plus de 10 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 

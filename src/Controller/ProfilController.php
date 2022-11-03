@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\ProfilType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+#[IsGranted('ROLE_USER')]
 #[Route('/profil')]
 class ProfilController extends AbstractController
 {
@@ -48,6 +49,8 @@ class ProfilController extends AbstractController
 
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+                $this->addFlash('success', 'Modifications effectuées');
         }
 
         return $this->render('user/profil.html.twig', [

@@ -12,7 +12,7 @@
         {#decomposer les forulaires pour ne pas afficher le campus en liste deroulante  #}
 
 
-{#            {% if app.user.id == user.id %}#}
+            {% if app.user.id == user.id %}
 
                 <h1>Mon profil</h1>
 
@@ -65,12 +65,20 @@
                 <button>Enregistrer</button>
                 <input type="reset">
 
-
-{#                    <h1>{{ path('profil', 'id'= {$id}) }}</h1>#}
-
-{#                 {% endif %}#}
+                {{ form_end(user_profil) }}
 
 
+
+            {% else %}
+            <div>
+               <p>{{ user.pseudo}}</p>
+               <p>{{ user.nom}}</p>
+               <p>{{ user.prenom}}</p>
+               <p>{{ user.telephone}}</p>
+               <p>{{ user.email}}</p>
+               <p>{{ user.campus.nom}}</p>
+            </div>
+            {% endif %}
 
         </div>
     </section>
