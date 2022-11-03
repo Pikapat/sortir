@@ -12,21 +12,63 @@
         {#decomposer les forulaires pour ne pas afficher le campus en liste deroulante  #}
 
 
-            {% if app.user.id == user.id %}
+{#            {% if app.user.id == user.id %}#}
 
                 <h1>Mon profil</h1>
 
-                {{ form_start(user_profil) }}
-                {{ form_widget(user_profil) }}
-                {{ form_end(user_profil) }}
+            {{ form_start(user_profil) }}
+
+            <div>
+                {{ form_label(user_profil.pseudo) }}
+                {{ form_widget(user_profil.pseudo) }}
+                {{ form_errors(user_profil.pseudo) }}
+                <br>
+            </div>
+            <div>
+                {{ form_label(user_profil.prenom) }}
+                {{ form_widget(user_profil.prenom) }}
+                {{ form_errors(user_profil.prenom) }}
+                <br>
+            </div>
+            <div>
+                {{ form_label(user_profil.nom) }}
+                {{ form_widget(user_profil.nom) }}
+                {{ form_errors(user_profil.nom) }}
+                <br>
+            </div>
+
+                <div>
+                    {{ form_label(user_profil.telephone) }}
+                    {{ form_widget(user_profil.telephone) }}
+                    {{ form_errors(user_profil.telephone) }}
+                    <br>
+                </div>
+                <div>
+                    {{ form_label(user_profil.email) }}
+                    {{ form_widget(user_profil.email) }}
+                    {{ form_errors(user_profil.email) }}
+                    <br>
+                </div>
+                <div>
+                    {{ form_widget(user_profil.password) }}
+                    {{ form_errors(user_profil.password) }}
+                    <br>
+                </div>
+
+            <div>
+                {{ form_label(user_profil.campus) }}
+                {{ form_widget(user_profil.campus) }}
+                {{ form_errors(user_profil.campus) }}
+                <br>
+            </div>
 
                 <button>Enregistrer</button>
                 <input type="reset">
-                {% else %}
+
 
 {#                    <h1>{{ path('profil', 'id'= {$id}) }}</h1>#}
 
-                 {% endif %}
+{#                 {% endif %}#}
 
 
 
