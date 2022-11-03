@@ -22,9 +22,20 @@ use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuild
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'sorties')]
-    public function list(SortieRepository $sortieRepository): Response
+    public function list(Request $request, SortieRepository $sortieRepository): Response
     {
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class);
+
+        $sortiesFilterForm->handleRequest($request);
+
+        $campusId = $sortiesFilterForm->get('campus')->getData();
+
+        if($sortiesFilterForm->isSubmitted())
+        {
+            dump($campusId);
+        }
+
+
 
         $sorties = $sortieRepository->findAll();
 
