@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
-use App\Form\ProfilType;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
@@ -53,11 +51,11 @@ class SortieController extends AbstractController
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
-                $etat = $etatRepository->find(1);
+                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
                 $sortie->setEtat($etat);
             }
             elseif ($sortieForm->get('publier')->isClicked()) {
-                $etat = $etatRepository->find(2);
+                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
                 $sortie->setEtat($etat);
             }
 

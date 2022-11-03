@@ -18,3 +18,21 @@ nav {
     display: flex;
     justify-content: space-between;
 }
+
+.flash{
+    padding: 1rem;
+}
+
+.flash-success{
+    background-color: lightgreen;
+}
+
+.flash-error{
+    background-color: indianred;
+}
+
+@media screen and (min-width: 700px) {
+    .serie-details {
+        grid-template-columns: 300px 1fr;
+    }
+}
