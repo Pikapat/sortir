@@ -24,13 +24,14 @@ class ProfilType extends AbstractType
             ->add('telephone')
             ->add('email')
             ->add('password', RepeatedType::class, [
-                'required' =>'false',
-
+                'mapped' => false,
+                'required' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Confirmation'],
+
+                'first_options'  => ['label' => 'Password', 'required' => false],
+                'second_options' => ['label' => 'Confirmation', 'required' => false],
                 ])
 
 

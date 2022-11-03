@@ -42,6 +42,16 @@ class LieuFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference('planete-sauvage', $lieu3);
         $manager->persist($lieu3);
 
+        $lieu4 = new Lieu();
+        $lieu4->setNom('V&B');
+        $lieu4->setVille($this->getReference('ville'));
+        $lieu4->setRue('Route de lorient');
+        $lieu4->setLatitude('01010101010');
+        $lieu4->setLongitude('1101010101');
+        $this->addReference('V&B', $lieu4);
+        $manager->persist($lieu4);
+
+
         $manager->flush();
     }
 

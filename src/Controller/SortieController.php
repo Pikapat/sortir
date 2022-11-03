@@ -42,6 +42,14 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
+    public function modifier(Sortie $sortie): Response
+    {
+        return $this->render('sortie/modifierSortie.html.twig',[
+            'sortie' => $sortie
+        ]);
+    }
+
     #[Route('/new', name: 'newSortie')]
     public function new(Request $request, EntityManagerInterface $em, EtatRepository $etatRepository): Response
     {

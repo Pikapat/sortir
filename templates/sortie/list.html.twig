@@ -9,9 +9,35 @@
     </div>
 
     <div class="sortieContainer">
-        <ul>
 
-        </ul>
+            {% for sortie in sorties %}
+                <article class="sortie">
+{#                    Titre + lien modif / affichage#}
+                    {% if sortie.organisateur == app.user %}
+                        <a href="{{ path('modifierSortie', {'id': sortie.id}) }}">{{ sortie.titre }}</a>*
+                        {% else %}
+                            <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">{{ sortie.titre }}</a>
+                    {% endif %}
+{#                    Date début sortie#}
+                    <p>{{ sortie.dateHeureDebut|date }}</p>
+{#                    Clôture#}
+                    <p>{{ sortie.dateLimiteInscription|date}}</p>
+{#                    inscrits/places#}
+                    <p>{{sortie.usersInscrits.count}} / {{ sortie.nbInscriptionsMax }}</p>
+{#                    Etat#}
+                    <p>{{ sortie.etat.libelle }}</p>
+{#                    Inscrit#}
+                    {% if sortie.usersInscrits.contains(app.user) %}
+                        <p>X</p>
+                    {% endif %}
+{#                    Organisateur#}
+                    <p>{{ sortie.organisateur.nom }}</p>
+{#                    Actions#}
+                    <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Se désister</a>
+                </article>
+
+            {% endfor %}
+
     </div>
 
 

@@ -31,8 +31,17 @@ nav {
     background-color: indianred;
 }
 
+.sortieContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.sortie{
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (min-width: 700px) {
-    .serie-details {
-        grid-template-columns: 300px 1fr;
-    }
+
 }
