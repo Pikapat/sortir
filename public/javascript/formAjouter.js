@@ -1,7 +1,4 @@
-function changeLieu(){
-    let idLieu = document.getElementById('ajouter_sortie_lieu').value;
-    let selectVille = document.getElementById('ajouter_sortie_ville');
-}
-function addLieu(){
-    alert('bonjour')
-}
+$('').change(function () {
+    var villeSelect = $(this);
+
+    fetch('')

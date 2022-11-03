@@ -6,7 +6,17 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('javascript/formAjouter.js') }}"></script>
+
+    <script>
+        function changeLieu(){
+
+            fetch({{ path('listeLieu', {'id': id }) }}).then((response) => response.json())
+                .then((data) => console.log(data));
+        }
+    </script>
+
+
+
 {% endblock %}
 
 

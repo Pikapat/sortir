@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Context;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 
 #[Route('/sortie')]
 class SortieController extends AbstractController
@@ -71,6 +76,21 @@ class SortieController extends AbstractController
         return $this->render('sortie/new.html.twig', [
             'sortieForm' =>$sortieForm->createView()
           ]);
+    }
+
+    #[Route('/listeLieu/{id}', name: 'listeLieu')]
+    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id)
+    {
+       $result = $lieus->createQueryBuilder("q")
+            ->where("q.ville = :villeid")
+            ->setParameter("villeid", $id)
+            ->getQuery()
+            ->getResult();
+
+       return $this->json($result, 200, [],  ['groups' => 'show_product',
+           'id' => $id
+           ]);
+
     }
 
     #[Route('/delete', name: 'deleteSortie')]

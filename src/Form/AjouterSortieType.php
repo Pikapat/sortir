@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,10 +18,12 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AjouterSortieType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -66,6 +69,8 @@ class AjouterSortieType extends AbstractType
                     "choice_label" => "nom",
                     "expanded" => false,
                     "multiple" => false,
+                    "attr" => ['onChange => changeLieu()']
+
             ])
             ->add('lieu', EntityType::class, [
                     'label' => 'Lieu : ',
@@ -76,7 +81,7 @@ class AjouterSortieType extends AbstractType
                     "choice_label" => "nom",
                     "expanded" => false,
                     "multiple" => false,
-                    'attr' => ['onChange' => 'changeLieu()']
+
 
                 ])
 
