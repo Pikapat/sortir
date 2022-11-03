@@ -87,7 +87,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/listeLieu/{id}', name: 'listeLieu')]
-    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id)
+    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
     {
        $result = $lieus->createQueryBuilder("q")
             ->where("q.ville = :villeid")
@@ -96,7 +96,7 @@ class SortieController extends AbstractController
             ->getResult();
 
        return $this->json($result, 200, [],  ['groups' => 'show_product',
-           'id' => $id
+
            ]);
 
     }

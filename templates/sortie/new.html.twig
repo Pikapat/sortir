@@ -5,19 +5,7 @@
     - Ajouter une sortie
 {% endblock %}
 
-{% block javascripts %}
 
-    <script>
-        function changeLieu(){
-
-            fetch({{ path('listeLieu', {'id': id }) }}).then((response) => response.json())
-                .then((data) => console.log(data));
-        }
-    </script>
-
-
-
-{% endblock %}
 
 
 {% block body %}
@@ -61,6 +49,14 @@
         {{ form_widget(sortieForm.lieu) }}
         {{ form_errors(sortieForm.lieu) }}
         <a onclick="addLieu()">+</a>
+        <div class ="formPopUp">
+            <form action="POST">
+                <h1>Ajouter un lieu</h1>
+
+            </form>
+        </div>
+
+
     </div>
 
     {{ form_label(sortieForm.enregistrer) }}
@@ -78,12 +74,31 @@
     {{ form_end(sortieForm) }}
 
 
+{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('javascript/formAjouter.js') }}"></script>
+    <script>
+        function changeLieu(){
 
+            let idVille = document.getElementById('ajouter_sortie_ville').value
+            console.log(idVille)
 
+            fetch('{{ path('listeLieu')}}/' + idVille).then((response) => response.json())
+                .then((data) => handleData(data))
+        }
+        function handleData(data){
+            console.log(data);
 
+            let lieuSelect = document.getElementById('ajouter_sortie_lieu')
 
+            lieuSelect.innerHTML='';
 
+            for (const elem of data) {
+                lieuSelect.innerHTML='<option value="' + elem.id + '">' + elem.nom + '</option>';
+            }
+        }
+    </script>
 {% endblock %}
 
 

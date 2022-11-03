@@ -69,7 +69,7 @@ class AjouterSortieType extends AbstractType
                     "choice_label" => "nom",
                     "expanded" => false,
                     "multiple" => false,
-                    "attr" => ['onChange => changeLieu()']
+                    "attr" => ['onChange' => 'changeLieu()']
 
             ])
             ->add('lieu', EntityType::class, [
@@ -78,6 +78,7 @@ class AjouterSortieType extends AbstractType
                     "query_builder" => function(EntityRepository $er){
                         return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
                     },
+//                    'placeholder' => 'Choose an option',
                     "choice_label" => "nom",
                     "expanded" => false,
                     "multiple" => false,

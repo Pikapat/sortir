@@ -1,4 +1,5 @@
-$('').change(function () {
-    var villeSelect = $(this);
+function addLieu(){
 
-    fetch('')
+        document.getElementById('formPopUp').style.display = "block";
+
+}
