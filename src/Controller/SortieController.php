@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Lieu;
+
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,22 +20,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'sorties')]
-    public function list(Request $request, SortieRepository $sortieRepository): Response
+    public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository): Response
     {
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class);
+//        $user = $repository->find($id);
 
-        $sortiesFilterForm->handleRequest($request);
+      $sortiesFilterForm->handleRequest($request);
 
-        $campusId = $sortiesFilterForm->get('campus')->getData();
 
         if($sortiesFilterForm->isSubmitted())
         {
-            dump($campusId);
+//            $campusId = $sortiesFilterForm->get('campus')->getData()->getId();
+            dump($request);
+            $user=($this->getUser());
+
+            $sorties = $sortieRepository->findByFilters($request, $user);
         }
-
-
-
-        $sorties = $sortieRepository->findAll();
+        else{
+            $sorties = $sortieRepository->findAll();
+        }
 
         return $this->render('sortie/list.html.twig', [
             'sortiesFiltersForm' => $sortiesFilterForm->createView(),

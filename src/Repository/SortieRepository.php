@@ -6,6 +6,8 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -40,17 +42,32 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByFilters(
-        int $campusId,
-        string $textfilter = null,
-        \DateTime $dateDebut = null,
-        \DateTime $dateFin = null,
-        bool $userOrga,
-        bool $userInscrit,
-        bool $userNonInscrit,
-        bool $sortiePassee,
-        User $currentUser)
+    public function findByFilters(Request $request, UserInterface $user)
     {
+        $form = $request->get('sortie_filters_form');
+
+        $campusId = $form['campus'];
+        $textfilter = $form['textFilter'];
+
+//        $textfilter = $request->get('textFilter');
+//        $dateDebut = $request->get('dateDebut');
+//        $dateFin = $request->get('dateFin');
+//        $userOrga = $request->get('userOrga');
+//        $userInscrit = $request->get('userIncrit');
+//        $userNonInscrit = $request->get('userNonInscrit');
+//        $sortiePassee = $request->get('sortiePassee');
+
+
+//        $dateDebut =  $form['dateDebut'];
+//        $dateFin =  $form['dateFin'];
+//        $userOrga = $form['userOrga'];
+//        $userInscrit = $form['userOrga'];
+//        $userNonInscrit = $form['userNonInscrit'];
+//        $sortiePassee = $form['sortiePassee'];
+
+//        dump($campusId);
+
+
         //Query Builder
         $qb = $this->createQueryBuilder('s');
 
@@ -59,37 +76,40 @@ class SortieRepository extends ServiceEntityRepository
 
         if ($textfilter != null)
         {
-            $qb->andWhere("s.titre LIKE %:textfilter%")
-                ->setParameter('textfilter', $textfilter);
-        }
+//            $qb->andWhere($qb->expr()->like('s.titre', $textfilter))->orderBy('s.titre', 'ASC');
 
-        if ($dateDebut != null && $dateFin != null)
-        {
-            $qb->andWhere("s.dateHeureDebut BETWEEN :dateDebut AND :dateFin")
-                ->setParameter('dateDebut', $dateDebut)
-                ->setParameter('dateFin', $dateFin);
+//                "s.titre LIKE %:textfilter%")
+//                ->setParameter('textfilter', $textfilter)
+//                ->groupBy('s.titre', 'DESC');
         }
-
-        if ($userOrga)
-        {
-            $qb->andWhere("s.organisateur = :orga")
-                ->setParameter('orga', $currentUser->getId());
-        }
-
-        if($userInscrit)
-        {
-            $qb->innerJoin('User', 'u')
-                ->where('s.usersInscrits LIKE %u.id%');
-        }
-
-        if($userNonInscrit)
-        {
-        }
-
-        if($sortiePassee)
-        {
-        }
-
+//
+//        if ($dateDebut != null && $dateFin != null)
+//        {
+//            $qb->andWhere("s.dateHeureDebut BETWEEN :dateDebut AND :dateFin")
+//                ->setParameter('dateDebut', $dateDebut)
+//                ->setParameter('dateFin', $dateFin);
+//        }
+//
+//        if ($userOrga)
+//        {
+//            $qb->andWhere("s.organisateur = :orga")
+//                ->setParameter('orga', $user);
+//        }
+//
+//        if($userInscrit)
+//        {
+//            $qb->innerJoin('User', 'u')
+//                ->where('s.usersInscrits LIKE %u.id%');
+//        }
+//
+//        if($userNonInscrit)
+//        {
+//        }
+//
+//        if($sortiePassee)
+//        {
+//        }
+//
         return $qb->getQuery()->getResult();
     }
 
