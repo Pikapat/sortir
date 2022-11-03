@@ -1,26 +1,52 @@
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 5px;
+*{
+    font-family: 'Quicksand', cursive;
 }
-
 body > .container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-rows: 150px 100px 2fr 50px;
     min-height: 100vh;
 }
 
-main{
-    flex: 1;
+header{
+    grid-area:  1 / 1 / 2 / 4;
 }
 
-nav {
+
+button{
+    border-radius: 5px;
+    background-color: rgba(188, 213, 204, 0.68);
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+
+.container {
+    margin: 1em;
+    padding: 5px;
+}
+
+main{
+    margin: 1em;
+    grid-area:  3 / 2 / 4 / 3;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .flash{
+    display: flex;
+    flex-direction: column;
+    grid-area: 2 / 2 / 2 / 3;
     padding: 1rem;
+
+    font-size: 1.2em;
+
+    text-align: center;
+    justify-content: center;
 }
 
 .flash-success{
@@ -48,6 +74,20 @@ nav {
     flex-direction: row;
     justify-content: space-between;
 
+}
+
+footer{
+    grid-area:  4 / 1 / 5 / 4;
+}
+
+footer > section{
+    display: flex;
+    justify-content: space-between;
+}
+
+footer div{
+    display: flex;
+    align-items: center;
 }
 
 @media screen and (min-width: 700px) {

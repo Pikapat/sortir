@@ -1,25 +1,28 @@
 <nav>
-    <div>
+    <section>
+        <div>
             {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('villes') }}">Villes</a>
-                    <a href="{{ path('campus') }}">Campus</a>
+                <a href="{{ path('villes') }}">Villes</a>
+                <a href="{{ path('campus') }}">Campus</a>
             {% endif %}
-                <a href="{{ path('homepage') }}">Accueil</a>
-    </div>
+            <button><a href="{{ path('homepage') }}">Accueil</a></button>
+        </div>
 
-    <div>
-        <p>Date du jour : {{ "now"|date("d/m/Y") }}</p>
-    </div>
 
-    <div>
-        {% if not is_granted('IS_AUTHENTICATED') %}
-            <a href="{{ path('app_login') }}">Connexion</a>
-        {% endif %}
+        <div>
+            {% if not is_granted('IS_AUTHENTICATED') %}
+                <button><a href="{{ path('app_login') }}">Connexion</a></button>
+            {% endif %}
 
-        {% if is_granted('IS_AUTHENTICATED') %}
-            <p>Participant : {{ app.user.nom }}</p>
-            <a href="{{ path('profil', {'id': app.user.id}) }}">Mon profil</a>
-            <a href="{{ path('app_logout') }}">Déconnexion</a>
-        {% endif %}
-    </div>
+            {% if is_granted('IS_AUTHENTICATED') %}
+                <h2>Participant : {{ app.user.prenom }}</h2>
+                <a href="{{ path('profil', {'id': app.user.id}) }}">Mon profil</a>
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
+            {% endif %}
+
+            <p>{{ "now"|date("d/m/Y", "Europe/Paris") }}</p>
+        </div>
+    </section>
+
+
 </nav>

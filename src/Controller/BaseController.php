@@ -13,4 +13,10 @@ class BaseController extends AbstractController
     {
         return $this->render('base/home.html.twig');
     }
+
+    #[Route('/legal', name: 'legal')]
+    public function legal(): Response
+    {
+        return $this->render('base/legal.html.twig');
+    }
 }

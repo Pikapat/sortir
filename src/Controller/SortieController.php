@@ -11,6 +11,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -113,9 +114,30 @@ class SortieController extends AbstractController
 
     }
 
-    #[Route('/delete', name: 'deleteSortie')]
+    #[isGranted('ROLE_ADMIN')]
+    #[Route('/delete/{id}', name: 'deleteSortie', requirements: ['id' => '\d+'])]
     public function delete(): Response
     {
         return $this->render('sortie/delete.html.twig');
+    }
+
+    #[Route('/inscrire/{id}', name: 'sInscrireSortie', requirements: ['id' => '\d+'])]
+    public function inscrire(UserRepository $userRepository, $id, SortieRepository $sortieRepository)
+    {
+        $user = $this->getUser();
+        $user->addSortiesInscrit($sortieRepository->find($id));
+        $userRepository->save($user, true);
+
+        return $this->redirectToRoute('sorties');
+    }
+
+    #[Route('/desist/{id}', name: 'seDesisterSortie', requirements: ['id' => '\d+'])]
+    public function desist(UserRepository $userRepository, SortieRepository $sortieRepository, $id)
+    {
+        $user = $this->getUser();
+        $user->removeSortiesInscrit($sortieRepository->find($id));
+        $userRepository->save($user, true);
+
+        return $this->redirectToRoute('sorties');
     }
 }

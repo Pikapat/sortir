@@ -1,0 +1,34 @@
+.profil-form{
+    height: min-content;
+    padding: 5em;
+    background-color: rgba(86, 129, 97, 0.16);
+    border-radius: 5px;
+    border: 1px rgba(86, 129, 97, 0.5) solid;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profil-form h1{
+    display: flex;
+    justify-content: center;
+}
+
+.form-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.form-fields{
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    justify-content: center;
+}
+
+.form-field{
+    display: flex;
+    justify-content: space-around;
+}

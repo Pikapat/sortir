@@ -1,85 +1,94 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+{% endblock %}
+
+
 {% block title %}
-    {{ parent() }} -Profil
+    {{ parent() }} - Profil
 {% endblock %}
 
 {% block body %}
-    <section>
-
-        <div>
-
-        {#decomposer les forulaires pour ne pas afficher le campus en liste deroulante  #}
+    <section class="profil-form">
 
 
-            {% if app.user.id == user.id %}
+        {# decomposer les formulaires pour ne pas afficher le campus en liste deroulante  #}
 
-                <h1>Mon profil</h1>
 
-            {{ form_start(user_profil) }}
+        {% if app.user.id == user.id %}
 
-            <div>
-                {{ form_label(user_profil.pseudo) }}
-                {{ form_widget(user_profil.pseudo) }}
-                {{ form_errors(user_profil.pseudo) }}
-                <br>
-            </div>
-            <div>
-                {{ form_label(user_profil.prenom) }}
-                {{ form_widget(user_profil.prenom) }}
-                {{ form_errors(user_profil.prenom) }}
-                <br>
-            </div>
-            <div>
-                {{ form_label(user_profil.nom) }}
-                {{ form_widget(user_profil.nom) }}
-                {{ form_errors(user_profil.nom) }}
-                <br>
-            </div>
+            <h1>Mon profil</h1>
 
-                <div>
+            <div class="form-fields">
+
+                {{ form_start(user_profil) }}
+
+                <div class="form-field">
+                    {{ form_label(user_profil.pseudo) }}
+                    {{ form_widget(user_profil.pseudo) }}
+                    {{ form_errors(user_profil.pseudo) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(user_profil.prenom) }}
+                    {{ form_widget(user_profil.prenom) }}
+                    {{ form_errors(user_profil.prenom) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(user_profil.nom) }}
+                    {{ form_widget(user_profil.nom) }}
+                    {{ form_errors(user_profil.nom) }}
+                    <br>
+                </div>
+
+                <div class="form-field">
                     {{ form_label(user_profil.telephone) }}
                     {{ form_widget(user_profil.telephone) }}
                     {{ form_errors(user_profil.telephone) }}
                     <br>
                 </div>
-                <div>
+                <div class="form-field">
                     {{ form_label(user_profil.email) }}
                     {{ form_widget(user_profil.email) }}
                     {{ form_errors(user_profil.email) }}
                     <br>
                 </div>
-                <div>
+                <div class="form-field">
                     {{ form_widget(user_profil.password) }}
                     {{ form_errors(user_profil.password) }}
                     <br>
                 </div>
 
-            <div>
-                {{ form_label(user_profil.campus) }}
-                {{ form_widget(user_profil.campus) }}
-                {{ form_errors(user_profil.campus) }}
-                <br>
+                <div class="form-field">
+                    {{ form_label(user_profil.campus) }}
+                    {{ form_widget(user_profil.campus) }}
+                    {{ form_errors(user_profil.campus) }}
+                    <br>
+                </div>
+
+                <div class="form-buttons">
+                    <button>Enregistrer</button>
+                    <input type="reset">
+                </div>
+
             </div>
 
-                <button>Enregistrer</button>
-                <input type="reset">
-
-                {{ form_end(user_profil) }}
+            {{ form_end(user_profil) }}
 
 
 
-            {% else %}
+        {% else %}
             <div>
-               <p>{{ user.pseudo}}</p>
-               <p>{{ user.nom}}</p>
-               <p>{{ user.prenom}}</p>
-               <p>{{ user.telephone}}</p>
-               <p>{{ user.email}}</p>
-               <p>{{ user.campus.nom}}</p>
+                <p>{{ user.pseudo }}</p>
+                <p>{{ user.nom }}</p>
+                <p>{{ user.prenom }}</p>
+                <p>{{ user.telephone }}</p>
+                <p>{{ user.email }}</p>
+                <p>{{ user.campus.nom }}</p>
             </div>
-            {% endif %}
+        {% endif %}
 
-        </div>
     </section>
 {% endblock %}
