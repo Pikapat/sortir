@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/sortie')]
 class SortieController extends AbstractController
@@ -31,7 +34,6 @@ class SortieController extends AbstractController
         {
             dump($campusId);
         }
-
 
 
         $sorties = $sortieRepository->findAll();
@@ -109,9 +111,23 @@ class SortieController extends AbstractController
 
     }
 
-    #[Route('/delete', name: 'deleteSortie')]
-    public function delete(): Response
+    #[Route('/inscrire/{id}', name: 'sInscrireSortie', requirements: ['id' => '\d+'])]
+    public function inscrire(UserRepository $userRepository, $id, SortieRepository $sortieRepository)
     {
-        return $this->render('sortie/delete.html.twig');
+        $user = $this->getUser();
+        $user->addSortiesInscrit($sortieRepository->find($id));
+        $userRepository->save($user, true);
+
+        return $this->redirectToRoute('sorties');
+    }
+
+    #[Route('/desist/{id}', name: 'seDesisterSortie', requirements: ['id' => '\d+'])]
+    public function desist(UserRepository $userRepository, SortieRepository $sortieRepository, $id)
+    {
+        $user = $this->getUser();
+        $user->removeSortiesInscrit($sortieRepository->find($id));
+        $userRepository->save($user, true);
+
+        return $this->redirectToRoute('sorties');
     }
 }

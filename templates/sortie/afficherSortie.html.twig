@@ -1,10 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-
+    {{ parent() }} - Sortie {{ sortie.titre }}
 {% endblock %}
 
 {% block body %}
 
-{% endblock %}
+    <h1>Sortie : {{ sortie.titre}}</h1>
 
+    <div class="detailsSortie">
+        <p>Campus : {{ sortie.siteOrganisateur.nom }}</p>
+        <p>Lieu : {{ sortie.lieu.nom }}</p>
+        <p>Rue: {{ sortie.lieu.rue }}</p>
+        <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+        <p>Date et heure de la sortie : {{ sortie.dateHeureDebut|date }}</p>
+        <p>Date limite d'inscription : {{ sortie.dateLimiteInscription|date }}</p>
+        <p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
+        <p>Durée : {{ sortie.duree }}</p>
+        <p>Description et infos : {{ sortie.infosSortie }}</p>
+
+        <p>Latitude : {{ sortie.lieu.latitude }}</p>
+        <p>Longitude : {{ sortie.lieu.longitude }}</p>
+
+    </div>
+
+{% endblock %}

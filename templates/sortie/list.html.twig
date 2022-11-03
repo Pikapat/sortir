@@ -33,7 +33,12 @@
 {#                    Organisateur#}
                     <p>{{ sortie.organisateur.nom }}</p>
 {#                    Actions#}
-                    <a href="{{ path('afficherSortie', {'id': sortie.id}) }}">Se désister</a>
+                    {% if sortie.usersInscrits.contains(app.user) %}
+                        <a href="{{ path('seDesisterSortie', {'id': sortie.id}) }}">Se désister</a>
+                        {% else %}
+                            <a href="{{ path('sInscrireSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                    {% endif %}
+
                 </article>
 
             {% endfor %}
