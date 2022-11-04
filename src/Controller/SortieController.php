@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
+use App\Form\AnnulerSortieType;
 use App\Form\ModifierSortieType;
 use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
@@ -104,12 +105,20 @@ class SortieController extends AbstractController
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
+
                 $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
                 $sortie->setEtat($etat);
+                $sortie->setMotif(null);
             }
             elseif ($sortieForm->get('publier')->isClicked()) {
+
                 $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
                 $sortie->setEtat($etat);
+                $sortie->setMotif(null);
+            }
+            elseif ($sortieForm->get('annulerLaSortie')->isClicked()) {
+
+                $this->redirectToRoute('annuler', ['id' => $sortie->getId()]);
             }
 
             $em->flush();
@@ -141,6 +150,36 @@ class SortieController extends AbstractController
         }
         return $this->redirectToRoute('sorties');
     }
+
+
+    #[Route('/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
+    public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
+    {
+            $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
+
+            $sortieForm->handleRequest($request);
+
+            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+                if($sortieForm->get('enregistrer')->isClicked()){
+
+                    $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+                    $sortie->setEtat($etat);
+                }
+
+                $em->flush();
+
+                $this->addFlash('success', 'La sortie a bien été annulée');
+
+                return $this->redirectToRoute('sorties');
+            }
+
+        return $this->render('sortie/annulerSortie.html.twig',[
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
+        ]);
+    }
+
 
 
 

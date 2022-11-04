@@ -54,6 +54,9 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $motif = null;
+
     public function __construct()
     {
         $this->usersInscrits = new ArrayCollection();
@@ -207,6 +210,18 @@ class Sortie
     public function setLieu(?Lieu $lieu): self
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(?string $motif): self
+    {
+        $this->motif = $motif;
 
         return $this;
     }
