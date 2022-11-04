@@ -79,21 +79,15 @@ class ModifierSortieType extends AbstractType
                 "expanded" => false,
                 "multiple" => false,
                 "attr" => ['onChange' => 'changeInfo()']
-
-
             ])
-
             ->add('enregistrer', SubmitType::class, [
             ])
             ->add('publier', SubmitType::class, [
             ])
             ->add('annuler', ResetType::class,[
-
             ])
-
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

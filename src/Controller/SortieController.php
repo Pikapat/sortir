@@ -7,7 +7,9 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
+use App\Form\AnnulerSortieType;
 use App\Form\ModifierSortieType;
+use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
@@ -26,19 +28,20 @@ class SortieController extends AbstractController
     #[Route('/', name: 'sorties')]
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository): Response
     {
-        $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class);
-//        $user = $repository->find($id);
+        $sortieFilters = new SortieFilters();
+
+        $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
       $sortiesFilterForm->handleRequest($request);
 
 
         if($sortiesFilterForm->isSubmitted())
         {
-//            $campusId = $sortiesFilterForm->get('campus')->getData()->getId();
-            dump($request);
+//
             $user=($this->getUser());
 
-            $sorties = $sortieRepository->findByFilters($request, $user);
+            $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
+
         }
         else{
             $sorties = $sortieRepository->findAll();
@@ -55,39 +58,6 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/afficherSortie.html.twig',[
             'sortie' => $sortie
-        ]);
-    }
-
-    #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
-    public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
-    {
-        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
-
-        $sortieForm->handleRequest($request);
-
-        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-
-            if($sortieForm->get('enregistrer')->isClicked()){
-                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
-                $sortie->setEtat($etat);
-            }
-            elseif ($sortieForm->get('publier')->isClicked()) {
-                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
-                $sortie->setEtat($etat);
-            }
-
-
-            $em->flush();
-
-            $this->addFlash('success', 'Le souhait a bien été modifié');
-
-            return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
-        }
-
-
-        return $this->render('sortie/modifierSortie.html.twig',[
-            'sortie' => $sortie,
-            'sortieForm' => $sortieForm->createView()
         ]);
     }
 
@@ -115,7 +85,6 @@ class SortieController extends AbstractController
                 $sortie->setEtat($etat);
             }
 
-
             $em->persist($sortie);
             $em->flush();
 
@@ -130,27 +99,93 @@ class SortieController extends AbstractController
           ]);
     }
 
-    #[Route('/listeLieu/{id}', name: 'listeLieu')]
-    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
+    #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
+    public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
-       $result = $lieus->createQueryBuilder("q")
-            ->where("q.ville = :villeid")
-            ->setParameter("villeid", $id)
-            ->getQuery()
-            ->getResult();
+        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
 
-       return $this->json($result, 200, [],  ['groups' => 'show_product',
+        $sortieForm->handleRequest($request);
 
-           ]);
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
+            if($sortieForm->get('enregistrer')->isClicked()){
+
+                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
+                $sortie->setEtat($etat);
+                $sortie->setMotif(null);
+            }
+            elseif ($sortieForm->get('publier')->isClicked()) {
+
+                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
+                $sortie->setEtat($etat);
+                $sortie->setMotif(null);
+            }
+            elseif ($sortieForm->get('annulerLaSortie')->isClicked()) {
+
+                $this->redirectToRoute('annuler', ['id' => $sortie->getId()]);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'La sortie a bien été modifié');
+
+            return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
+        }
+
+
+        return $this->render('sortie/modifierSortie.html.twig',[
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
+        ]);
     }
+
 
     #[isGranted('ROLE_ADMIN')]
     #[Route('/delete/{id}', name: 'deleteSortie', requirements: ['id' => '\d+'])]
-    public function delete(): Response
+    public function deleteSortie(Request $request, EntityManagerInterface $em, Sortie $sortie): Response
     {
-        return $this->render('sortie/delete.html.twig');
+        if($this->isCsrfTokenValid('delete'. $sortie->getId(), $request->request->get('_token'))){
+            $em->remove($sortie);
+            $em->flush();
+            $this->addFlash('success', 'La sortie a été supprimé !');
+        }
+        else{
+            $this->addFlash('error', 'Le token CSRF est invalide !');
+        }
+        return $this->redirectToRoute('sorties');
     }
+
+
+    #[Route('/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
+    public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
+    {
+            $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
+
+            $sortieForm->handleRequest($request);
+
+            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+                if($sortieForm->get('enregistrer')->isClicked()){
+
+                    $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+                    $sortie->setEtat($etat);
+                }
+
+                $em->flush();
+
+                $this->addFlash('success', 'La sortie a bien été annulée');
+
+                return $this->redirectToRoute('sorties');
+            }
+
+        return $this->render('sortie/annulerSortie.html.twig',[
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
+        ]);
+    }
+
+
+
 
     #[Route('/inscrire/{id}', name: 'sInscrireSortie', requirements: ['id' => '\d+'])]
     public function inscrire(UserRepository $userRepository, $id, SortieRepository $sortieRepository)
@@ -170,5 +205,20 @@ class SortieController extends AbstractController
         $userRepository->save($user, true);
 
         return $this->redirectToRoute('sorties');
+    }
+
+    #[Route('/listeLieu/{id}', name: 'listeLieu')]
+    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
+    {
+        $result = $lieus->createQueryBuilder("q")
+            ->where("q.ville = :villeid")
+            ->setParameter("villeid", $id)
+            ->getQuery()
+            ->getResult();
+
+        return $this->json($result, 200, [],  ['groups' => 'show_product',
+
+        ]);
+
     }
 }

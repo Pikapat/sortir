@@ -48,6 +48,10 @@
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
         {{ form_errors(sortieForm.lieu) }}
+
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
+
+
         <a onclick="addLieu()">+</a>
 
         <p id="newRue">Rue : </p>
@@ -60,7 +64,7 @@
 
 
 
-    </div>
+
 
     {{ form_label(sortieForm.enregistrer) }}
     {{ form_widget(sortieForm.enregistrer) }}
@@ -69,13 +73,20 @@
     {{ form_label(sortieForm.publier) }}
     {{ form_widget(sortieForm.publier) }}
 
-
     {{ form_label(sortieForm.annuler) }}
     {{ form_widget(sortieForm.annuler) }}
 
 
     {{ form_end(sortieForm) }}
 
+        {% if sortie.etat.libelle != 'Annulée' %}
+            <button><a href="{{ path('annuler', {'id' : sortie.id}) }}">Annuler La Sortie</a></button>
+        {% endif %}
+
+        <form action="{{ path('deleteSortie', {'id' : sortie.id}) }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
+         <button>Supprimer</button></form>
+    </div>
 
 {% endblock %}
 
@@ -84,7 +95,7 @@
     <script>
         function changeLieu(){
 
-            let idVille = document.getElementById('ajouter_sortie_ville').value
+            let idVille = document.getElementById('modifier_sortie_ville').value
 
 
             fetch('{{ path('listeLieu')}}/' + idVille).then((response) => response.json())
@@ -95,7 +106,7 @@
             console.log(data)
 
 
-            let lieuSelect = document.getElementById('ajouter_sortie_lieu')
+            let lieuSelect = document.getElementById('modifier_sortie_lieu')
 
             lieuSelect.innerHTML='';
 
@@ -117,7 +128,7 @@
 
         function changeInfo(){
 
-            let idVille = document.getElementById('ajouter_sortie_ville').value
+            let idVille = document.getElementById('modifier_sortie_ville').value
 
             fetch('{{ path('listeLieu')}}/' + idVille).then((response) => response.json())
                 .then((data) => lieuData(data))
@@ -126,7 +137,7 @@
 
         function lieuData(data){
 
-            let lieuSelect = document.getElementById('ajouter_sortie_lieu')
+            let lieuSelect = document.getElementById('modifier_sortie_lieu')
 
             indexLieu = lieuSelect.selectedIndex
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Form\Model;
 
-use phpDocumentor\Reflection\Types\Boolean;
+use App\Entity\Campus;
 
 class SortieFilters
 {
