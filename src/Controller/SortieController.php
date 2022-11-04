@@ -14,6 +14,7 @@ use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,6 +71,8 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(AjouterSortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
+
+        dump($sortieForm);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
@@ -204,15 +207,17 @@ class SortieController extends AbstractController
     }
 
     #[Route('/listeLieu/{id}', name: 'listeLieu')]
-    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
+    public function listeLieuDesVille(Request $request, LieuRepository $lieuRepository,VilleRepository $villeRepository, $id = 1)
     {
-        $result = $lieus->createQueryBuilder("q")
+
+        $lieux = $lieuRepository->createQueryBuilder("q")
             ->where("q.ville = :villeid")
             ->setParameter("villeid", $id)
             ->getQuery()
             ->getResult();
 
-        return $this->json($result, 200, [],  ['groups' => 'show_product',
+
+        return $this->json($lieux, 200, [],  ['groups' => 'show_product',
 
         ]);
 
