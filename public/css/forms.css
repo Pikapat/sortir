@@ -1,4 +1,4 @@
-.profil-form{
+.baseForm{
     height: min-content;
     padding: 5em;
     background-color: rgba(86, 129, 97, 0.16);
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.profil-form h1{
+.baseForm h1{
     display: flex;
     justify-content: center;
 }
