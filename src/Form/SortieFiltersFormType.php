@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Campus;
-use App\Entity\SortieFilters;
+use App\Form\Model\SortieFilters;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,19 +46,25 @@ class SortieFiltersFormType extends AbstractType
             ])
             ->add('userOrga', CheckboxType::class, [
                 'label' => 'Sorties dont je suis l\'organisateur',
-                'required' => false
+                'value' => false,
+                'required' => false,
+
             ])
             ->add('userInscrit', CheckboxType::class, [
                 'label' => 'Sorties auxquelles je suis inscrit',
-                'required' => false
+                'value' => false,
+                'required' => false,
+
             ])
             ->add('userNonInscrit', CheckboxType::class, [
                 'label' => 'Sorties auxquelles je ne suis pas inscrit',
-                'required' => false
+                'value' => false,
+                'required' => false,
             ])
             ->add('sortiePassee', CheckboxType::class, [
                 'label' => 'Sorties passées',
-                'required' => false
+                'value' => false,
+                'required' => false,
             ])
             ->add('Rechercher', SubmitType::class);
     }

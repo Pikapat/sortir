@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
+use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
@@ -23,19 +24,20 @@ class SortieController extends AbstractController
     #[Route('/', name: 'sorties')]
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository): Response
     {
-        $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class);
-//        $user = $repository->find($id);
+        $sortieFilters = new SortieFilters();
+
+        $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
       $sortiesFilterForm->handleRequest($request);
 
 
         if($sortiesFilterForm->isSubmitted())
         {
-//            $campusId = $sortiesFilterForm->get('campus')->getData()->getId();
-            dump($request);
+//
             $user=($this->getUser());
 
-            $sorties = $sortieRepository->findByFilters($request, $user);
+            $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
+
         }
         else{
             $sorties = $sortieRepository->findAll();
