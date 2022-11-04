@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\AnnulerSortieType;
+use App\Form\LieuType;
 use App\Form\ModifierSortieType;
 use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
@@ -68,7 +70,7 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($this->getUser());
 
         $lieu = new Lieu();
-        $lieuForm = $this->createForm(AjouterSortieType::class, $lieu);
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 
         $sortieForm = $this->createForm(AjouterSortieType::class, $sortie);
@@ -92,6 +94,14 @@ class SortieController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'La sortie a bien été créée');
+        }
+
+        if($lieuForm->isSubmitted())
+        {
+            $em->persist($lieu);
+            $em->flush();
+
+            $this->addFlash('success', 'Le lieu a bien été créé');
         }
 
 

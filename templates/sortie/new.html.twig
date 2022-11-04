@@ -51,7 +51,6 @@
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
         {{ form_errors(sortieForm.lieu) }}
-        <a onclick="addLieu()">+</a>
 
         <p id="newRue">Rue : </p>
 
@@ -65,11 +64,7 @@
 
     </div>
 
-    <div class="form-popup">
-        {{ form_start(lieuForm) }}
-        {{ form_widget(lieuForm) }}
-        {{ form_end(lieuForm) }}
-    </div>
+
 
     {{ form_label(sortieForm.enregistrer) }}
     {{ form_widget(sortieForm.enregistrer) }}
@@ -84,6 +79,17 @@
 
 
     {{ form_end(sortieForm) }}
+
+
+    <div class="form-popup">
+        {{ form_start(lieuForm) }}
+        {{ form_widget(lieuForm) }}
+        <button id="btnAjouter" class="btn">Se connecter</button>
+        <button class="btn cancel" onclick="closeForm()">Annuler</button>
+        {{ form_end(lieuForm) }}
+    </div>
+
+    <button onclick="openForm()"><a >+</a></button>
 
 
 {% endblock %}

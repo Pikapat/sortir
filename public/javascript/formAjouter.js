@@ -1,5 +1,14 @@
 function addLieu(){
 
-        document.getElementById('formPopUp').style.display = "block";
 
+}
+
+function openForm() {
+
+        console.log('ALL GOOD')
+
+        document.querySelector(".form-popup").style.display = "block";
+}
+function closeForm() {
+        document.querySelector(".form-popup").style.display = "none";
 }

@@ -1,0 +1,31 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block form %}
+    <div class="form">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block form_row %}
+    <div class="form-row">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block form_label %}
+    <div class="form-label">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block form_errors %}
+    <div class="form-error">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block form_widget %}
+    <div class="form-field">
+        {{ parent() }}
+    </div>
+{% endblock %}
