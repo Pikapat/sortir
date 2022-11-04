@@ -33,9 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
 
-//    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
-//    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$', message: 'le mot de passe doit avoir au moins
-//    5 caractères dont au moins un chiffre et une lettre')]
+    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
+    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$^', message: 'le mot de passe doit avoir au moins
+    5 caractères dont au moins un chiffre et une lettre')]
     #[ORM\Column]
         private ?string $password = null;
 
@@ -58,7 +58,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-//    #[Assert\Regex(pattern:'^(?:(?:\+|00)33|0)\s*[1-9](from 1 to 9)(?:[\s.-]*\d{2}){4}$)')]
+    #[Assert\Regex(pattern:'^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$^',
+        message: 'Le numéro de téléphone doit contenir 10 chiffres et commencer par un zéro')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telephone = null;
 
@@ -86,6 +87,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sortiesOrganisees;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
 
     public function __construct()
     {
@@ -304,6 +308,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $sortiesOrganisee->setOrganisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
