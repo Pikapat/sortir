@@ -68,6 +68,13 @@
                     <br>
                 </div>
 
+                <div class="form-field">
+                    {{ form_label(user_profil.picture) }}
+                    {{ form_widget(user_profil.picture) }}
+                    {{ form_errors(user_profil.picture) }}
+                    <br>
+                </div>
+
                 <div class="form-buttons">
                     <button>Enregistrer</button>
                     <input type="reset">

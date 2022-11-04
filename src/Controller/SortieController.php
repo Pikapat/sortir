@@ -34,10 +34,11 @@ class SortieController extends AbstractController
       $sortiesFilterForm->handleRequest($request);
 
 
-        if($sortiesFilterForm->isSubmitted())
+        if($sortiesFilterForm->isSubmitted()&& $sortiesFilterForm->isValid())
         {
 //
             $user=($this->getUser());
+
 
             $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
 

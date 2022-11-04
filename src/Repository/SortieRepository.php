@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
-use App\Entity\User;
+
 use App\Form\Model\SortieFilters;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\AST\Functions\DateAddFunction;
@@ -64,16 +64,14 @@ class SortieRepository extends ServiceEntityRepository
         $qb->andWhere("s.siteOrganisateur = :campusId")
             ->setParameter('campusId', $campus);
 
-//        if($sortiePassee) {
-//
-//            $qb->addSelect('e')
-//                ->from('etat', 'e')
-//                ->innerJoin('e.id', 's')
-//                ->andWhere('s.etat = 3');
-//        }
-//        else{
-//            $qb->andWhere('s.etat = publié');
-//        }
+        if($sortiePassee) {
+
+            $qb->leftJoin('s.etat', 'e')
+               ->andWhere('e.id = 5');
+        }
+        else{
+            $qb->andWhere('s.etat = publiée');
+        }
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")
