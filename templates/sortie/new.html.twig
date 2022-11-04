@@ -50,6 +50,14 @@
         {{ form_errors(sortieForm.lieu) }}
         <a onclick="addLieu()">+</a>
 
+        <p id="newRue">Rue : </p>
+
+        <p id="newCodePostal">Code Postal : </p>
+
+        <p id="newLatitude">Latitude : </p>
+
+        <p id="newLongitude">Longitude : </p>
+
 
 
     </div>
@@ -77,22 +85,73 @@
         function changeLieu(){
 
             let idVille = document.getElementById('ajouter_sortie_ville').value
-            console.log(idVille)
+
 
             fetch('{{ path('listeLieu')}}/' + idVille).then((response) => response.json())
-                .then((data) => handleData(data))
+                .then((data) => villeData(data))
         }
-        function handleData(data){
-            console.log(data);
+        function villeData(data){
+
+            console.log(data)
+
 
             let lieuSelect = document.getElementById('ajouter_sortie_lieu')
 
             lieuSelect.innerHTML='';
 
             for (const elem of data) {
-                lieuSelect.innerHTML='<option value="' + elem.id + '">' + elem.nom + '</option>';
+                lieuSelect.innerHTML+='<option value="' + elem.id + '">' + elem.nom + '</option>';
             }
+
+            let newRue = document.getElementById('newRue')
+            let newCodePostal = document.getElementById('newCodePostal')
+            let newLatitude = document.getElementById('newLatitude')
+            let newLongitude = document.getElementById('newLongitude')
+
+            newRue.innerText='Rue : ' +data[0].rue;
+            // newCodePostal.innerText='Code Postal : ' +data[0].codePostal;
+            newLatitude.innerText='Latitude : ' +data[0].latitude;
+            newLongitude.innerText='Longitude : ' +data[0].longitude;
+
         }
+
+        function changeInfo(){
+
+            let idVille = document.getElementById('ajouter_sortie_ville').value
+
+            fetch('{{ path('listeLieu')}}/' + idVille).then((response) => response.json())
+                .then((data) => lieuData(data))
+
+        }
+
+        function lieuData(data){
+
+            let lieuSelect = document.getElementById('ajouter_sortie_lieu')
+
+            indexLieu = lieuSelect.selectedIndex
+
+            let newRue = document.getElementById('newRue')
+            let newCodePostal = document.getElementById('newCodePostal')
+            let newLatitude = document.getElementById('newLatitude')
+            let newLongitude = document.getElementById('newLongitude')
+
+            newRue.innerText='Rue : ' +data[indexLieu].rue;
+            // newCodePostal.innerText='Code Postal : ' +data[indexLieu].codePostal;
+            newLatitude.innerText='Latitude : ' +data[indexLieu].latitude;
+            newLongitude.innerText='Longitude : ' +data[indexLieu].longitude;
+
+
+
+
+
+
+
+        }
+
+
+
+
+
     </script>
 {% endblock %}
 

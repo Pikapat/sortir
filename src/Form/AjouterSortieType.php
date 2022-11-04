@@ -82,6 +82,7 @@ class AjouterSortieType extends AbstractType
                     "choice_label" => "nom",
                     "expanded" => false,
                     "multiple" => false,
+                    "attr" => ['onChange' => 'changeInfo()']
 
 
                 ])
