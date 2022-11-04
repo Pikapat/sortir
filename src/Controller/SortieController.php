@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 
-use App\Entity\Etat;
-use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\AnnulerSortieType;
@@ -72,6 +70,7 @@ class SortieController extends AbstractController
         $lieuForm->handleRequest($request);
 
         $sortieForm = $this->createForm(AjouterSortieType::class, $sortie);
+
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
@@ -109,13 +108,11 @@ class SortieController extends AbstractController
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
-
                 $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
                 $sortie->setEtat($etat);
                 $sortie->setMotif(null);
             }
             elseif ($sortieForm->get('publier')->isClicked()) {
-
                 $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
                 $sortie->setEtat($etat);
                 $sortie->setMotif(null);
