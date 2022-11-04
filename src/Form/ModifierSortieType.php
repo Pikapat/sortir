@@ -87,6 +87,7 @@ class ModifierSortieType extends AbstractType
             ])
             ->add('publier', SubmitType::class, [
             ])
+
             ->add('annuler', ResetType::class,[
 
             ])
