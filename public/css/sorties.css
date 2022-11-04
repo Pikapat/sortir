@@ -1,0 +1,52 @@
+
+.sortieContainer{
+
+}
+
+.sortie{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-content: center;
+}
+
+.sortie p,a{
+    margin: 1em;
+    display: inline;
+}
+
+#field-titre{
+    grid-column: 1 / 2 ;
+}
+
+#field-dateDebut{
+    grid-column: 2 / 3 ;
+}
+
+#field-dateFin{
+    grid-column: 3 / 4 ;
+}
+
+#field-Inscriptions{
+    grid-column: 4 / 5 ;
+}
+
+#field-etat{
+    grid-column: 5 / 6 ;
+}
+
+#field-isInscrit{
+    grid-column: 6 / 7 ;
+}
+
+#field-orga{
+    grid-column: 7 / 8 ;
+}
+
+#field-desist{
+    grid-column: 8 / 9 ;
+}
+
+#field-inscrire{
+    grid-column: 8 / 9 ;
+}
