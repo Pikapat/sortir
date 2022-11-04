@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\ModifierSortieType;
@@ -96,9 +97,11 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $sortie->setOrganisateur($this->getUser());
 
+        $lieu = new Lieu();
+        $lieuForm = $this->createForm(AjouterSortieType::class, $lieu);
+        $lieuForm->handleRequest($request);
 
         $sortieForm = $this->createForm(AjouterSortieType::class, $sortie);
-
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
@@ -122,7 +125,8 @@ class SortieController extends AbstractController
 
 
         return $this->render('sortie/new.html.twig', [
-            'sortieForm' =>$sortieForm->createView()
+            'sortieForm' => $sortieForm->createView(),
+            'lieuForm' => $lieuForm->createView()
           ]);
     }
 
