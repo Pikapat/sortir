@@ -58,14 +58,17 @@ main{
 }
 
 .sortieContainer{
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+
 }
 
 .sortie{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.sortie p,a{
+   display: inline;
 }
 
 .adminVille{
