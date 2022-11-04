@@ -52,7 +52,7 @@ class AdminController extends AbstractController
         if($this->isCsrfTokenValid('delete'. $ville->getId(), $request->request->get('_token'))){
             $em->remove($ville);
             $em->flush();
-            $this->addFlash('success', 'La ville a été supprimé !');
+            $this->addFlash('success', 'La ville a été supprimée !');
         }
         else{
             $this->addFlash('error', 'Le token CSRF est invalide !');
@@ -77,7 +77,7 @@ class AdminController extends AbstractController
             $em->persist($campus);
             $em->flush();
 
-            $this->addFlash('success', 'Le campus a bien été ajoutée');
+            $this->addFlash('success', 'Le campus a bien été ajouté');
 
             $campuss = $campusRepository->findAll();
         }
