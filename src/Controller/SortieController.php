@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
+use App\Form\ModifierSortieType;
 use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
@@ -58,10 +60,35 @@ class SortieController extends AbstractController
     }
 
     #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
-    public function modifier(Sortie $sortie): Response
+    public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
+        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
+
+        $sortieForm->handleRequest($request);
+
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+            if($sortieForm->get('enregistrer')->isClicked()){
+                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
+                $sortie->setEtat($etat);
+            }
+            elseif ($sortieForm->get('publier')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
+                $sortie->setEtat($etat);
+            }
+
+
+            $em->flush();
+
+            $this->addFlash('success', 'Le souhait a bien été modifié');
+
+            return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
+        }
+
+
         return $this->render('sortie/modifierSortie.html.twig',[
-            'sortie' => $sortie
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
         ]);
     }
 
