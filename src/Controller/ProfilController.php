@@ -7,6 +7,8 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -38,46 +40,51 @@ class ProfilController extends AbstractController
                 $newPass = $userForm->get('password')->getData();
                 $picture = $userForm->get('picture')->getData();
 
-                if ($newPass == null) {
-                    $user->setPassword($user->getPassword());
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                } else {
-                    $newPass = $passwordHasher->hashPassword($user, $newPass);
-                    $user->setPassword($newPass);
-                }
-
+            if ($newPass == null) {
+                $user->setPassword($user->getPassword());
                 $entityManager->persist($user);
                 $entityManager->flush();
+            } else {
+                $newPass = $passwordHasher->hashPassword($user, $newPass);
+                $user->setPassword($newPass);
+            }
 
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
+            /** @var UploadedFile $picture */
             if ($picture) {
+
                 $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $picture->move(
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $product->setBrochureFilename($newFilename);
+                    // updates the 'brochureFilename' property to store the PDF file name
+                    // instead of its contents
+                $user->setPicture($newFilename);
             }
 
-            // ... persist the $product variable or any other work
+
+
+
+                 $entityManager->persist($user);
+                 $entityManager->flush();
+
 
                 $this->addFlash('success', 'Modifications effectuées');
             }
             else{
+
                 $this->addFlash('error', 'Une erreur est survenue');
             }
 

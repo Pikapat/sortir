@@ -33,9 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
 
-    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
-    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$^', message: 'le mot de passe doit avoir au moins
-    5 caractères dont au moins un chiffre et une lettre')]
+//    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
+//    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$^', message: 'le mot de passe doit avoir au moins
+//    5 caractères dont au moins un chiffre et une lettre')]
     #[ORM\Column]
         private ?string $password = null;
 
