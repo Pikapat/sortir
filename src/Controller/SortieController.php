@@ -57,39 +57,6 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
-    public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
-    {
-        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
-
-        $sortieForm->handleRequest($request);
-
-        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-
-            if($sortieForm->get('enregistrer')->isClicked()){
-                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
-                $sortie->setEtat($etat);
-            }
-            elseif ($sortieForm->get('publier')->isClicked()) {
-                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
-                $sortie->setEtat($etat);
-            }
-
-
-            $em->flush();
-
-            $this->addFlash('success', 'Le souhait a bien été modifié');
-
-            return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
-        }
-
-
-        return $this->render('sortie/modifierSortie.html.twig',[
-            'sortie' => $sortie,
-            'sortieForm' => $sortieForm->createView()
-        ]);
-    }
-
     #[Route('/new', name: 'newSortie')]
     public function new(Request $request, EntityManagerInterface $em, EtatRepository $etatRepository): Response
     {
@@ -112,7 +79,6 @@ class SortieController extends AbstractController
                 $sortie->setEtat($etat);
             }
 
-
             $em->persist($sortie);
             $em->flush();
 
@@ -126,27 +92,55 @@ class SortieController extends AbstractController
           ]);
     }
 
-    #[Route('/listeLieu/{id}', name: 'listeLieu')]
-    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
+    #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
+    public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
-       $result = $lieus->createQueryBuilder("q")
-            ->where("q.ville = :villeid")
-            ->setParameter("villeid", $id)
-            ->getQuery()
-            ->getResult();
+        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
 
-       return $this->json($result, 200, [],  ['groups' => 'show_product',
+        $sortieForm->handleRequest($request);
 
-           ]);
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
+            if($sortieForm->get('enregistrer')->isClicked()){
+                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
+                $sortie->setEtat($etat);
+            }
+            elseif ($sortieForm->get('publier')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
+                $sortie->setEtat($etat);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'La sortie a bien été modifié');
+
+            return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
+        }
+
+
+        return $this->render('sortie/modifierSortie.html.twig',[
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
+        ]);
     }
+
 
     #[isGranted('ROLE_ADMIN')]
     #[Route('/delete/{id}', name: 'deleteSortie', requirements: ['id' => '\d+'])]
-    public function delete(): Response
+    public function deleteSortie(Request $request, EntityManagerInterface $em, Sortie $sortie): Response
     {
-        return $this->render('sortie/delete.html.twig');
+        if($this->isCsrfTokenValid('delete'. $sortie->getId(), $request->request->get('_token'))){
+            $em->remove($sortie);
+            $em->flush();
+            $this->addFlash('success', 'La sortie a été supprimé !');
+        }
+        else{
+            $this->addFlash('error', 'Le token CSRF est invalide !');
+        }
+        return $this->redirectToRoute('sorties');
     }
+
+
 
     #[Route('/inscrire/{id}', name: 'sInscrireSortie', requirements: ['id' => '\d+'])]
     public function inscrire(UserRepository $userRepository, $id, SortieRepository $sortieRepository)
@@ -166,5 +160,20 @@ class SortieController extends AbstractController
         $userRepository->save($user, true);
 
         return $this->redirectToRoute('sorties');
+    }
+
+    #[Route('/listeLieu/{id}', name: 'listeLieu')]
+    public function listeLieuDesVille(Request $request, LieuRepository $lieus, $id = 1)
+    {
+        $result = $lieus->createQueryBuilder("q")
+            ->where("q.ville = :villeid")
+            ->setParameter("villeid", $id)
+            ->getQuery()
+            ->getResult();
+
+        return $this->json($result, 200, [],  ['groups' => 'show_product',
+
+        ]);
+
     }
 }
