@@ -33,24 +33,27 @@ class ProfilController extends AbstractController
 
 
         if ($userForm->isSubmitted()){
+            if ($userForm->isValid()) {
 
                 $newPass = $userForm->get('password')->getData();
 
-                if ($newPass == null){
-                $user->setPassword($user->getPassword());
+                if ($newPass == null) {
+                    $user->setPassword($user->getPassword());
                     $entityManager->persist($user);
                     $entityManager->flush();
-                 }
-
-                else{
-                $newPass = $passwordHasher->hashPassword($user,$newPass);
-                $user->setPassword($newPass);
+                } else {
+                    $newPass = $passwordHasher->hashPassword($user, $newPass);
+                    $user->setPassword($newPass);
                 }
 
                 $entityManager->persist($user);
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Modifications effectuées');
+            }
+            else{
+                $this->addFlash('error', 'Une erreur est survenue');
+            }
         }
 
         return $this->render('user/profil.html.twig', [

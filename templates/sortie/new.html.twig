@@ -5,6 +5,9 @@
     - Ajouter une sortie
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/formPopUp.css') }}" >
+{% endblock %}
 
 
 
@@ -60,6 +63,12 @@
 
 
 
+    </div>
+
+    <div class="form-popup">
+        {{ form_start(lieuForm) }}
+        {{ form_widget(lieuForm) }}
+        {{ form_end(lieuForm) }}
     </div>
 
     {{ form_label(sortieForm.enregistrer) }}
