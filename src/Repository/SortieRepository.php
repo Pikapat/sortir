@@ -6,6 +6,7 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\Model\SortieFilters;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Functions\DateAddFunction;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -57,27 +58,22 @@ class SortieRepository extends ServiceEntityRepository
         $now = new \DateTime();
 
 
-
-
-
-
         //Query Builder
         $qb = $this->createQueryBuilder('s');
 
         $qb->andWhere("s.siteOrganisateur = :campusId")
             ->setParameter('campusId', $campus);
 
-        if($sortiePassee) {
-
-            $qb->andWhere(' :dateFin < :now ')
-                ->setParameter('dateFin', $dateLimiteinscription)
-                ->setParameter('now', $now);
-        }
-        else{
-            $qb->andWhere(' :dateFin < :now ')
-                ->setParameter('dateFin', $dateLimiteinscription)
-                ->setParameter('now', $now);
-        }
+//        if($sortiePassee) {
+//
+//            $qb->addSelect('e')
+//                ->from('etat', 'e')
+//                ->innerJoin('e.id', 's')
+//                ->andWhere('s.etat = 3');
+//        }
+//        else{
+//            $qb->andWhere('s.etat = publié');
+//        }
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")

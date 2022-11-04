@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 
-use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AjouterSortieType;
 use App\Form\ModifierSortieType;
