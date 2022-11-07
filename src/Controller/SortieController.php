@@ -34,23 +34,15 @@ class SortieController extends AbstractController
         $etatUpdateService->updateEtats();
 
         $sortieFilters = new SortieFilters();
-
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
-      $sortiesFilterForm->handleRequest($request);
-
+        $sortiesFilterForm->handleRequest($request);
+        $sorties = $sortieRepository->findAllPubliee();
 
         if($sortiesFilterForm->isSubmitted()&& $sortiesFilterForm->isValid())
         {
-//
             $user=($this->getUser());
-
-
             $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
-
-        }
-        else{
-            $sorties = $sortieRepository->findAll();
         }
 
         return $this->render('sortie/list.html.twig', [
@@ -107,8 +99,6 @@ class SortieController extends AbstractController
 
             $this->addFlash('success', 'Le lieu a bien été créé');
         }
-
-
 
         return $this->render('sortie/new.html.twig', [
             'sortieForm' => $sortieForm->createView(),

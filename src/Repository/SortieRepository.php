@@ -7,6 +7,7 @@ use App\Entity\Sortie;
 use App\Form\Model\SortieFilters;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\AST\Functions\DateAddFunction;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,7 +47,6 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findByFilters(SortieFilters $filters, UserInterface $user)
     {
-
         $campus = $filters->getCampus();
         $textfilter = $filters->getTextFilter();
         $dateDebut = $filters->getDateDebut();
@@ -55,7 +55,6 @@ class SortieRepository extends ServiceEntityRepository
         $userInscrit = $filters->getUserInscrit();
         $userNonInscrit = $filters->getUserNonInscrit();
         $sortiePassee = $filters->getSortiePassee();
-        $now = new \DateTime();
 
 
         //Query Builder
@@ -103,20 +102,34 @@ class SortieRepository extends ServiceEntityRepository
             return $qb->getQuery()->getResult();
         }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
+
+    public function findAllPubliee(): array
+    {
+        return $this->createQueryBuilder('s')
+
+
+            ->leftJoin('s.etat', 'e')
+            ->addSelect('e')
+            ->andWhere('s.etat IN(2,3,4,5)')
+
+            ->leftJoin('s.organisateur', 'u')
+            ->addSelect('u')
+            ->andWhere('s.organisateur = u.id')
+
+            ->leftJoin('s.siteOrganisateur', 'c')
+            ->addSelect('c')
+            ->andWhere('s.siteOrganisateur = c.id')
+
+
+
 //            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
 
 //    public function findOneBySomeField($value): ?Sortie
 //    {

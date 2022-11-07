@@ -22,9 +22,9 @@ class SortieFiltersFormType extends AbstractType
             ->add('campus', EntityType::class, [
                 'label' => 'Campus : ',
                 'class' => Campus::class,
-                "query_builder" => function(EntityRepository $er){
-                    return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
-                },
+//                "query_builder" => function(EntityRepository $er){
+//                    return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
+//                },
                 "choice_label" => "nom",
                 "expanded" => false,
                 "multiple" => false
