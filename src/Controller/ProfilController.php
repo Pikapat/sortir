@@ -33,7 +33,7 @@ class ProfilController extends AbstractController
             throw $this->createAccessDeniedException('No access for you!');
         }
 
-        // récupére le profil et affiche dan sle formulaire
+        // récupére le profil et affiche dans le formulaire
         $user = $repository->find($id);
         $user->getCampus();
         $user->getPassword();
@@ -42,11 +42,11 @@ class ProfilController extends AbstractController
 
         $userForm->handleRequest($request);
 
-        if ($userForm->isSubmitted()) {
-
-            if ($userForm->isValid()){
+        if ($userForm->isSubmitted() && $userForm->isValid()){
                 $newPass = $userForm->get('password')->getData();
+            dump($newPass);
                 if ($newPass == null) {
+                    dump($newPass);
                     $user->setPassword($user->getPassword());
                     $entityManager->persist($user);
                     $entityManager->flush();
@@ -65,11 +65,9 @@ class ProfilController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->addFlash('success', 'Modifications effectuées.');
-            }
-            else{
+            }else if ($userForm->isSubmitted() && !$userForm->isValid()) {
                 $this->addFlash('error', 'Une erreur est survenue !');
             }
-        }
 
         return $this->render('user/modifyProfil.html.twig', [
             'user_profil' => $userForm->createView(),

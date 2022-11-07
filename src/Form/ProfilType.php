@@ -60,9 +60,11 @@ class ProfilType extends AbstractType
                     new File([
                         'maxSize' => '2048k',
                         'mimeTypes' => [
-
+                            'png','jpg', 'jpeg'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid img document',
+                        'notFoundMessage' => 'Le fichier n\'a pas pu être téléchargé',
+                        'mimeTypesMessage' => 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
+
                     ])
                 ],
             ])
