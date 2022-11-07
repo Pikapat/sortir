@@ -119,6 +119,10 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
 
+        $lieu = new Lieu();
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $lieuForm->handleRequest($request);
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
@@ -143,10 +147,19 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
         }
 
+        if($lieuForm->isSubmitted())
+        {
+            $em->persist($lieu);
+            $em->flush();
+
+            $this->addFlash('success', 'Le lieu a bien été créé');
+        }
+
 
         return $this->render('sortie/modifierSortie.html.twig',[
             'sortie' => $sortie,
-            'sortieForm' => $sortieForm->createView()
+            'sortieForm' => $sortieForm->createView(),
+            'lieuForm' => $lieuForm->createView()
         ]);
     }
 

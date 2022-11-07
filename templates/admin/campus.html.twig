@@ -9,7 +9,7 @@
 
     <h2>Filtrer les campus</h2>
 
-
+<div>
     {% for camp in campus %}
         {#        Nom des campus#}
         <div class="adminVille">
@@ -17,13 +17,13 @@
                 {{ camp.nom }}
             </p>
 
-
+            <div>
             <form action="{{ path('campus_delete', {'id' : camp.id}) }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ camp.id) }}">
                 <button>Modifier</button>
                 -
                 <button>Supprimer</button></form>
-
+            </div>
         </div>
 
     {% endfor %}
@@ -47,7 +47,7 @@
 
     {{ form_end(campusForm) }}
 
-
+    </div>
 
 {% endblock %}
 

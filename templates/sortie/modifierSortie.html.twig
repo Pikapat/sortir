@@ -5,87 +5,120 @@
     - Ajouter une sortie
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/formPopUp.css') }}" >
+{% endblock %}
 
 
 
 {% block body %}
-    <h1>Modifictaion d'une sortie</h1>
+<div class="baseForm">
+
+    <h1>Modifictaion de {{ sortie.titre }}</h1>
+
+
 
     {{ form_start(sortieForm) }}
-    <div>
-        {{ form_label(sortieForm.titre) }}
-        {{ form_widget(sortieForm.titre) }}
-        {{ form_errors(sortieForm.titre) }}
-        <br>
-        {{ form_label(sortieForm.dateHeureDebut) }}
-        {{ form_widget(sortieForm.dateHeureDebut) }}
-        {{ form_errors(sortieForm.dateHeureDebut) }}
-        <br>
-        {{ form_label(sortieForm.duree) }}
-        {{ form_widget(sortieForm.duree) }}
-        {{ form_errors(sortieForm.duree) }}
-        <br>
-        {{ form_label(sortieForm.dateLimiteInscription) }}
-        {{ form_widget(sortieForm.dateLimiteInscription) }}
-        {{ form_errors(sortieForm.dateLimiteInscription) }}
-        <br>
-        {{ form_label(sortieForm.nbInscriptionsMax) }}
-        {{ form_widget(sortieForm.nbInscriptionsMax) }}
-        {{ form_errors(sortieForm.nbInscriptionsMax) }}
-        <br>
-        {{ form_label(sortieForm.infosSortie) }}
-        {{ form_widget(sortieForm.infosSortie) }}
-        {{ form_errors(sortieForm.infosSortie) }}
-        <br>
-        {{ form_label(sortieForm.siteOrganisateur) }}
-        {{ form_widget(sortieForm.siteOrganisateur) }}
-        {{ form_errors(sortieForm.siteOrganisateur) }}
-        <br>
-        {{ form_label(sortieForm.ville) }}
-        {{ form_widget(sortieForm.ville) }}
-        {{ form_errors(sortieForm.ville) }}
-        <br>
-        {{ form_label(sortieForm.lieu) }}
-        {{ form_widget(sortieForm.lieu) }}
-        {{ form_errors(sortieForm.lieu) }}
+    <div class="wrapper">
+        <div class="form">
+            <div class="form-row">
+                {{ form_label(sortieForm.titre) }}
+                {{ form_widget(sortieForm.titre) }}
+                {{ form_errors(sortieForm.titre) }}
+            </div>
 
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
+            <div class="form-row">
+                {{ form_label(sortieForm.dateHeureDebut) }}
+                {{ form_widget(sortieForm.dateHeureDebut) }}
+                {{ form_errors(sortieForm.dateHeureDebut) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.duree) }}
+                {{ form_widget(sortieForm.duree) }}
+                {{ form_errors(sortieForm.duree) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.dateLimiteInscription) }}
+                {{ form_widget(sortieForm.dateLimiteInscription) }}
+                {{ form_errors(sortieForm.dateLimiteInscription) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.nbInscriptionsMax) }}
+                {{ form_widget(sortieForm.nbInscriptionsMax) }}
+                {{ form_errors(sortieForm.nbInscriptionsMax) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.infosSortie) }}
+                {{ form_widget(sortieForm.infosSortie) }}
+                {{ form_errors(sortieForm.infosSortie) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.siteOrganisateur) }}
+                {{ form_widget(sortieForm.siteOrganisateur) }}
+                {{ form_errors(sortieForm.siteOrganisateur) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.ville) }}
+                {{ form_widget(sortieForm.ville) }}
+                {{ form_errors(sortieForm.ville) }}
+            </div>
+
+            <div class="form-row">
+                {{ form_label(sortieForm.lieu) }}
+                <div class="form-row-lieu">
+                    {{ form_widget(sortieForm.lieu) }}
+                    {{ form_widget(sortieForm.ajouterLieu) }}
+                    {#                <button style="width: 50px" onclick="openForm()"><a >+</a></button></div>#}
+                    {{ form_errors(sortieForm.lieu) }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <p id="newRue">Rue : </p>
+
+                <p id="newCodePostal">Code Postal : </p>
+
+                <p id="newLatitude">Latitude : </p>
+
+                <p id="newLongitude">Longitude : </p>
+            </div>
+
+            <div class="form-button">
+                {{ form_label(sortieForm.enregistrer) }}
+                {{ form_widget(sortieForm.enregistrer) }}
 
 
-        <a onclick="addLieu()">+</a>
-
-        <p id="newRue">Rue : </p>
-
-        <p id="newCodePostal">Code Postal : </p>
-
-        <p id="newLatitude">Latitude : </p>
-
-        <p id="newLongitude">Longitude : </p>
+                {{ form_label(sortieForm.publier) }}
+                {{ form_widget(sortieForm.publier) }}
 
 
+                {{ form_label(sortieForm.annuler) }}
+                {{ form_widget(sortieForm.annuler) }}
+
+            </div>
 
 
+            {{ form_end(sortieForm) }}
 
-    {{ form_label(sortieForm.enregistrer) }}
-    {{ form_widget(sortieForm.enregistrer) }}
-
-
-    {{ form_label(sortieForm.publier) }}
-    {{ form_widget(sortieForm.publier) }}
-
-    {{ form_label(sortieForm.annuler) }}
-    {{ form_widget(sortieForm.annuler) }}
+        </div>
 
 
-    {{ form_end(sortieForm) }}
+        <div class="form-popup form-container">
+            {{ form_start(lieuForm) }}
+            {{ form_widget(lieuForm) }}
+            <button id="btnAjouter" class="btn">Se connecter</button>
+            <button class="btn cancel" onclick="closeForm()">Annuler</button>
+            {{ form_end(lieuForm) }}
+        </div>
 
-        {% if sortie.etat.libelle != 'Annulée' %}
-            <button><a href="{{ path('annuler', {'id' : sortie.id}) }}">Annuler La Sortie</a></button>
-        {% endif %}
-
-        <form action="{{ path('deleteSortie', {'id' : sortie.id}) }}" method="post">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
-         <button>Supprimer</button></form>
+    </div>
     </div>
 
 {% endblock %}
@@ -151,17 +184,7 @@
             newLatitude.innerText='Latitude : ' +data[indexLieu].latitude;
             newLongitude.innerText='Longitude : ' +data[indexLieu].longitude;
 
-
-
-
-
-
-
         }
-
-
-
-
 
     </script>
 {% endblock %}
