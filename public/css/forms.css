@@ -1,9 +1,10 @@
 .baseForm{
     height: min-content;
     padding: 5em;
-    background-color: #fff;
+    background-color: lightsteelblue;
+
     border-radius: 5px;
-    border: 3px solid #f1f1f1;
+    border: 3px solid black;
 
 
 }

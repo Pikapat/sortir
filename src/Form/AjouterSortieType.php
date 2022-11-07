@@ -36,7 +36,9 @@ class AjouterSortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('titre', TextType::class, [
-                    'label' => 'Titre : '
+                    'label' => 'Titre : ',
+
+
                 ])
                 ->add('dateHeureDebut', DateType::class, [
                         'label' => 'Début : ',
