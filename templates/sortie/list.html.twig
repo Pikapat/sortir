@@ -11,6 +11,9 @@
 {% block body %}
 
     <div class="baseForm">
+        <div id="btn-newSortie">
+            <button><a href="{{ path('newSortie') }}">Créer une sortie</a></button>
+        </div>
         <div>
             {{ form(sortiesFiltersForm) }}
         </div>
@@ -31,44 +34,56 @@
             {% for sortie in sorties %}
                 <article class="sortie">
                     {#                    Titre + lien modif / affichage #}
-                    {% if sortie.organisateur == app.user %}
-                        <button>
-                            <a class="field-titre"
-                               href="{{ path('modifierSortie', {'id': sortie.id}) }}">{{ sortie.titre }}
-                            </a>
-                        </button>
-                    {% else %}
-                        <button>
-                            <a class="field-titre"
-                               href="{{ path('afficherSortie', {'id': sortie.id}) }}">{{ sortie.titre }}</a>
-                        </button>
-                    {% endif %}
+
+                    <button>
+                        <a class="field-titre"
+                           href="{{ path('afficherSortie', {'id': sortie.id}) }}">{{ sortie.titre }}
+                        </a>
+                    </button>
                     {#                    Date début sortie #}
                     <p class="field-dateDebut">{{ sortie.dateHeureDebut|date("d/m/Y") }}</p>
                     {#                    Clôture #}
                     <p>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</p>
                     {#                    inscrits/places #}
                     <p class="field-Inscriptions">{{ sortie.usersInscrits.count }} / {{ sortie.nbInscriptionsMax }}</p>
+
+
                     {#                    Etat #}
                     <p class="field-etat">{{ sortie.etat.libelle }}</p>
+
+
                     {#                    Inscrit #}
                     {% if sortie.usersInscrits.contains(app.user) %}
                         <p class="field-isInscrit">Inscrit</p>
                     {% endif %}
+
+
                     {#                    Organisateur #}
                     <p class="field-orga">{{ sortie.organisateur.nom }}</p>
+
+
                     {#                    Actions #}
-                    {% if sortie.usersInscrits.contains(app.user) %}
+                    {% if sortie.dateLimiteInscription < now %}
+                        {% if sortie.usersInscrits.contains(app.user) %}
+                            <button>
+                                <a class="field-actions" href="{{ path('seDesisterSortie', {'id': sortie.id}) }}">Se
+                                    désister</a>
+                            </button>
+                        {% else %}
+                            <button>
+                                <a class="field-actions"
+                                   href="{{ path('sInscrireSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if sortie.organisateur == app.user and sortie.etat.code == 'ENR' %}
                         <button>
-                            <a class="field-desist" href="{{ path('seDesisterSortie', {'id': sortie.id}) }}">Se
-                                désister</a>
-                        </button>
-                    {% else %}
-                        <button>
-                            <a class="field-inscrire"
-                               href="{{ path('sInscrireSortie', {'id': sortie.id}) }}">S'inscrire</a>
+                            <a class="field-actions"
+                               href="{{ path('modifierSortie', {'id': sortie.id}) }}">Modifier</a>
                         </button>
                     {% endif %}
+
 
                 </article>
 

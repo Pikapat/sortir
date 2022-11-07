@@ -2,14 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Etat;
-use App\Entity\Lieu;
 use App\Entity\Sortie;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use phpDocumentor\Reflection\Types\This;
+use Faker\Factory;
+use Faker\ORM\Doctrine\Populator;
 
 class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -69,14 +67,14 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
         $sortie5 = new Sortie();
         $sortie5->setTitre('Cinéma');
-        $sortie5->setDateHeureDebut(new \DateTime("10/21/2022"));
-        $sortie5->setDateLimiteInscription(new \DateTime("10/20/2022"));
+        $sortie5->setDateHeureDebut(new \DateTime("11/21/2022"));
+        $sortie5->setDateLimiteInscription(new \DateTime("11/20/2022"));
         $sortie5->setDuree(2);
         $sortie5->setInfosSortie('Avatar');
         $sortie5->setNbInscriptionsMax(20);
         $sortie5->setSiteOrganisateur($this->getReference('campus-nantes'));
         $sortie5->setLieu($this->getReference('gaumont'));
-        $sortie5->setEtat($this->getReference('cloturer'));
+        $sortie5->setEtat($this->getReference('publier'));
         $sortie5->setOrganisateur($this->getReference('nino'));
         $manager->persist($sortie5);
 
@@ -105,6 +103,47 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $sortie7->setEtat($this->getReference('en-cours'));
         $sortie7->setOrganisateur($this->getReference('nino'));
         $manager->persist($sortie7);
+
+
+
+//        //        // Utilisation de Faker
+//        $generator = Factory::create('fr_FR');
+//        $populator = new Populator($generator, $manager);
+//        $populator->addEntity(Sortie::class, 100, [
+//            'titre' => function() use ($generator) {
+//                return $generator->title;
+//            },
+//            '$dateHeureDebut' => function() use ($generator) {
+//                return $generator->dateTimeBetween('+ 1 month', 'now');
+//            },
+//            'dateLimiteInscription' => function() use ($generator) {
+//                return $generator->dateTimeBetween('+ 1 month', 'now');
+//            },
+//            '$duree' => function() use ($generator) {
+//                return $generator->numberBetween(1,5);
+//            },
+//            '$nbInscriptionsMax' => function() use ($generator) {
+//                return $generator->numberBetween(3,20);
+//            },
+//            '$infosSortie' => function() use ($generator) {
+//                return $generator->text;
+//            },
+//            '$usersInscrits' => null,
+//
+//            'organisateur' => function(){
+//            return $this->getReference('admin');
+//            },
+//            'siteOrganisateur' => function() {
+//                return ($this->getReference('campus-rennes'));
+//            },
+//            'etat' => function(){
+//               return $this->getReference('publier');
+//            },
+//            'lieu' => function(){
+//                return $this->getReference('gaumont');
+//            }
+//        ]);
+//        $populator->execute();
 
         $manager->flush();
     }

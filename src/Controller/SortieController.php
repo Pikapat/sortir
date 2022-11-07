@@ -24,12 +24,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[isGranted('ROLE_USER')]
 #[Route('/sortie')]
 class SortieController extends AbstractController
 {
+
     #[Route('/', name: 'sorties')]
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
+
+
         // Actualise l'état des sorties
         $etatUpdateService->updateEtats();
 
@@ -47,7 +51,8 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/list.html.twig', [
             'sortiesFiltersForm' => $sortiesFilterForm->createView(),
-            'sorties' => $sorties
+            'sorties' => $sorties,
+            'now' => new \DateTime()
         ]);
     }
 
@@ -109,6 +114,10 @@ class SortieController extends AbstractController
     #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
     public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
+        if ($this->getUser() != $sortie->getOrganisateur()) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
+        }
+        
         $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);

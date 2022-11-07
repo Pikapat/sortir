@@ -88,7 +88,7 @@ class ProfilController extends AbstractController
                 $this->addFlash('error', 'Une erreur est survenue !');
         }
 
-        return $this->render('user/profil.html.twig', [
+        return $this->render('afficherProfil.html.twig', [
             'user_profil' => $userForm->createView(),
             'user' => $user
         ]);

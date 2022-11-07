@@ -62,13 +62,8 @@
     text-align: center;
 }
 
-.field-desist{
+.field-actions{
     grid-column: 8 / 9 ;
     text-align: center;
     align-content: center;
-}
-
-.field-inscrire{
-    grid-column: 8 / 9 ;
-    text-align: center;
 }
