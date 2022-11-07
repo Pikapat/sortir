@@ -21,7 +21,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfilController extends AbstractController
 {
 
-    // le nom de la route et la route on étét modifé pour pouvoir testre l'affichage de la page profil
     #[Route('/{id}', name: 'profil', requirements: ['id' => '\d+'])]
     public function profil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {
@@ -34,9 +33,8 @@ class ProfilController extends AbstractController
 
         $userForm->handleRequest($request);
 
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-        if ($userForm->isSubmitted()) {
-            if ($userForm->isValid()) {
                 $newPass = $userForm->get('password')->getData();
                 $picture = $userForm->get('picture')->getData();
 
@@ -68,22 +66,19 @@ class ProfilController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                     }
-
                     // updates the 'brochureFilename' property to store the PDF file name
                     // instead of its contents
                     $user->setPicture($newFilename);
-                }
 
+                }
 
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-
                 $this->addFlash('success', 'Modifications effectuées.');
-            }
-            $this->addFlash('error', 'Une erreur est survenue !');
+        }else{
+                $this->addFlash('error', 'Une erreur est survenue !');
         }
-
 
         return $this->render('user/profil.html.twig', [
             'user_profil' => $userForm->createView(),

@@ -50,17 +50,8 @@
         {% endblock %}
 
     </main>
-
-
     <footer>
-        <section>
-            <div>
-                <h3>© Sortir {{ 'now'|date('Y') }}</h3>
-            </div>
-            <div>
-                <button><a href="{{ path('legal') }}">Mentions légales</a></button>
-            </div>
-        </section>
+        {% include 'inc/_footer.html.twig' %}
     </footer>
     </body>
 

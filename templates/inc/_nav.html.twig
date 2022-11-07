@@ -6,6 +6,10 @@
                 <a href="{{ path('campus') }}">Campus</a>
             {% endif %}
             <button><a href="{{ path('homepage') }}">Accueil</a></button>
+            {% if app.user %}
+                <button><a href="{{ path('sorties') }}">Sorties</a></button>
+            {% endif %}
+
         </div>
 
 
@@ -23,6 +27,5 @@
             <p>{{ "now"|date("d/m/Y", "Europe/Paris") }}</p>
         </div>
     </section>
-
 
 </nav>
