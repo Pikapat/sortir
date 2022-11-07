@@ -5,26 +5,51 @@
                 <a href="{{ path('villes') }}">Villes</a>
                 <a href="{{ path('campus') }}">Campus</a>
             {% endif %}
-            <button><a href="{{ path('homepage') }}">Accueil</a></button>
+            <button class="nav-button"><a href="{{ path('homepage') }}">Accueil</a></button>
             {% if app.user %}
-                <button><a href="{{ path('sorties') }}">Sorties</a></button>
+                <button class="nav-button"><a href="{{ path('sorties') }}">Sorties</a></button>
             {% endif %}
 
         </div>
 
 
         <div>
+            <h1>Sortir.com</h1>
+        </div>
+
+
+        <div class="connexion">
             {% if not is_granted('IS_AUTHENTICATED') %}
-                <button><a href="{{ path('app_login') }}">Connexion</a></button>
+
+            <div class="mon-profil">
+                <div class="mon-profil-pseudo">
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                </div>
+                <div class="mon-profil-logo">
+                    <a href="{{ path('app_login') }}">
+                        <img class="image-profil" src="{{ asset('images/nav/connexion.png') }}" alt="profil"></a>
+                </div>
+
             {% endif %}
 
             {% if is_granted('IS_AUTHENTICATED') %}
-                <h2>Bienvenu, {{ app.user.prenom }}</h2>
-            <button><a href="{{ path('profil', {'id': app.user.id}) }}">Mon profil</a></button>
-            <button> <a href="{{ path('app_logout') }}">Déconnexion</a></button>
-            {% endif %}
 
-            <p>{{ "now"|date("d/m/Y", "Europe/Paris") }}</p>
+            <div class="mon-profil">
+                <div class="mon-profil-pseudo">
+                    <a href="{{ path('profil', {'id': app.user.id}) }}">
+                        {{ app.user.pseudo }}</a>
+                </div>
+                <div class="mon-profil-logo">
+                    <a href="{{ path('profil', {'id': app.user.id}) }}">
+                        <img class="image-profil" src="{{ asset('images/nav/profil.png') }}" alt="profil"></a>
+                </div>
+
+            </div>
+            <div class="mon-profil">
+            <a href="{{ path('app_logout') }}"><img class="image-deconnexion" src="{{ asset('images/nav/deconnexion.png') }}" alt="deconnexion"></a>
+            </div>
+            {% endif %}
+            </div>
         </div>
     </section>
 

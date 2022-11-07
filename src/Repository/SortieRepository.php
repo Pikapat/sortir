@@ -47,6 +47,7 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findByFilters(SortieFilters $filters, UserInterface $user)
     {
+
         $campus = $filters->getCampus();
         $textfilter = $filters->getTextFilter();
         $dateDebut = $filters->getDateDebut();
@@ -62,15 +63,6 @@ class SortieRepository extends ServiceEntityRepository
 
         $qb->andWhere("s.siteOrganisateur = :campusId")
             ->setParameter('campusId', $campus);
-
-        if($sortiePassee) {
-
-            $qb->leftJoin('s.etat', 'e')
-               ->andWhere('e.id = 5');
-        }
-        else{
-            $qb->andWhere('s.etat = publiée');
-        }
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")
@@ -98,31 +90,37 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $user);
         }
 
+        if($sortiePassee) {
+            $qb->leftJoin('s.etat', 'e')
+                ->addSelect('e')
+               ->andWhere('e.id = 5');
+        }
+        else{
+            $qb->andWhere('s.etat IN(2,3,4,5)');
+        }
 
             return $qb->getQuery()->getResult();
         }
 
 
-    public function findAllPubliee(): array
+    public function findAllPubliee()
     {
         return $this->createQueryBuilder('s')
 
-
-            ->leftJoin('s.etat', 'e')
+            ->join('s.etat', 'e')
             ->addSelect('e')
-            ->andWhere('s.etat IN(2,3,4,5)')
+            ->andWhere('s.etat IN(2,3,4,5,6)')
 
-            ->leftJoin('s.organisateur', 'u')
+            ->join('s.organisateur', 'u')
             ->addSelect('u')
             ->andWhere('s.organisateur = u.id')
 
-            ->leftJoin('s.siteOrganisateur', 'c')
+            ->leftJoin('s.usersInscrits', 'i')
+            ->addSelect('i')
+
+            ->join('s.siteOrganisateur', 'c')
             ->addSelect('c')
             ->andWhere('s.siteOrganisateur = c.id')
-
-
-
-//            ->setMaxResults(10)
 
             ->orderBy('s.id', 'ASC')
             ->getQuery()
