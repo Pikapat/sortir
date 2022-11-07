@@ -12,6 +12,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
@@ -38,18 +39,21 @@ class AjouterSortieType extends AbstractType
         $builder->add('titre', TextType::class, [
                     'label' => 'Titre : ',
 
-
                 ])
-                ->add('dateHeureDebut', DateType::class, [
-                        'label' => 'Début : ',
-                        'widget' => 'single_text'
+                ->add('dateHeureDebut', DateTimeType::class, [
+                        'label' => 'Début de l\'évènement : ',
+                        'widget' => 'single_text',
+                        'html5' => 'true',
+//
                 ])
                 ->add('duree', IntegerType::class, [
                         'label' => 'Durée en heure : '
                 ])
-                ->add('dateLimiteInscription', DateType::class, [
+                ->add('dateLimiteInscription', DateTimeType::class, [
                         'label' => 'Date limite d\'inscription : ',
-                        'widget' => 'single_text'
+                        'widget' => 'single_text',
+                        'html5' => 'true',
+
                 ])
                 ->add('nbInscriptionsMax', IntegerType::class, [
                         'label' => 'Nombre d\'inscription maximum : '

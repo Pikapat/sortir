@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -16,20 +17,56 @@ class Sortie
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'l\'email ne peut pas être vide')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Length(
+        min: 2,
+        max: 15,
+        minMessage: 'Le titre doit contenir au moins 2 caractères',
+        maxMessage: 'Le titre ne peut pas contenir plus de 15 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
+    #[Assert\DateTimeInterface (format: 'd-m-Y H:i', message: 'Le format sasie n\'est pas reconu')]
+    #[Assert\Expression(
+
+        ' this.getDateHeureDebut() > this.getDateLimiteInscription()', message: 'aaab'
+
+    )]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
+    #[Assert\NotBlank (message: 'La durée doit être renseigné')]
+    #[Assert\NotNull(message: 'error')]
+    #[Assert\range(
+        min: '1',
+        max: '24',
+        minMessage: 'La durée de ne peut pas être inférieur à 1 heure',
+        maxMessage: 'La durée de ne peut pas être supérieur à 24 heures'
+    )]
     #[ORM\Column]
     private ?int $duree = null;
 
+    #[Assert\DateTimeInterface (format: 'd-m-Y H:i', message: 'Le format sasie n\'est pas reconu')]
+    #[Assert\Expression(
+
+        ' this.getDateHeureDebut() > this.getDateLimiteInscription()', message: 'bbbb'
+
+    )]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
+
+    #[Assert\NotBlank (message: 'Le nombre maximum d\'inscriptions doit être renseigné')]
+    #[Assert\NotNull(message: 'error')]
+    #[Assert\range(
+        min: '2',
+        minMessage: 'Le nombre d\'inscriptions acceptées doit être supérieur à 2',
+
+    )]
     #[ORM\Column]
     private ?int $nbInscriptionsMax = null;
+
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $infosSortie = null;
@@ -38,15 +75,15 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sortiesInscrits')]
     private Collection $usersInscrits;
 
-    #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $organisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $siteOrganisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 

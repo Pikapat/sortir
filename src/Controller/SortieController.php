@@ -31,18 +31,22 @@ class SortieController extends AbstractController
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
         // Actualise l'état des sorties
-        $etatUpdateService->updateEtats();
+        //$etatUpdateService->updateEtats();
 
         $sortieFilters = new SortieFilters();
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
         $sortiesFilterForm->handleRequest($request);
-        $sorties = $sortieRepository->findAllPubliee();
+
+
 
         if($sortiesFilterForm->isSubmitted()&& $sortiesFilterForm->isValid())
         {
             $user=($this->getUser());
             $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
+        }
+        else{
+            $sorties = $sortieRepository->findAllPubliee();
         }
 
         return $this->render('sortie/list.html.twig', [
