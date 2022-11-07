@@ -12,8 +12,6 @@ header{
     grid-area:  1 / 1 / 2 / 4;
 }
 
-
-
 button{
     cursor: pointer;
     padding: 10px;
@@ -30,6 +28,7 @@ a{
 }
 
 .container {
+
     margin: 1em;
     padding: 5px;
 }

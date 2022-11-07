@@ -24,36 +24,36 @@
 
 </head>
 
-<div class="container">
-
     <body>
 
     <header>
         {% include 'inc/_nav.html.twig' %}
     </header>
 
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="flash flash-{{ label }}">
-                {{ message }}
-            </div>
+    <div class="container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
-    <main>
+        <main>
 
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+            {% block javascripts %}
+                {{ encore_entry_script_tags('app') }}
+            {% endblock %}
 
-    </main>
+        </main>
+
+    </div>
     <footer>
         {% include 'inc/_footer.html.twig' %}
     </footer>
     </body>
 
-</div>
 </html>

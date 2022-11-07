@@ -26,6 +26,9 @@ class ProfilController extends AbstractController
     #[Route('/{id}', name: 'profil', requirements: ['id' => '\d+'])]
     public function profil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {
+
+
+
         // récupére le profil et affiche dan sle formulaire
         $user = $repository->find($id);
         $user->getCampus();
