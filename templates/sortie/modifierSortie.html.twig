@@ -75,7 +75,7 @@
                 <div class="form-row-lieu">
                     {{ form_widget(sortieForm.lieu) }}
                     {{ form_widget(sortieForm.ajouterLieu) }}
-                    {#                <button style="width: 50px" onclick="openForm()"><a >+</a></button></div>#}
+
                     {{ form_errors(sortieForm.lieu) }}
                 </div>
             </div>
@@ -112,8 +112,9 @@
 
         <div class="form-popup form-container">
             {{ form_start(lieuForm) }}
+            <h2>Ajouter un lieu</h2>
             {{ form_widget(lieuForm) }}
-            <button id="btnAjouter" class="btn">Se connecter</button>
+            <button id="btnAjouter" class="btn">Ajouter</button>
             <button class="btn cancel" onclick="closeForm()">Annuler</button>
             {{ form_end(lieuForm) }}
         </div>

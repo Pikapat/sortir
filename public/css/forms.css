@@ -128,4 +128,9 @@ button {
     justify-content: center;
 }
 
+#modifier_sortie_ajouterLieu{
+    border-radius: 20px;
+    background-color: #8ebf42;
+}
+
 
