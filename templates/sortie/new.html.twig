@@ -6,16 +6,19 @@
 {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
     <link rel="stylesheet" href="{{ asset('css/formPopUp.css') }}" >
 {% endblock %}
 
 
 
 {% block body %}
+    <div class="baseForm">
+
     <h1>Création d'une sortie</h1>
 
     {{ form_start(sortieForm) }}
-    <div>
+
         {{ form_label(sortieForm.titre) }}
         {{ form_widget(sortieForm.titre) }}
         {{ form_errors(sortieForm.titre) }}
@@ -50,6 +53,7 @@
         <br>
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
+        <button style="width: 50px" onclick="openForm()"><a >+</a></button>
         {{ form_errors(sortieForm.lieu) }}
 
         <p id="newRue">Rue : </p>
@@ -61,8 +65,6 @@
         <p id="newLongitude">Longitude : </p>
 
 
-
-    </div>
 
 
 
@@ -80,16 +82,16 @@
 
     {{ form_end(sortieForm) }}
 
+    </div>
 
-    <div class="form-popup">
+
+    <div class="form-popup form-container">
         {{ form_start(lieuForm) }}
         {{ form_widget(lieuForm) }}
         <button id="btnAjouter" class="btn">Se connecter</button>
         <button class="btn cancel" onclick="closeForm()">Annuler</button>
         {{ form_end(lieuForm) }}
     </div>
-
-    <button onclick="openForm()"><a >+</a></button>
 
 
 {% endblock %}
@@ -154,12 +156,6 @@
             newCodePostal.innerText='Code Postal : ' +data[indexLieu].ville.codePostal;
             newLatitude.innerText='Latitude : ' +data[indexLieu].latitude;
             newLongitude.innerText='Longitude : ' +data[indexLieu].longitude;
-
-
-
-
-
-
 
         }
 

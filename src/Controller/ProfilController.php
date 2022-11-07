@@ -22,8 +22,8 @@ class ProfilController extends AbstractController
 {
 
     // le nom de la route et la route on étét modifé pour pouvoir testre l'affichage de la page profil
-    #[Route('/{id}', name: 'profil', requirements: ['id' =>'\d+'])]
-    public function profil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger ): Response
+    #[Route('/{id}', name: 'profil', requirements: ['id' => '\d+'])]
+    public function profil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {
         // récupére le profil et affiche dan sle formulaire
         $user = $repository->find($id);
@@ -35,29 +35,29 @@ class ProfilController extends AbstractController
         $userForm->handleRequest($request);
 
 
-        if ($userForm->isSubmitted()&& $userForm->isValid()){
-
+        if ($userForm->isSubmitted()) {
+            if ($userForm->isValid()) {
                 $newPass = $userForm->get('password')->getData();
                 $picture = $userForm->get('picture')->getData();
 
-            if ($newPass == null) {
-                $user->setPassword($user->getPassword());
-                $entityManager->persist($user);
-                $entityManager->flush();
-            } else {
-                $newPass = $passwordHasher->hashPassword($user, $newPass);
-                $user->setPassword($newPass);
-            }
+                if ($newPass == null) {
+                    $user->setPassword($user->getPassword());
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                } else {
+                    $newPass = $passwordHasher->hashPassword($user, $newPass);
+                    $user->setPassword($newPass);
+                }
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            /** @var UploadedFile $picture */
-            if ($picture) {
+                // this condition is needed because the 'brochure' field is not required
+                // so the PDF file must be processed only when a file is uploaded
+                /** @var UploadedFile $picture */
+                if ($picture) {
 
-                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$picture->guessExtension();
+                    $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
 
                     // Move the file to the directory where brochures are stored
                     try {
@@ -71,22 +71,18 @@ class ProfilController extends AbstractController
 
                     // updates the 'brochureFilename' property to store the PDF file name
                     // instead of its contents
-                $user->setPicture($newFilename);
+                    $user->setPicture($newFilename);
+                }
+
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+
+                $this->addFlash('success', 'Modifications effectuées.');
             }
-
-
-
-
-                 $entityManager->persist($user);
-                 $entityManager->flush();
-
-
-                $this->addFlash('success', 'Modifications effectuées');
-            }
-            else{
-
-                $this->addFlash('error', 'Une erreur est survenue');
-            }
+            $this->addFlash('error', 'Une erreur est survenue !');
+        }
 
 
         return $this->render('user/profil.html.twig', [

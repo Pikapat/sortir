@@ -1,13 +1,10 @@
 .baseForm{
     height: min-content;
     padding: 5em;
-    background-color: rgba(86, 129, 97, 0.16);
+    background-color: #fff;
     border-radius: 5px;
-    border: 1px rgba(86, 129, 97, 0.5) solid;
+    border: 3px solid #f1f1f1;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .baseForm h1{
@@ -16,9 +13,10 @@
 }
 
 .form-buttons{
+    margin: 2em;
     display: flex;
     justify-content: center;
-    gap: 1em;
+    gap: 2em;
 }
 
 .form-fields{
@@ -36,4 +34,23 @@
 .form-row{
 
 }
+
+.baseForm button{
+    padding: 10px;
+}
+
+.form-error{
+    font-weight: bold;
+    color: red;
+}
+
+.baseForm button[type="submit"]{
+    color: #FFFFFF;
+    background-color: #8ebf42;
+}
+.baseForm button[type="reset"]{
+    color: #FFFFFF;
+    background-color: #cc0000;
+}
+
 

@@ -3,7 +3,7 @@
 }
 body > .container {
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 150px 100px 2fr 50px;
     min-height: 100vh;
 }
@@ -14,8 +14,11 @@ header{
 
 
 button{
-    border-radius: 5px;
-    background-color: rgba(188, 213, 204, 0.68);
+    cursor: pointer;
+    padding: 10px;
+    border-style: none;
+    border-radius: 2px;
+    background-color: #f1f1f1;
 }
 
 a{
@@ -78,7 +81,6 @@ footer div{
     display: flex;
     align-items: center;
 }
-
 @media screen and (min-width: 700px) {
 
 }

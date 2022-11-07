@@ -1,52 +1,74 @@
 
 .sortieContainer{
+    padding: 1em;
+    margin: 1em;
 
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    border-radius: 5px;
+    border: 2px rgba(86, 129, 97, 0.5) solid;
 }
 
 .sortie{
+    padding: 1em;
+
+    border-radius: 5px;
+    background-color: rgba(143, 175, 192, 0.5);
+    border: 2px rgba(86, 129, 97, 0.5) solid;
+
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-content: center;
+    align-content: center;
 }
 
-.sortie p,a{
-    margin: 1em;
-    display: inline;
-}
-
-#field-titre{
+.field-titre{
     grid-column: 1 / 2 ;
+    text-align: center;
 }
 
-#field-dateDebut{
+.field-dateDebut{
     grid-column: 2 / 3 ;
+    text-align: center;
+    align-content: center;
 }
 
-#field-dateFin{
+.field-dateFin{
     grid-column: 3 / 4 ;
+    text-align: center;
+    vertical-align: center;
 }
 
-#field-Inscriptions{
+.field-Inscriptions{
     grid-column: 4 / 5 ;
+    text-align: center;
 }
 
-#field-etat{
+.field-etat{
     grid-column: 5 / 6 ;
+    text-align: center;
 }
 
-#field-isInscrit{
+.field-isInscrit{
     grid-column: 6 / 7 ;
+    text-align: center;
 }
 
-#field-orga{
+.field-orga{
     grid-column: 7 / 8 ;
+    text-align: center;
 }
 
-#field-desist{
+.field-desist{
     grid-column: 8 / 9 ;
+    text-align: center;
+    align-content: center;
 }
 
-#field-inscrire{
+.field-inscrire{
     grid-column: 8 / 9 ;
+    text-align: center;
 }

@@ -15,9 +15,9 @@
             {% endif %}
 
             {% if is_granted('IS_AUTHENTICATED') %}
-                <h2>Participant : {{ app.user.prenom }}</h2>
-                <a href="{{ path('profil', {'id': app.user.id}) }}">Mon profil</a>
-                <a href="{{ path('app_logout') }}">Déconnexion</a>
+                <h2>Bienvenu, {{ app.user.prenom }}</h2>
+            <button><a href="{{ path('profil', {'id': app.user.id}) }}">Mon profil</a></button>
+            <button> <a href="{{ path('app_logout') }}">Déconnexion</a></button>
             {% endif %}
 
             <p>{{ "now"|date("d/m/Y", "Europe/Paris") }}</p>

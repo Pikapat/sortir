@@ -76,8 +76,8 @@
                 </div>
 
                 <div class="form-buttons">
-                    <button>Enregistrer</button>
-                    <input type="reset">
+                   {{ form_widget(user_profil.submit) }}
+                    {{ form_widget(user_profil.reset) }}
                 </div>
 {#                <a href="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}">View brochure </a>#}
 
