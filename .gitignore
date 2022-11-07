@@ -21,4 +21,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-.public/uploads/brochures/
+public/uploads/brochures/
