@@ -29,47 +29,49 @@ class Sortie
 
     #[Assert\DateTimeInterface (format: 'd-m-Y H:i', message: 'Le format sasie n\'est pas reconu')]
     #[Assert\Expression(
-
-        ' this.getDateHeureDebut() > this.getDateLimiteInscription()', message: 'aaab'
-
-    )]
+        'this.getDateHeureDebut() > this.getDateLimiteInscription()',
+        message: 'Le début de l\'éveenement doit être ultérieur à la date de limite de des inscriptions')]
+    #[Assert\GreaterThanOrEqual('today',  message: 'Le début de l\'évènement ne doit pas être antérieur
+     à la date et heure actuele')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[Assert\NotBlank (message: 'La durée doit être renseigné')]
-    #[Assert\NotNull(message: 'error')]
+    #[Assert\NotNull(message: 'La durée doit être renseigné')]
     #[Assert\Range(
         minMessage: 'La durée de ne peut pas être inférieur à 1 heure',
         maxMessage: 'La durée de ne peut pas être supérieur à 24 heures',
         min: '1',
-        max: '24'
-    )]
+        max: '24')]
     #[ORM\Column]
     private ?int $duree = null;
 
     #[Assert\DateTimeInterface (format: 'd-m-Y H:i', message: 'Le format sasie n\'est pas reconu')]
     #[Assert\Expression(
-
-        ' this.getDateHeureDebut() > this.getDateLimiteInscription()', message: 'bbbb'
-
-    )]
+        ' this.getDateLimiteInscription() < this.getDateHeureDebut()',
+        message: 'La date limite des inscriptions doit être antèrieur à la date de début de l\'évènement ')]
+    #[Assert\GreaterThanOrEqual('today',  message: 'La date limite des inscriptions ne doit pas être antérieur
+     à la date et heure actuele')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
-
-    #[Assert\NotBlank (message: 'Le nombre maximum d\'inscriptions doit être renseigné')]
-    #[Assert\NotNull(message: 'error')]
+    #[Assert\NotBlank (message: 'Le nombre maximum d\'inscripts doit être renseigné')]
+    #[Assert\NotNull(message: 'Le nombre maximum d\'inscripts doit être renseigné')]
     #[Assert\range(
-        minMessage: 'Le nombre d\'inscriptions acceptées doit être supérieur à 2',
-        min: '2',
-    )]
+        min : '2',
+        minMessage: 'Le nombre d\'inscriptions acceptées doit être supérieur à 2')]
     #[ORM\Column]
     private ?int $nbInscriptionsMax = null;
 
-
+    #[Assert\NotBlank(message: 'l\'email ne peut pas être vide')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Length(
+        min: 5,
+        max: 100 ,
+        minMessage: 'Le champ de description doit contenir au moins 5 caractères',
+        maxMessage: 'Le champ de description ne peut pas contenir plus de 100 caractères')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $infosSortie = null;
-
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sortiesInscrits')]
     private Collection $usersInscrits;
@@ -78,6 +80,8 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?User $organisateur = null;
 
+    #[Assert\NotBlank(message: 'le campus doit être renseigné')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $siteOrganisateur = null;
@@ -86,10 +90,19 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
+    #[Assert\NotBlank(message: 'le lieu doit être renseigné')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
+    #[Assert\NotBlank(message: 'le motif d\'annulation doit être indiqué')]
+    #[Assert\NotNull(message: 'Une erreur est survenue')]
+    #[Assert\Length(
+        min: 5,
+        max: 50 ,
+        minMessage: 'le motif d\'annulation moins 5 caractères',
+        maxMessage: 'le motif d\'annulation ne peut pas contenir plus de 50 caractères')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $motif = null;
 
