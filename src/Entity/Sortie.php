@@ -38,11 +38,11 @@ class Sortie
 
     #[Assert\NotBlank (message: 'La durée doit être renseigné')]
     #[Assert\NotNull(message: 'error')]
-    #[Assert\range(
-        min: '1',
-        max: '24',
+    #[Assert\Range(
         minMessage: 'La durée de ne peut pas être inférieur à 1 heure',
-        maxMessage: 'La durée de ne peut pas être supérieur à 24 heures'
+        maxMessage: 'La durée de ne peut pas être supérieur à 24 heures',
+        min: '1',
+        max: '24'
     )]
     #[ORM\Column]
     private ?int $duree = null;
@@ -60,9 +60,8 @@ class Sortie
     #[Assert\NotBlank (message: 'Le nombre maximum d\'inscriptions doit être renseigné')]
     #[Assert\NotNull(message: 'error')]
     #[Assert\range(
-        min: '2',
         minMessage: 'Le nombre d\'inscriptions acceptées doit être supérieur à 2',
-
+        min: '2',
     )]
     #[ORM\Column]
     private ?int $nbInscriptionsMax = null;
