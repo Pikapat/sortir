@@ -8,12 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use function Composer\Autoload\includeFile;
 
 
 #[IsGranted('ROLE_USER')]
@@ -66,9 +68,15 @@ class ProfilController extends AbstractController
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                     }
-                    // updates the 'brochureFilename' property to store the PDF file name
+                    // updates the 'brochureFilename' property to store the file name
                     // instead of its contents
                     $user->setPicture($newFilename);
+//                    $user->setPicture(new File($this->getParameter('brochures_directory').'/'.$user->getPicture()));
+
+                    //    if ($this->getParameter('brochures_directory').includeFile($originalFilename)){
+//                        $oldPicture = $this->getParameter('brochures_directory');
+//                        $entityManager->remove($oldPicture);
+//                    }
 
                 }
 

@@ -38,19 +38,19 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sortiesInscrits')]
     private Collection $usersInscrits;
 
-    #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees')]
+    #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $organisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(inversedBy: 'sorties', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $siteOrganisateur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(inversedBy: 'sorties', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(inversedBy: 'sorties', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
