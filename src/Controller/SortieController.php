@@ -16,6 +16,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
+use App\Service\EtatUpdateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +28,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'sorties')]
-    public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository): Response
+    public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
+        // Actualise l'état des sorties
+        $etatUpdateService->updateEtats();
+
         $sortieFilters = new SortieFilters();
 
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
