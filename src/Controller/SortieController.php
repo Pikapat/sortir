@@ -16,6 +16,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
+use App\Service\EtatUpdateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +28,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'sorties')]
-    public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository): Response
+    public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
+        // Actualise l'état des sorties
+        $etatUpdateService->updateEtats();
+
         $sortieFilters = new SortieFilters();
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
@@ -109,6 +113,10 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
 
+        $lieu = new Lieu();
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $lieuForm->handleRequest($request);
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
@@ -133,10 +141,19 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
         }
 
+        if($lieuForm->isSubmitted())
+        {
+            $em->persist($lieu);
+            $em->flush();
+
+            $this->addFlash('success', 'Le lieu a bien été créé');
+        }
+
 
         return $this->render('sortie/modifierSortie.html.twig',[
             'sortie' => $sortie,
-            'sortieForm' => $sortieForm->createView()
+            'sortieForm' => $sortieForm->createView(),
+            'lieuForm' => $lieuForm->createView()
         ]);
     }
 

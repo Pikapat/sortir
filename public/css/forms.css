@@ -1,16 +1,20 @@
 .baseForm{
     height: min-content;
     padding: 5em;
-    background-color: #fff;
+    background-color: lightsteelblue;
+
     border-radius: 5px;
-    border: 3px solid #f1f1f1;
+    border: 3px solid black;
+
 
 }
 
 .baseForm h1{
     display: flex;
     justify-content: center;
+    margin-bottom: 20%;
 }
+
 
 .form-buttons{
     margin: 2em;
@@ -24,15 +28,44 @@
     flex-direction: row;
     gap: 2em;
     justify-content: center;
+
 }
 
-.form-field{
-    display: flex;
-    justify-content: space-around;
+
+.wrapper {
+    max-width: 500px;
 }
+.form {
+
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:-10px;
+}
+.form>* {
+    flex: 1 1 160px;
+    margin: 10px;
+}
+
 
 .form-row{
+ display: flex;
+ flex-direction: column;
+}
 
+.form-row-lieu{
+    display: flex;
+    flex-direction: row;
+}
+
+.form-button{
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin: 10px;
 }
 
 .baseForm button{
