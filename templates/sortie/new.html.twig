@@ -22,35 +22,35 @@
         {{ form_label(sortieForm.titre) }}
         {{ form_widget(sortieForm.titre) }}
         {{ form_errors(sortieForm.titre) }}
-        <br>
+
         {{ form_label(sortieForm.dateHeureDebut) }}
         {{ form_widget(sortieForm.dateHeureDebut) }}
         {{ form_errors(sortieForm.dateHeureDebut) }}
-        <br>
+
         {{ form_label(sortieForm.duree) }}
         {{ form_widget(sortieForm.duree) }}
         {{ form_errors(sortieForm.duree) }}
-        <br>
+
         {{ form_label(sortieForm.dateLimiteInscription) }}
         {{ form_widget(sortieForm.dateLimiteInscription) }}
         {{ form_errors(sortieForm.dateLimiteInscription) }}
-        <br>
+
         {{ form_label(sortieForm.nbInscriptionsMax) }}
         {{ form_widget(sortieForm.nbInscriptionsMax) }}
         {{ form_errors(sortieForm.nbInscriptionsMax) }}
-        <br>
+
         {{ form_label(sortieForm.infosSortie) }}
         {{ form_widget(sortieForm.infosSortie) }}
         {{ form_errors(sortieForm.infosSortie) }}
-        <br>
+
         {{ form_label(sortieForm.siteOrganisateur) }}
         {{ form_widget(sortieForm.siteOrganisateur) }}
         {{ form_errors(sortieForm.siteOrganisateur) }}
-        <br>
+
         {{ form_label(sortieForm.ville) }}
         {{ form_widget(sortieForm.ville) }}
         {{ form_errors(sortieForm.ville) }}
-        <br>
+
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
         <button style="width: 50px" onclick="openForm()"><a >+</a></button>
@@ -158,11 +158,6 @@
             newLongitude.innerText='Longitude : ' +data[indexLieu].longitude;
 
         }
-
-
-
-
-
     </script>
 {% endblock %}
 

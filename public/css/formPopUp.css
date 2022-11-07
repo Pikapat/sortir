@@ -24,9 +24,10 @@ body {
 
 /* Masquez la forme Popup */
 .form-popup {
+    height: min-content;
     display: none;
-    position: fixed;
-    transform: translate(100%, 50%);
+    position: relative;
+    transform: translate(50%, 50%);
     border: 3px solid #f1f1f1;
     z-index: 9;
 }
