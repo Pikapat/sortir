@@ -3,6 +3,11 @@ nav section{
     justify-content: space-between;
 }
 
+.navBar{
+    display: flex;
+    gap: 5px;
+}
+
 .connexion{
     display: flex;
     flex-direction: row;
@@ -11,7 +16,7 @@ nav section{
     font-weight: bold;
     font-size: large;
     /*padding: 1em;*/
-    background-color: #85ADEA;
+    background-color: #768799;
     border-radius: 5px;
     border: 3px black solid;
     box-shadow: 5px 2px 5px #333333;
@@ -41,12 +46,13 @@ nav section{
 
 .nav-button{
     cursor: pointer;
-    padding: 10px;
-    border: 3px black solid;
-    border-radius: 30px;
-    background-color: #85ADEA;
+    height: 50px;
+    width: 100px;
+    border: 1px black solid;
+    border-radius: 5px;
+    box-shadow: 5px 2px 5px #333333;
+    background-color: #768799;
 }
-
 
 nav p:last-child{
     font-size: 1em;

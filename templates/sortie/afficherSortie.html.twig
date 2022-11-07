@@ -4,28 +4,49 @@
     {{ parent() }} - Sortie {{ sortie.titre }}
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
+{% endblock %}
+
+
 {% block body %}
 
-    <h1>Sortie : {{ sortie.titre}}</h1>
+
 
     <div class="detailsSortie">
+        <div id="detailsSortieTitle">
+            <h1>{{ sortie.titre }}</h1>
+        </div>
+        <div>
+            <p>Campus : {{ sortie.siteOrganisateur.nom }}</p>
+            <p>Lieu : {{ sortie.lieu.nom }}</p>
+            <p>Rue: {{ sortie.lieu.rue }}</p>
+            <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+            <p>Latitude : {{ sortie.lieu.latitude }}</p>
+            <p>Longitude : {{ sortie.lieu.longitude }}</p>
+        </div>
+        <div>
+            <div>
+                <p>Date et heure de la sortie : {{ sortie.dateHeureDebut|date }}</p>
+                <p>Date limite d'inscription : {{ sortie.dateLimiteInscription|date }}</p>
+                <p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
+                <p>Durée : {{ sortie.duree }}</p>
+                <p>Description et infos : {{ sortie.infosSortie }}</p>
+                <h2>Etat : {{ sortie.etat.libelle }}</h2>
+                {% if sortie.motif != null %}
+                    <p>Motif d'annulation : {{ sortie.motif }}</p>
+                {% endif %}
+            </div>
+        </div>
 
-        <p>Campus : {{ sortie.siteOrganisateur.nom }}</p>
-        <p>Lieu : {{ sortie.lieu.nom }}</p>
-        <p>Rue: {{ sortie.lieu.rue }}</p>
-        <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-        <p>Date et heure de la sortie : {{ sortie.dateHeureDebut|date }}</p>
-        <p>Date limite d'inscription : {{ sortie.dateLimiteInscription|date }}</p>
-        <p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
-        <p>Durée : {{ sortie.duree }}</p>
-        <p>Description et infos : {{ sortie.infosSortie }}</p>
-
-        <p>Latitude : {{ sortie.lieu.latitude }}</p>
-        <p>Longitude : {{ sortie.lieu.longitude }}</p>
-        <h2>Etat : {{ sortie.etat.libelle }}</h2>
-        {% if sortie.motif != null %}
-            <p>Motif d'annulation : {{ sortie.motif }}</p>
+        {% if app.user == sortie.organisateur %}
+            <div id="btnModifier">
+                <form action="{{ path('modifierSortie', {'id': sortie.id}) }}">
+                    <input type="submit" value="Modifier">
+                </form>
+            </div>
         {% endif %}
+
 
     </div>
 

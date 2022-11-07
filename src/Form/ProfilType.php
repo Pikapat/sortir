@@ -7,7 +7,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
 class ProfilType extends AbstractType
 {
@@ -56,17 +55,19 @@ class ProfilType extends AbstractType
                 'required' => false,
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2048k',
-                        'mimeTypes' => [
-                            'png','jpg', 'jpeg'
-                        ],
-                        'notFoundMessage' => 'Le fichier n\'a pas pu être téléchargé',
-                        'mimeTypesMessage' => 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
-
-                    ])
-                ],
+//                'constraints' => [
+//                    new Assert\File([
+//                        'maxSize' => '2048k',
+//                        'mimeTypes' => [
+//                            'application/png',
+//                            'application/jpg',
+//                            'application/jpeg'
+//                        ],
+//                        'notFoundMessage' => 'Le fichier n\'a pas pu être téléchargé',
+//                        'mimeTypesMessage' => 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
+//
+//                    ])
+//                ],
             ])
 
             ->add('submit', SubmitType::class,[

@@ -4,7 +4,7 @@
 body > .container {
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: 150px 100px 2fr 50px;
+    grid-template-rows: 80px 100px 2fr 50px;
     min-height: 100vh;
 }
 
@@ -18,13 +18,17 @@ button{
     padding: 10px;
     border-style: none;
     border-radius: 2px;
-    background-color: #f1f1f1;
+    background-color: #768799;
+}
+button a{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    color: #f1f1f1;
 }
 
 a{
     text-decoration: none;
     color: black;
-    font-weight: bold;
     font-size: large;
 }
 

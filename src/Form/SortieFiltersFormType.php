@@ -63,7 +63,9 @@ class SortieFiltersFormType extends AbstractType
                 'value' => false,
                 'required' => false,
             ])
-            ->add('Rechercher', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

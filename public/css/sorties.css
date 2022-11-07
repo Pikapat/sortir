@@ -67,3 +67,49 @@
     text-align: center;
     align-content: center;
 }
+
+/*Détail d'une sortie*/
+
+.detailsSortie{
+    height: min-content;
+    font-style: italic;
+    color: #B0413E;
+    background-color: rgba(33, 51, 66, 0.83);
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: auto;
+}
+
+#detailsSortieTitle{
+    justify-content: start;
+}
+
+.detailsSortie h1{
+    transform: rotate(-10deg);
+    padding-top: 1em;
+    padding-left: 1em;
+    align-items: start;
+    font-size: 3em;
+    font-weight: bolder;
+    font-style: italic;
+    /*grid-area: 1 / 1 / auto / auto;*/
+}
+
+.detailsSortie div{
+    margin: 1em;
+    align-content: center;
+    justify-content: end;
+}
+
+#btnModifier{
+    grid-area: 2 / 3 / 3 / 4;
+    display: flex;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    align-items: end;
+    justify-content: end;
+}
+
+#btnModifier input[type="submit"]{
+    width: 15em;
+}

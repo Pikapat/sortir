@@ -1,20 +1,15 @@
 <nav>
     <section>
-        <div>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('villes') }}">Villes</a>
-                <a href="{{ path('campus') }}">Campus</a>
-            {% endif %}
+        <div class="navBar">
             <button class="nav-button"><a href="{{ path('homepage') }}">Accueil</a></button>
+            {% if is_granted('ROLE_ADMIN') %}
+                <button class="nav-button"><a href="{{ path('villes') }}">Villes</a></button>
+                <button class="nav-button"><a href="{{ path('campus') }}">Campus</a></button>
+            {% endif %}
             {% if app.user %}
                 <button class="nav-button"><a href="{{ path('sorties') }}">Sorties</a></button>
             {% endif %}
 
-        </div>
-
-
-        <div>
-            <h1>Sortir.com</h1>
         </div>
 
 

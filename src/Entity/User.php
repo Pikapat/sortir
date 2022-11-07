@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
 
 //    #[SecurityAssert\UserPassword(message: 'Le mot de passe saisi est incorrect')]
-    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$^', message: 'le mot de passe doit avoir au moins
+    #[Assert\Regex(pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}^', message: 'le mot de passe doit avoir au moins
     5 caractères dont au moins un chiffre et une lettre')]
     #[ORM\Column]
         private ?string $password = null;
@@ -88,11 +88,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sortiesOrganisees;
 
-    #[Assert\File(
-        maxSize: '2048k',
-        mimeTypes: ['/png', '/jpg', '/jpeg'],
-        mimeTypesMessage: 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
-    )]
+//    #[Assert\File(
+//        maxSize: '2048k',
+//        mimeTypes: ['application/png'],
+//        mimeTypesMessage: 'Seuls les formats .jpg, .jpeg et .png sont acceptés ',
+//    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 

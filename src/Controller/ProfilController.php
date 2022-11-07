@@ -29,8 +29,8 @@ class ProfilController extends AbstractController
     public function modifierProfil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploaderService $fileUploader): Response
     {
         // Deny access if ID doesn't correspond to connected User
-        if ($this->getUser() != $repository->find($id)) {
-            throw $this->createAccessDeniedException('No access for you!');
+        if ($this->getUser() !== $repository->find($id)) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à ce profil.');
         }
 
         // récupére le profil et affiche dans le formulaire
@@ -42,9 +42,10 @@ class ProfilController extends AbstractController
 
         $userForm->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid()){
+        if ($userForm->isSubmitted()) {
+            if ($userForm->isValid()) {
                 $newPass = $userForm->get('password')->getData();
-            dump($newPass);
+                dump($newPass);
                 if ($newPass == null) {
                     dump($newPass);
                     $user->setPassword($user->getPassword());
@@ -65,9 +66,12 @@ class ProfilController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->addFlash('success', 'Modifications effectuées.');
-            }else if ($userForm->isSubmitted() && !$userForm->isValid()) {
+
+            }
+            else{
                 $this->addFlash('error', 'Une erreur est survenue !');
             }
+        }
 
         return $this->render('user/modifyProfil.html.twig', [
             'user_profil' => $userForm->createView(),

@@ -32,8 +32,6 @@ class SortieController extends AbstractController
     #[Route('/', name: 'sorties')]
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
-
-
         // Actualise l'état des sorties
         //$etatUpdateService->updateEtats();
 
@@ -41,8 +39,6 @@ class SortieController extends AbstractController
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
 
         $sortiesFilterForm->handleRequest($request);
-
-
 
         if($sortiesFilterForm->isSubmitted()&& $sortiesFilterForm->isValid())
         {

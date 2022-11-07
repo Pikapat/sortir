@@ -10,13 +10,75 @@
 
 {% block body %}
 
-    <div class="baseForm">
+    <div class="baseForm double-border">
         <div id="btn-newSortie">
-            <button><a href="{{ path('newSortie') }}">Créer une sortie</a></button>
+            <form action="{{ path('newSortie') }}">
+                <input type="submit" value="Créer une sortie">
+            </form>
         </div>
-        <div>
-            {{ form(sortiesFiltersForm) }}
-        </div>
+
+
+
+            <div id="filtersContainer">
+                {{ form_start(sortiesFiltersForm) }}
+
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.campus) }}
+                    {{ form_widget(sortiesFiltersForm.campus) }}
+                    {{ form_errors(sortiesFiltersForm.campus) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.textFilter) }}
+                    {{ form_widget(sortiesFiltersForm.textFilter) }}
+                    {{ form_errors(sortiesFiltersForm.textFilter) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.dateDebut) }}
+                    {{ form_widget(sortiesFiltersForm.dateDebut) }}
+                    {{ form_errors(sortiesFiltersForm.dateDebut) }}
+                    <br>
+                </div>
+
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.dateFin) }}
+                    {{ form_widget(sortiesFiltersForm.dateFin) }}
+                    {{ form_errors(sortiesFiltersForm.dateFin) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.userOrga) }}
+                    {{ form_widget(sortiesFiltersForm.userOrga) }}
+                    {{ form_errors(sortiesFiltersForm.userOrga) }}
+                    <br>
+                </div>
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.userInscrit) }}
+                    {{ form_widget(sortiesFiltersForm.userInscrit) }}
+                    {{ form_errors(sortiesFiltersForm.userInscrit) }}
+                    <br>
+                </div>
+
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.userNonInscrit) }}
+                    {{ form_widget(sortiesFiltersForm.userNonInscrit) }}
+                    {{ form_errors(sortiesFiltersForm.userNonInscrit) }}
+                    <br>
+                </div>
+
+                <div class="form-field">
+                    {{ form_label(sortiesFiltersForm.sortiePassee) }}
+                    {{ form_widget(sortiesFiltersForm.sortiePassee) }}
+                    {{ form_errors(sortiesFiltersForm.sortiePassee) }}
+                    <br>
+                </div>
+
+                <div class="form-buttons">
+                    {{ form_widget(sortiesFiltersForm.submit) }}
+                </div>
+                {{ form_end(sortiesFiltersForm) }}
+            </div>
 
         <div class="sortieContainer">
 
