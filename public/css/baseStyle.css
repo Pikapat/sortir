@@ -10,6 +10,7 @@ body > .container {
 
 header{
     grid-area:  1 / 1 / 2 / 4;
+    margin: 1em;
 }
 
 button{

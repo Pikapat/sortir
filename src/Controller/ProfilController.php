@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Form\ProfilType;
+use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,11 +25,13 @@ use function Composer\Autoload\includeFile;
 class ProfilController extends AbstractController
 {
 
-    #[Route('/{id}', name: 'profil', requirements: ['id' => '\d+'])]
-    public function profil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
+    #[Route('/modifier/{id}', name: 'modifierProfil', requirements: ['id' => '\d+'])]
+    public function modifierProfil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploaderService $fileUploader): Response
     {
-
-
+        // Deny access if ID doesn't correspond to connected User
+        if ($this->getUser() != $repository->find($id)) {
+            throw $this->createAccessDeniedException('No access for you!');
+        }
 
         // récupére le profil et affiche dan sle formulaire
         $user = $repository->find($id);
@@ -38,11 +42,10 @@ class ProfilController extends AbstractController
 
         $userForm->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
+        if ($userForm->isSubmitted()) {
 
+            if ($userForm->isValid()){
                 $newPass = $userForm->get('password')->getData();
-                $picture = $userForm->get('picture')->getData();
-
                 if ($newPass == null) {
                     $user->setPassword($user->getPassword());
                     $entityManager->persist($user);
@@ -52,47 +55,38 @@ class ProfilController extends AbstractController
                     $user->setPassword($newPass);
                 }
 
-                // this condition is needed because the 'brochure' field is not required
-                // so the PDF file must be processed only when a file is uploaded
-                /** @var UploadedFile $picture */
-                if ($picture) {
-
-                    $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-                    // this is needed to safely include the file name as part of the URL
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
-
-                    // Move the file to the directory where brochures are stored
-                    try {
-                        $picture->move(
-                            $this->getParameter('brochures_directory'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                    }
-                    // updates the 'brochureFilename' property to store the file name
-                    // instead of its contents
-                    $user->setPicture($newFilename);
-//                    $user->setPicture(new File($this->getParameter('brochures_directory').'/'.$user->getPicture()));
-
-                    //    if ($this->getParameter('brochures_directory').includeFile($originalFilename)){
-//                        $oldPicture = $this->getParameter('brochures_directory');
-//                        $entityManager->remove($oldPicture);
-//                    }
-
+                /** @var UploadedFile $pictureFile */
+                $pictureFile = $userForm->get('picture')->getData();
+                if ($pictureFile) {
+                    $picture = $fileUploader->upload($pictureFile);
+                    $user->setPicture($picture);
                 }
 
                 $entityManager->persist($user);
                 $entityManager->flush();
-
                 $this->addFlash('success', 'Modifications effectuées.');
-        }else{
+            }
+            else{
                 $this->addFlash('error', 'Une erreur est survenue !');
+            }
         }
 
-        return $this->render('user/afficherProfil.html.twig', [
+        return $this->render('user/modifyProfil.html.twig', [
             'user_profil' => $userForm->createView(),
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/afficher/{id}', name: 'afficherProfil', requirements: ['id' => '\d+'])]
+    public function affficherProfil(UserRepository $userRepository, int $id)
+    {
+
+        // Récupérer la série à afficher en base de données
+        $user = $userRepository->find($id);
+
+        $userForm = $this->createForm(ProfilType::class, $user);
+
+        return $this->render('user/afficherProfil.html.twig', [
             'user' => $user
         ]);
     }

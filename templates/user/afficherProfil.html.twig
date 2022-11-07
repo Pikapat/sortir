@@ -10,27 +10,28 @@
 {% endblock %}
 
 {% block body %}
-    <section class="baseForm">
+<section class="baseForm">
 
 
-        {% if app.user.id == user.id %}
-            <h1>Profil</h1>
-        {% endif %}
-                <section>
-                    <div>
-                        <img src="{{ asset('uploads/brochures/' ~ user.picture) }}" alt="Photo du profil" height="200 px">
-                        <a href=""></a>
-                    </div>
-                </section>
-
-            <div>
-                <p>{{ user.pseudo }}</p>
-                <p>{{ user.nom }}</p>
-                <p>{{ user.prenom }}</p>
-                <p>{{ user.telephone }}</p>
-                <p>{{ user.email }}</p>
-                <p>{{ user.campus.nom }}</p>
-            </div>
-
+    <section>
+        <div>
+            <img src="{{ asset('uploads/brochures/' ~ user.picture) }}" alt="Photo du profil" height="200 px">
+            <a href=""></a>
+        </div>
     </section>
+
+    <div>
+        <p>{{ user.pseudo }}</p>
+        <p>{{ user.nom }}</p>
+        <p>{{ user.prenom }}</p>
+        <p>{{ user.telephone }}</p>
+        <p>{{ user.email }}</p>
+        <p>{{ user.campus.nom }}</p>
+    </div>
+
+
+    {% if app.user == user %}
+        <button><a href="{{ path('modifierProfil', {'id': app.user.id}) }}">Modifier mon profil</a></button>
+    {% endif %}
+</section>
 {% endblock %}

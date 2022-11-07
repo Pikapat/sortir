@@ -40,7 +40,7 @@ class ProfilType extends AbstractType
 
 
             ->add('campus', EntityType::class, [
-                'label' => 'Campus : ',
+                'label' => 'Campus',
                 "class" => Campus::class,
                 "query_builder" => function(EntityRepository $er){
                     return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
@@ -51,7 +51,7 @@ class ProfilType extends AbstractType
             ])
 
             ->add('picture', FileType::class, [
-                'label' => 'Brochure (PDF file)',
+                'label' => 'Photo de profil',
                 'mapped' => false,
                 'required' => false,
                 // unmapped fields can't define their validation using annotations
