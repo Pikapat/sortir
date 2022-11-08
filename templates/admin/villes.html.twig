@@ -4,29 +4,41 @@
     - Villes
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/campus-ville.css') }}">
+{% endblock %}
+
 {% block body %}
+<div class="baseForm">
     <h1>Gérer les villes</h1>
 
-    <h2>Filtrer les villes</h2>
-
-
     {% for ville in villes %}
-{#        Nom des villes + code postal#}
+
         <div class="adminVille">
-        <p>
-        {{ ville.nom }}
-        </p>
-        <p>
-        {{ ville.codePostal }}
-        </p>
+            <div class="divVille" id="ville-{{ ville.nom }}">
+                <p class="ville">{{ ville.nom }}</p>
+                <p class="ville">{{ ville.codePostal }}</p>
+            </div>
 
+            <div class="modification" id="mod-{{ ville.nom }}">
+                <div class="divVille">
+                <form method="get" action="{{ path('ville_modify') }}">
+                    <input name="label" type="text" value="{{ ville.nom }}">
+                    <input name="codePostal" type="text" value="{{ ville.codePostal }}">
+                    <input name="id" type="hidden" value="{{ ville.id }}">
+                    <button class="form-button-modifer" type="submit">Valider</button>
+                </form>
+            </div>
+                <button class="form-button-supprimer" onclick="resetCampus('{{ 'ville-'~ville.nom }}', '{{ 'mod-'~ville.nom}}')">Annuler</button>
+            </div>
 
-            <form action="{{ path('ville_delete', {'id' : ville.id}) }}" method="post">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
-                <button>Modifier</button>
-                -
-                <button>Supprimer</button></form>
-
+            <div class="ville-button">
+                <button class="form-button-modifer" onclick="modifierCampus('{{ 'ville-'~ville.nom }}', '{{ 'mod-'~ville.nom}}')">Modifier</button>
+                <form action="{{ path('ville_delete', {'id' : ville.id}) }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
+                    <button class="form-button-supprimer">Supprimer</button></form>
+            </div>
         </div>
 
     {% endfor %}
@@ -34,29 +46,49 @@
 
             {{ form_start(villesForm) }}
     <div class="adminVille">
-        <p>
+        <div class="label-ville">
             {{ form_label(villesForm.nom) }}
             {{ form_widget(villesForm.nom) }}
             {{ form_errors(villesForm.nom) }}
-        </p>
-        <p>
+        </div>
+
+        <div class="label-ville">
             {{ form_label(villesForm.codePostal) }}
             {{ form_widget(villesForm.codePostal) }}
             {{ form_errors(villesForm.codePostal) }}
-        </p>
-        <p>
+        </div>
+
+        <div class="label-ville">
             {{ form_label(villesForm.ajouter) }}
             {{ form_widget(villesForm.ajouter) }}
 
-        </p>
+        </div>
 
 
     </div>
 
             {{ form_end(villesForm) }}
 
-    
+    </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        function modifierCampus(idVille, idMod){
+
+            document.getElementById(idMod).style.display = "flex";
+            document.getElementById(idVille).style.display = 'none';
+        }
+
+        function resetCampus(idVille, idMod){
+
+            document.getElementById(idMod).style.display = "none";
+            document.getElementById(idVille).style.display = 'flex';
+        }
+
+    </script>
 {% endblock %}
 
 

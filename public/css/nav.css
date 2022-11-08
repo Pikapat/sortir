@@ -52,6 +52,10 @@ nav section{
     border-radius: 5px;
     box-shadow: 5px 2px 5px #333333;
     background-color: #768799;
+
+}
+.nav-button:hover{
+    background-color: gray;
 }
 
 nav p:last-child{

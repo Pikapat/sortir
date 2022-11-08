@@ -60,6 +60,24 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('villes');
     }
 
+    #[Route('/modifierVille', name: 'ville_modify', methods: ['GET'])]
+    public function modifierVille(Request $request, EntityManagerInterface $em,VilleRepository $villeRepository): Response
+    {
+
+        $libelle = $request->query->get('label');
+        $codePostal = $request->query->get('codePostal');
+        $id = $request->query->get('id');
+
+        $ville = $villeRepository->find($id);
+
+        $ville->setNom($libelle);
+        $ville->setCodePostal($codePostal);
+
+        $em->flush();
+
+        return $this->redirectToRoute('villes');
+    }
+
 
     #[Route('/campus', name: 'campus')]
     public function campus(Request $request,CampusRepository $campusRepository, EntityManagerInterface $em): Response
@@ -103,17 +121,19 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/modifierCampus/{id}', name: 'campus_modify', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function modifierCampus(Request $request, EntityManagerInterface $em, Campus $campus): Response
+    #[Route('/modifierCampus', name: 'campus_modify', methods: ['GET'])]
+    public function modifierCampus(Request $request, EntityManagerInterface $em,CampusRepository $campusRepository): Response
     {
-    if($this->isCsrfTokenValid('update'. $campus->getId(), $request->request->get('_token'))){
-        $em->persist($campus);
+
+        $libelle = $request->query->get('label');
+        $id = $request->query->get('id');
+
+        $campus = $campusRepository->find($id);
+
+        $campus->setNom($libelle);
+
         $em->flush();
-        $this->addFlash('success', 'Le campus a été modifié !');
-    }
-    else{
-        $this->addFlash('error', 'Le token CSRF est invalide !');
-    }
-    return $this->redirectToRoute('campus');
+
+        return $this->redirectToRoute('campus');
     }
 }

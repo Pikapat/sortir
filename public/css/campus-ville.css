@@ -1,0 +1,43 @@
+.adminVille{
+    border-color: black;
+    border-style: solid;
+    border-top-left-radius: 30px 30px;
+    border-bottom-left-radius: 30px 30px;
+    margin: 10px;
+    background-color: gray;
+}
+.divVille{
+    width: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+.modification{
+    display: none;
+    align-items: center;
+    margin: 10px;
+}
+.label-ville {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+.ville-button {
+    display: flex;
+    flex-direction: row;
+    border-left: solid;
+}
+.baseForm .form-button-modifer{
+    color: #FFFFFF;
+    background-color: #8ebf42;
+}
+.baseForm .form-button-supprimer{
+
+    color: #FFFFFF;
+    background-color: #cc0000;
+}
+p{
+    font-weight: bold;
+    margin: 10px;
+}

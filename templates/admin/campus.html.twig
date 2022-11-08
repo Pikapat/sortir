@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/campus-ville.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -15,15 +15,28 @@
     <h1>Gérer les campus</h1>
 
     <div>
+
     {% for camp in campus %}
+
         {#        Nom des campus#}
-        <div class="adminVille">
-            <div>
+        <div class="adminVille" >
+            <div class="divVille" id="campus-{{ camp.nom }}">
                 <p class="ville">{{ camp.nom }}</p>
             </div>
 
-            <div>
-                <button class="form-button-modifer" onclick="modifierLieu()">Modifier</button>
+            <div class="modification" id="mod-{{ camp.nom }}">
+
+                <form method="get" action="{{ path('campus_modify') }}">
+                    <input name="label" type="text" value="{{ camp.nom }}">
+                    <input name="id" type="hidden" value="{{ camp.id }}">
+                    <button class="form-button-modifer" type="submit">Valider</button>
+                </form>
+
+                <button class="form-button-supprimer" onclick="resetCampus('{{ 'campus-'~camp.nom }}', '{{ 'mod-'~camp.nom}}')">Annuler</button>
+            </div>
+
+            <div class="ville-button">
+                <button class="form-button-modifer" onclick="modifierCampus('{{ 'campus-'~camp.nom }}', '{{ 'mod-'~camp.nom}}')">Modifier</button>
             <form action="{{ path('campus_delete', {'id' : camp.id}) }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ camp.id) }}">
                 <button class="form-button-supprimer">Supprimer</button></form>
@@ -32,7 +45,6 @@
 
     {% endfor %}
 
-
     {{ form_start(campusForm) }}
     <div class="adminVille">
         <div class="label-ville">
@@ -40,12 +52,10 @@
             {{ form_widget(campusForm.nom) }}
             {{ form_errors(campusForm.nom) }}
         </div>
-        <div>
+        <div class="ville-button">
             {{ form_label(campusForm.ajouter) }}
             {{ form_widget(campusForm.ajouter) }}
         </div>
-
-
 
     </div>
 
@@ -58,20 +68,19 @@
 {% block javascripts %}
     <script>
 
-        function modifierLieu(){
+        function modifierCampus(idCampus, idMod){
 
-            let ville = document.querySelector('.ville')
+                document.getElementById(idMod).style.display = "flex";
+                document.getElementById(idCampus).style.display = 'none';
+            }
 
-            ville.innerHTML='<div></div>'
+        function resetCampus(idCampus, idMod){
 
+                document.getElementById(idMod).style.display = "none";
+                document.getElementById(idCampus).style.display = 'flex';
         }
 
-
     </script>
-
-
-
-
 {% endblock %}
 
 
