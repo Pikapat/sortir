@@ -12,12 +12,11 @@ use App\Form\ModifierSortieType;
 use App\Form\Model\SortieFilters;
 use App\Form\SortieFiltersFormType;
 use App\Repository\EtatRepository;
-use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
-use App\Repository\VilleRepository;
 use App\Service\EtatUpdateService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,11 +28,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
 
+    /**
+     * @throws Exception
+     */
     #[Route('/', name: 'sorties')]
     public function list(Request $request, SortieRepository $sortieRepository, UserRepository $repository, EtatUpdateService $etatUpdateService): Response
     {
-        // Actualise l'état des sorties
-        //$etatUpdateService->updateEtats();
+//         Actualise l'état des sorties
+        $etatUpdateService->updateEtats();
 
         $sortieFilters = new SortieFilters();
         $sortiesFilterForm = $this->createForm(SortieFiltersFormType::class, $sortieFilters);
