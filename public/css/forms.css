@@ -113,9 +113,9 @@ button {
 }
 
 #btn-newSortie input[type="submit"]{
-    border: 5px rgba(86, 129, 97, 0.5) solid;
+    border: 3px black solid;
     font-size: xx-large;
-    padding: 30px 70px;
+    padding: 30px 100px;
     background-color: #829bac;
     color: #f1f1f1;
 }
