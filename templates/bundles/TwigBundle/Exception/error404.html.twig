@@ -4,6 +4,16 @@
     ERREUR 404 - Page introuvable
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/error.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>ERREUR 404 - Page introuvable</h1>
+    <div class="errorContainer double-border">
+        <h1>Erreur 404 - Page introuvable</h1>
+
+        <p>
+            Cette page n'existe pas, veuillez vérifier le contenu de l'URL
+        </p>
+    </div>
 {% endblock %}

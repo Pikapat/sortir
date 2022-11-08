@@ -165,7 +165,6 @@ class ModifierSortieType extends AbstractType
 
         $lieu = $this->lieuRepository->findBy(['ville' => $ville]);
 
-        dump($ville);
 
         $this->addElements($form, $ville, $lieu, true);
 

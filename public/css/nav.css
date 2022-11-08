@@ -10,32 +10,36 @@ nav section{
 
 .connexion{
     display: flex;
+    gap: 1em;
     flex-direction: row;
     text-align: center;
     align-items: center;
     font-weight: bold;
     font-size: large;
-    /*padding: 1em;*/
     background-color: #768799;
     border-radius: 5px;
     border: 3px black solid;
     box-shadow: 5px 2px 5px #333333;
 
 }
-.mon-profil-pseudo {
+.mon-profil-profil {
     display: flex;
-    align-items: center;
-    margin: 5px;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 1em;
     font-weight: bold;
 }
 .mon-profil-logo{
-    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .mon-profil{
     display: flex;
+    gap: 1em;
+    padding: 1em;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px;
 }
 .image-profil{
     width: 50px;
