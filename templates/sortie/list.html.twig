@@ -93,7 +93,6 @@
 
             {% if sorties|length == 0 %}
 
-
                 <h2 class="sortie">Aucun résultat ne correspond à votre recherche</h2>
 
             {% else %}
@@ -130,7 +129,9 @@
 
 
                     {#                    Organisateur #}
-                    <p class="field-orga">{{ sortie.organisateur.pseudo }}</p>
+                    <a href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
+                        {{ sortie.organisateur.pseudo }}</a>
+{#                    <p class="field-orga">{{ sortie.organisateur.pseudo }}</p>#}
 
 
                     {#                    Actions #}
