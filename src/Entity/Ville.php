@@ -31,7 +31,7 @@ class Ville
 
     #[Assert\NotBlank (message: 'Le nombre maximum d\'inscripts doit être renseigné')]
     #[Assert\NotNull(message: 'Le nombre maximum d\'inscripts doit être renseigné')]
-    #[Assert\range(
+    #[Assert\Range(
         min : '2',
         minMessage: 'Le nombre d\'inscriptions acceptées doit être supérieur à 2')]
     #[Groups(['show_product', 'list_product'])]

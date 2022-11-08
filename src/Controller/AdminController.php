@@ -101,4 +101,19 @@ class AdminController extends AbstractController
         }
         return $this->redirectToRoute('campus');
     }
+
+
+    #[Route('/modifierCampus/{id}', name: 'campus_modify', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function modifierCampus(Request $request, EntityManagerInterface $em, Campus $campus): Response
+    {
+    if($this->isCsrfTokenValid('update'. $campus->getId(), $request->request->get('_token'))){
+        $em->persist($campus);
+        $em->flush();
+        $this->addFlash('success', 'Le campus a été modifié !');
+    }
+    else{
+        $this->addFlash('error', 'Le token CSRF est invalide !');
+    }
+    return $this->redirectToRoute('campus');
+    }
 }

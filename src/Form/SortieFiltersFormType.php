@@ -30,9 +30,7 @@ class SortieFiltersFormType extends AbstractType
             ->add('textFilter', TextType::class, [
                 'label' => 'Le nom de la sortie contient : ',
                 'attr' => ['placeholder' => 'Rechercher'],
-                'required' => false,
-                'constraints' => [
-                    new Assert\NotNull(message: 'Une erreur est survenue')],
+                'required' => false
             ])
             ->add('dateDebut',DateType::class, [
                 'label' => 'Entre',

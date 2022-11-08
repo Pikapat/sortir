@@ -17,8 +17,6 @@
             </form>
         </div>
 
-
-
             <div id="filtersContainer">
                 {{ form_start(sortiesFiltersForm) }}
 
@@ -93,7 +91,15 @@
                 <p class="field-desist">Actions</p>
             </div>
 
+            {% if sorties|length == 0 %}
+
+
+                <h2 class="sortie">Aucun résultat ne correspond à votre recherche</h2>
+
+            {% else %}
+
             {% for sortie in sorties %}
+
                 <article class="sortie">
                     {#                    Titre + lien modif / affichage #}
 
@@ -150,6 +156,7 @@
                 </article>
 
             {% endfor %}
+            {% endif %}
         </div>
 
     </div>
