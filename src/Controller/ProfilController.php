@@ -67,6 +67,12 @@ class ProfilController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash('success', 'Modifications effectuées.');
 
+                return $this->render('user/afficherProfil.html.twig', [
+                    'id' => $user->getId(),
+                    'user_profil' => $userForm->createView(),
+                    'user' => $user
+                ]);
+
             }
             else{
                 $this->addFlash('error', 'Une erreur est survenue !');

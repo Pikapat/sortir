@@ -55,19 +55,17 @@ class ProfilType extends AbstractType
                 'required' => false,
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
-//                'constraints' => [
-//                    new Assert\File([
-//                        'maxSize' => '2048k',
+                'constraints' => [
+                    new Assert\File([
+                        'maxSize' => '2048k',
 //                        'mimeTypes' => [
-//                            'application/png',
-//                            'application/jpg',
-//                            'application/jpeg'
-//                        ],
-//                        'notFoundMessage' => 'Le fichier n\'a pas pu être téléchargé',
-//                        'mimeTypesMessage' => 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
-//
-//                    ])
-//                ],
+//                            'png',
+//                            'jpg', 'jpeg'],
+                        'notFoundMessage' => 'Le fichier n\'a pas pu être téléchargé',
+                        'mimeTypesMessage' => 'Seulement les formats .jpg, .jpeg et .png sont acceptés ',
+
+                   ])
+                ],
             ])
 
             ->add('submit', SubmitType::class,[

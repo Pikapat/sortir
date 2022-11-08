@@ -90,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 //    #[Assert\File(
 //        maxSize: '2048k',
-//        mimeTypes: ['application/png'],
+//        mimeTypes: ['png, jpg, jpeg'],
 //        mimeTypesMessage: 'Seuls les formats .jpg, .jpeg et .png sont acceptés ',
 //    )]
     #[ORM\Column(length: 255, nullable: true)]
