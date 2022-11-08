@@ -167,22 +167,6 @@ class SortieController extends AbstractController
     }
 
 
-    #[isGranted('ROLE_ADMIN')]
-    #[Route('/delete/{id}', name: 'deleteSortie', requirements: ['id' => '\d+'])]
-    public function deleteSortie(Request $request, EntityManagerInterface $em, Sortie $sortie): Response
-    {
-        if($this->isCsrfTokenValid('delete'. $sortie->getId(), $request->request->get('_token'))){
-            $em->remove($sortie);
-            $em->flush();
-            $this->addFlash('success', 'La sortie a été supprimé !');
-        }
-        else{
-            $this->addFlash('error', 'Le token CSRF est invalide !');
-        }
-        return $this->redirectToRoute('sorties');
-    }
-
-
     #[Route('/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
     public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
     {
@@ -232,22 +216,5 @@ class SortieController extends AbstractController
         $userRepository->save($user, true);
 
         return $this->redirectToRoute('sorties');
-    }
-
-    #[Route('/listeLieu/{id}', name: 'listeLieu')]
-    public function listeLieuDesVille(Request $request, LieuRepository $lieuRepository,VilleRepository $villeRepository, $id = 1)
-    {
-
-        $lieux = $lieuRepository->createQueryBuilder("q")
-            ->where("q.ville = :villeid")
-            ->setParameter("villeid", $id)
-            ->getQuery()
-            ->getResult();
-
-
-        return $this->json($lieux, 200, [],  ['groups' => 'show_product',
-
-        ]);
-
     }
 }
