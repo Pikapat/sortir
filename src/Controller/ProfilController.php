@@ -46,9 +46,7 @@ class ProfilController extends AbstractController
         if ($userForm->isSubmitted()) {
             if ($userForm->isValid()) {
                 $newPass = $userForm->get('password')->getData();
-                dump($newPass);
                 if ($newPass == null) {
-                    dump($newPass);
                     $user->setPassword($user->getPassword());
                     $entityManager->persist($user);
                     $entityManager->flush();

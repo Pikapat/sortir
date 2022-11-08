@@ -30,14 +30,14 @@
             {% if is_granted('IS_AUTHENTICATED') %}
 
             <div class="mon-profil">
-                <div class="mon-profil-pseudo">
-                    <a href="{{ path('afficherProfil', {'id': app.user.id}) }}"> Profil
-                        {{ app.user.pseudo }} </a>
-                </div>
+
                 <div class="mon-profil-logo">
                     <a href="{{ path('afficherProfil', {'id': app.user.id}) }}">
-                        <img class="image-profil" src="{{ asset('images/nav/profil.png') }}" alt="profil"></a>
-                    </p>
+                        <img class="image-profil" src="{{ asset('images/nav/profil.png') }}" alt="profil"> </a>
+                    <p>{{ app.user.pseudo }}</p>
+                </div>
+                <div class="mon-profil-profil">
+                    <a href="{{ path('afficherProfil', {'id': app.user.id}) }}">Profil </a>
                 </div>
 
             </div>

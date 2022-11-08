@@ -1,0 +1,40 @@
+.errorContainer{
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+    padding: 5em;
+    border-radius: 5px;
+    border: 3px solid black;
+}
+
+.double-border {
+    background-color: #f1f1f1;
+    border: 6px solid #f1f1f1;
+    padding: 35px;;
+    position: relative;
+    margin: 0 auto;
+}
+.double-border:before {
+    background: none;
+    border: 2px solid #f1f1f1;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+
+h1{
+    justify-content: center;
+    color: #f1f1f1;
+    font-size: xx-large;
+}
+
+p{
+    justify-content: center;
+    font-size: large;
+    font-weight: bold;
+    color: #f1f1f1;
+}

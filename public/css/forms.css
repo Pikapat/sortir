@@ -8,8 +8,8 @@
 }
 
 .double-border {
-    background-color: lightslategray;
-    border: 6px solid #135746;
+    background-color: rgba(197, 205, 213, 0.87);
+    border: 3px solid #6b8d87;
     padding: 35px;;
     width: auto;
     height: auto;
@@ -18,7 +18,7 @@
 }
 .double-border:before {
     background: none;
-    border: 2px solid #135746;
+    border: 2px solid #6b8d87;
     content: "";
     display: block;
     position: absolute;

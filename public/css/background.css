@@ -1,6 +1,25 @@
+/*body {*/
+/*    width: 100%;*/
+/*    height: auto;*/
+/*    background: url('../images/BaseBackground.png') no-repeat center;*/
+/*    background-size: cover;*/
+/*}*/
+
 body {
-    width: 100%;
-    height: auto;
-    background: url('../images/BaseBackground.png') no-repeat center;
-    background-size: cover;
+    animation: scroll 200s linear infinite;
+    background: url('../images/sandbg.jpg'), #111111;
+    height: 100vh;
+}
+
+
+@keyframes scroll {
+    100%{
+        background-position:3000px -3000px;
+    }
+}
+
+@media (prefers-reduced-motion) {
+    .wrapper {
+        animation: scroll 200s linear infinite;
+    }
 }

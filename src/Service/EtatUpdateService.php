@@ -43,7 +43,6 @@ class EtatUpdateService
 
         $sorties = $this->sortieRepository->findAll();
         $etats = $this->etatRepository->findAll();
-        dump($etats);
         $now = new \DateTime();
 
         foreach ($sorties as $sortie){
