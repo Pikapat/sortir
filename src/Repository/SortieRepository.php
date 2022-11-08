@@ -50,12 +50,14 @@ class SortieRepository extends ServiceEntityRepository
 
         $campus = $filters->getCampus();
         $textfilter = $filters->getTextFilter();
-        $dateDebut = $filters->getDateDebut();
-        $dateLimiteinscription = $filters->getDateFin();
+        $dateDebutSortie = $filters->getDateDebut();
+        $dateFinSortie = $filters->getDateFin();
         $userOrga = $filters->getUserOrga();
         $userInscrit = $filters->getUserInscrit();
         $userNonInscrit = $filters->getUserNonInscrit();
         $sortiePassee = $filters->getSortiePassee();
+
+        dump($dateFinSortie);
 
 
         //Query Builder
@@ -70,17 +72,22 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('i')
             ->join('s.siteOrganisateur', 'c')
             ->addSelect('c')
-            ->andWhere('s.siteOrganisateur = c.id');
+            ->andWhere('s.siteOrganisateur = :campus')
+            ->setParameter('campus', $campus);
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")
                 ->setParameter('textfilter', '%' . $textfilter . '%');
         }
 
-        if ($dateDebut != null && $dateLimiteinscription != null) {
-            $qb->andWhere("s.dateHeureDebut BETWEEN :dateDebut AND :dateFin")
-                ->setParameter('dateDebut', $dateDebut)
-                ->setParameter('dateFin', $dateLimiteinscription);
+        if ($dateDebutSortie != null) {
+            $qb->andWhere("s.dateHeureDebut >= :dateDebut")
+                ->setParameter('dateDebut', $dateDebutSortie);
+        }
+
+        if ($dateFinSortie != null){
+            $qb->andWhere("DATE_ADD(s.dateHeureDebut, s.duree, 'HOUR') <= :dateFin")
+            ->setParameter('dateFin', $dateFinSortie);
         }
 
         if ($userOrga) {
@@ -105,27 +112,6 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
-    }
-
-
-    public function findAllPubliee()
-    {
-        return $this->createQueryBuilder('s')
-            ->leftJoin('s.etat', 'e')
-            ->addSelect('e')
-            ->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')")
-            ->join('s.organisateur', 'u')
-            ->addSelect('u')
-            ->andWhere('s.organisateur = u.id')
-            ->leftJoin('s.usersInscrits', 'i')
-            ->addSelect('i')
-            ->join('s.siteOrganisateur', 'c')
-            ->addSelect('c')
-            ->andWhere('s.siteOrganisateur = c.id')
-            ->orderBy('s.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-
     }
 
 //    public function findOneBySomeField($value): ?Sortie
