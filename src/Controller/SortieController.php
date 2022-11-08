@@ -73,23 +73,26 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
 
-        dump($sortieForm);
 
-        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+        if($sortieForm->isSubmitted()){
+            if ($sortieForm->isValid()){
+                if($sortieForm->get('enregistrer')->isClicked()){
+                    $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
+                    $sortie->setEtat($etat);
+                }
+                elseif ($sortieForm->get('publier')->isClicked()) {
+                    $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
+                    $sortie->setEtat($etat);
+                }
 
-            if($sortieForm->get('enregistrer')->isClicked()){
-                $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
-                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+
+                $this->addFlash('success', 'La sortie a bien été créée');
             }
-            elseif ($sortieForm->get('publier')->isClicked()) {
-                $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
-                $sortie->setEtat($etat);
+            else{
+                $this->addFlash('error', 'Une erreur est survenue');
             }
-
-            $em->persist($sortie);
-            $em->flush();
-
-            $this->addFlash('success', 'La sortie a bien été créée');
         }
 
 
