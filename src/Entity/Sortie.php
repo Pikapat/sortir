@@ -90,14 +90,14 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
-    #[Assert\NotBlank(message: 'le lieu doit être renseigné')]
-    #[Assert\NotNull(message: 'Une erreur est survenue')]
+//    #[Assert\NotBlank(message: 'le lieu doit être renseigné')]
+//    #[Assert\NotNull(message: 'Une erreur est survenue')]
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
-    #[Assert\NotBlank(message: 'le motif d\'annulation doit être indiqué')]
-    #[Assert\NotNull(message: 'Une erreur est survenue')]
+//    #[Assert\NotBlank(message: 'le motif d\'annulation doit être indiqué')]
+//    #[Assert\NotNull(message: 'Une erreur est survenue')]
     #[Assert\Length(
         min: 5,
         max: 50 ,
