@@ -51,8 +51,6 @@
     justify-content: center;
 
 }
-
-
 .wrapper {
     max-width: 500px;
 }
@@ -102,10 +100,19 @@ button {
     color: #FFFFFF;
     background-color: #8ebf42;
 }
+.baseForm .form-button-modifer{
+    color: #FFFFFF;
+    background-color: #8ebf42;
+}
 .baseForm button[type="reset"]{
     color: #FFFFFF;
     background-color: #cc0000;
 }
+.baseForm .form-button-supprimer{
+    color: #FFFFFF;
+    background-color: #cc0000;
+}
+
 
 #btn-newSortie{
     display: flex;

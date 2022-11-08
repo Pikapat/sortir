@@ -6,7 +6,9 @@ use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +27,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModifierSortieType extends AbstractType
 {
+
+
+
+    private LieuRepository $lieuRepository;
+    public function __construct(LieuRepository $lieuRepository)
+    {
+        $this->lieuRepository = $lieuRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -103,7 +114,7 @@ class ModifierSortieType extends AbstractType
 //        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
 
-    protected function addElements(FormInterface $form, Ville $ville = null, bool $clearLieus){
+    protected function addElements(FormInterface $form, $ville,$lieu, bool $clearLieus){
 
         $form->add('ville', EntityType::class,  [
             'mapped' => false,
@@ -121,27 +132,20 @@ class ModifierSortieType extends AbstractType
 
         ]);
 
-//        if ($clearLieus)
-//        {
-//            $lieus = [];
-//        }
-//        else{
-//            $lieus = $ville->getLieus();
-//        }
-//
-//        $form->add('lieu', EntityType::class, [
-//            'label' => 'Lieu : ',
-//            "class" => Lieu::class,
-//            "query_builder" => function(EntityRepository $er){
-//                return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
-//            },
-//            "choice_label" => "nom",
-//            "expanded" => false,
-//            "multiple" => false,
-//            "attr" => ['onChange' => 'changeInfo()'],
-//            'choices' => $lieus,
-//
-//        ]);
+
+        $form->add('lieu', EntityType::class, [
+            'label' => 'Lieu : ',
+            "class" => Lieu::class,
+            "query_builder" => function(EntityRepository $er){
+                return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
+            },
+            "choice_label" => "nom",
+            "expanded" => false,
+            "multiple" => false,
+            "attr" => ['onChange' => 'changeInfo()'],
+            'choices' => $lieu,
+
+        ]);
     }
 //
 //    function onPreSubmit(FormEvent $event){
@@ -156,15 +160,14 @@ class ModifierSortieType extends AbstractType
 //    }
     function onPreSetData(FormEvent $event){
 
-        $idVille = $event->getData()->getLieu()->getVille();
+        $ville = $event->getData()->getLieu()->getVille();
         $form = $event->getForm();
 
-        $ville = null;
-//            $villeRepository->find($idVille);
+        $lieu = $this->lieuRepository->findBy(['ville' => $ville]);
 
-        dump($idVille);
+        dump($ville);
 
-        $this->addElements($form, $ville, true);
+        $this->addElements($form, $ville, $lieu, true);
 
     }
     public function configureOptions(OptionsResolver $resolver): void
