@@ -101,7 +101,7 @@
     justify-content: end;
 }
 
-#btnModifier{
+#sortieActions{
     grid-area: 2 / 3 / 3 / 4;
     display: flex;
     padding-right: 2em;
@@ -110,6 +110,6 @@
     justify-content: end;
 }
 
-#btnModifier input[type="submit"]{
+#sortieActions input[type="submit"]{
     width: 15em;
 }

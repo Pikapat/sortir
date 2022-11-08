@@ -40,10 +40,16 @@
         </div>
 
         {% if app.user == sortie.organisateur %}
-            <div id="btnModifier">
+            <div id="sortieActions">
                 <form action="{{ path('modifierSortie', {'id': sortie.id}) }}">
                     <input type="submit" value="Modifier">
                 </form>
+
+                {% if sortie.etat.code == 'ENR' or 'PUB' or 'CLO' %}
+                    <form action="{{ path('annulerSortie', {'id': sortie.id}) }}">
+                        <input type="submit" value="Annuler la sortie">
+                    </form>
+                {% endif %}
             </div>
         {% endif %}
 

@@ -114,7 +114,7 @@ class SortieController extends AbstractController
     #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
     public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
-        if ($this->getUser() != $sortie->getOrganisateur()) {
+        if ($this->getUser() !== $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
         }
         
@@ -140,7 +140,7 @@ class SortieController extends AbstractController
             }
             elseif ($sortieForm->get('annulerLaSortie')->isClicked()) {
 
-                $this->redirectToRoute('annuler', ['id' => $sortie->getId()]);
+                $this->redirectToRoute('annulerSortie', ['id' => $sortie->getId()]);
             }
 
             $em->flush();
@@ -167,9 +167,20 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
+    #[Route('/annuler/{id}', name: 'annulerSortie', requirements: ['id' => '\d+'])]
     public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
     {
+        if ($this->getUser() !== $sortie->getOrganisateur()) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
+        }
+        elseif ($sortie->getEtat()->getCode() == 'ENC' ||
+            $sortie->getEtat()->getCode() == 'TER' ||
+            $sortie->getEtat()->getCode() == 'ANN' ||
+            $sortie->getEtat()->getCode() == 'ARC')
+        {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
+        }
+
             $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
 
             $sortieForm->handleRequest($request);
