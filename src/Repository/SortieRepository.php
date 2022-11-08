@@ -59,12 +59,18 @@ class SortieRepository extends ServiceEntityRepository
 
 
         //Query Builder
-        $qb = $this->createQueryBuilder('s');
-
-        $qb->leftJoin('s.etat', 'e')
+        $qb = $this->createQueryBuilder('s')
+            ->leftJoin('s.etat', 'e')
             ->addSelect('e')
-            ->andWhere("s.siteOrganisateur = :campusId")
-            ->setParameter('campusId', $campus);
+            ->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')")
+            ->join('s.organisateur', 'u')
+            ->addSelect('u')
+            ->andWhere('s.organisateur = u.id')
+            ->leftJoin('s.usersInscrits', 'i')
+            ->addSelect('i')
+            ->join('s.siteOrganisateur', 'c')
+            ->addSelect('c')
+            ->andWhere('s.siteOrganisateur = c.id');
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")

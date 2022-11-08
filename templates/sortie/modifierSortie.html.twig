@@ -81,13 +81,13 @@
             </div>
 
             <div class="form-row">
-                <p id="newRue">Rue : </p>
+                <p id="newRue">Rue : {{ sortie.lieu.rue }}</p>
 
-                <p id="newCodePostal">Code Postal : </p>
+                <p id="newCodePostal">Code Postal : {{ sortie.lieu.ville.codePostal }}</p>
 
-                <p id="newLatitude">Latitude : </p>
+                <p id="newLatitude">Latitude : {{ sortie.lieu.latitude }}</p>
 
-                <p id="newLongitude">Longitude : </p>
+                <p id="newLongitude">Longitude : {{ sortie.lieu.longitude }}</p>
             </div>
 
             <div class="form-button">
@@ -99,8 +99,8 @@
                 {{ form_widget(sortieForm.publier) }}
 
 
-                {{ form_label(sortieForm.annuler) }}
-                {{ form_widget(sortieForm.annuler) }}
+                {{ form_label(sortieForm.reinitialiser) }}
+                {{ form_widget(sortieForm.reinitialiser) }}
 
             </div>
 
@@ -127,6 +127,23 @@
 {% block javascripts %}
     <script src="{{ asset('javascript/formAjouter.js') }}"></script>
     <script>
+
+            //Charger la ville de la sortie
+            {#window.onload = (event) => {#}
+
+            {#    let idLieu = document.getElementById('modifier_sortie_lieu').value#}
+
+            {#    fetch('{{ path('listeLieu')}}/' + idLieu).then((response) => response.json())#}
+            {#        .then((data) => chargerVille(data));#}
+            {#};#}
+
+            {#function chargerVille(data){#}
+
+            {#        let villeSelect = document.getElementById('modifier_sortie_ville');#}
+
+            {#    villeSelect.innerHTML='<option value="' + data[0].ville.id + '">' + data[0].ville.nom + '</option>';#}
+            {#}#}
+
         function changeLieu(){
 
             let idVille = document.getElementById('modifier_sortie_ville').value
@@ -154,7 +171,7 @@
             let newLongitude = document.getElementById('newLongitude')
 
             newRue.innerText='Rue : ' +data[0].rue;
-            // newCodePostal.innerText='Code Postal : ' +data[0].codePostal;
+            newCodePostal.innerText='Code Postal : ' +data[0].ville.codePostal;
             newLatitude.innerText='Latitude : ' +data[0].latitude;
             newLongitude.innerText='Longitude : ' +data[0].longitude;
 
@@ -181,7 +198,7 @@
             let newLongitude = document.getElementById('newLongitude')
 
             newRue.innerText='Rue : ' +data[indexLieu].rue;
-            // newCodePostal.innerText='Code Postal : ' +data[indexLieu].codePostal;
+            newCodePostal.innerText='Code Postal : ' +data[indexLieu].ville.codePostal;
             newLatitude.innerText='Latitude : ' +data[indexLieu].latitude;
             newLongitude.innerText='Longitude : ' +data[indexLieu].longitude;
 

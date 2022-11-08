@@ -103,9 +103,9 @@
                         </a>
                     </button>
                     {#                    Date début sortie #}
-                    <p class="field-dateDebut">{{ sortie.dateHeureDebut|date("d/m/Y") }}</p>
+                    <p class="field-dateDebut">{{ sortie.dateHeureDebut|date }}</p>
                     {#                    Clôture #}
-                    <p>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</p>
+                    <p>{{ sortie.dateLimiteInscription|date }}</p>
                     {#                    inscrits/places #}
                     <p class="field-Inscriptions">{{ sortie.usersInscrits.count }} / {{ sortie.nbInscriptionsMax }}</p>
 
@@ -121,11 +121,11 @@
 
 
                     {#                    Organisateur #}
-                    <p class="field-orga">{{ sortie.organisateur.nom }}</p>
+                    <p class="field-orga">{{ sortie.organisateur.pseudo }}</p>
 
 
                     {#                    Actions #}
-                    {% if sortie.dateLimiteInscription < now %}
+                    {% if sortie.dateLimiteInscription > now %}
                         {% if sortie.usersInscrits.contains(app.user) %}
                             <button>
                                 <a class="field-actions" href="{{ path('seDesisterSortie', {'id': sortie.id}) }}">Se
