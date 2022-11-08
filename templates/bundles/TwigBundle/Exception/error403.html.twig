@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    ERREUR 403 - Accès refusé
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="baseForm">
+        <h1>Erreur 403 - Accès refusé</h1>
+
+        <p>
+            Vous n'avez pas les droits nécessaires pour accéder à cette page
+        </p>
+    </div>
+{% endblock %}
