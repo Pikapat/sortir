@@ -116,10 +116,10 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
                 return $generator->text(80);
             },
             'dateHeureDebut' => function() use ($generator) {
-                return $generator->dateTimeBetween('now', '+ 1 month');
+                return $generator->dateTimeBetween('now - 2 month', 'now + 1 month');
             },
             'dateLimiteInscription' => function() use ($generator) {
-                return $generator->dateTimeBetween('now', '+ 1 month');
+                return $generator->dateTimeBetween('now - 2 month', 'now + 1 month');
             },
             'duree' => function() use ($generator) {
                 return $generator->numberBetween(1,5);

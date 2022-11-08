@@ -43,21 +43,22 @@ class EtatUpdateService
 
         $sorties = $this->sortieRepository->findAll();
         $etats = $this->etatRepository->findAll();
+        dump($etats);
         $now = new \DateTime();
 
         foreach ($sorties as $sortie){
             $dateFinClone = clone $sortie->getDateHeureDebut();
             $dateFin = $dateFinClone->add(new \DateInterval('PT'.$sortie->getDuree().'H'));
 
-            $shouldArchive = $now > $dateFin->add(new \DateInterval('P1M'));
+            $shouldArchive = ($now > clone $dateFin->add(new \DateInterval('P1M')));
 
             // Clôture des sorties en cours quand la date de find d'inscription est dépassée
             if($sortie->getDateLimiteInscription() < $now && ($sortie->getEtat() === $etats[0] || $sortie->getEtat() === $etats[1])){
                 $sortie->setEtat($etats[2]);
                 $this->em->persist($sortie);
             }
-            // Passage à l'état en cours de toutes les sorties dont la date de début
-            if($sortie->getEtat() === $etats[2] && ($sortie->getDateHeureDebut() < $now && $dateFin > $now )) {
+            // Passage à l'état en cours de toutes les sorties dont la date de début est entre maintenant et date de fin
+            if($sortie->getEtat() === $etats[2] && ($sortie->getDateHeureDebut() < $now)) {
                 $sortie->setEtat($etats[3]);
                 $this->em->persist($sortie);
             }

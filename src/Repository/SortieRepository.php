@@ -45,10 +45,21 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function findSortiesWithEtats()
+    {
+        //Query Builder
+        return $this
+            ->createQueryBuilder('s')
+            ->join('s.etat','e')
+            ->addSelect('e')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByFilters(SortieFilters $filters, UserInterface $user)
     {
 
-        $campus = $filters->getCampus();
+        $campus = ($filters->getCampus()) ? $filters->getCampus() : $user->getCampus();
         $textfilter = $filters->getTextFilter();
         $dateDebutSortie = $filters->getDateDebut();
         $dateFinSortie = $filters->getDateFin();
@@ -57,12 +68,12 @@ class SortieRepository extends ServiceEntityRepository
         $userNonInscrit = $filters->getUserNonInscrit();
         $sortiePassee = $filters->getSortiePassee();
 
-        dump($dateFinSortie);
+        dump($campus);
 
 
         //Query Builder
         $qb = $this->createQueryBuilder('s')
-            ->leftJoin('s.etat', 'e')
+            ->join('s.etat', 'e')
             ->addSelect('e')
             ->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')")
             ->join('s.organisateur', 'u')
@@ -75,17 +86,17 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('s.siteOrganisateur = :campus')
             ->setParameter('campus', $campus);
 
-        if ($textfilter != null) {
+        if ($textfilter) {
             $qb->andWhere("s.titre LIKE :textfilter")
                 ->setParameter('textfilter', '%' . $textfilter . '%');
         }
 
-        if ($dateDebutSortie != null) {
+        if ($dateDebutSortie) {
             $qb->andWhere("s.dateHeureDebut >= :dateDebut")
                 ->setParameter('dateDebut', $dateDebutSortie);
         }
 
-        if ($dateFinSortie != null){
+        if ($dateFinSortie){
             $qb->andWhere("DATE_ADD(s.dateHeureDebut, s.duree, 'HOUR') <= :dateFin")
             ->setParameter('dateFin', $dateFinSortie);
         }
@@ -107,7 +118,8 @@ class SortieRepository extends ServiceEntityRepository
 
         if ($sortiePassee) {
             $qb->andWhere("e.code = 'TER'");
-        } else {
+        }
+        else {
             $qb->andWhere("e.code IN('PUB','CLO','ENC','TER')");
         }
 
