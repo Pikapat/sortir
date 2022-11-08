@@ -17,6 +17,7 @@ use App\Repository\UserRepository;
 use App\Service\EtatUpdateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use phpDocumentor\Reflection\Types\True_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,9 +67,7 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $sortie->setOrganisateur($this->getUser());
 
-        $lieu = new Lieu();
-        $lieuForm = $this->createForm(LieuType::class, $lieu);
-        $lieuForm->handleRequest($request);
+        $lieuForm = $this->handleLieuForm($request, $em);
 
         $sortieForm = $this->createForm(AjouterSortieType::class, $sortie);
 
@@ -93,13 +92,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a bien été créée');
         }
 
-        if($lieuForm->isSubmitted())
-        {
-            $em->persist($lieu);
-            $em->flush();
 
-            $this->addFlash('success', 'Le lieu a bien été créé');
-        }
 
         return $this->render('sortie/new.html.twig', [
             'sortieForm' => $sortieForm->createView(),
@@ -118,9 +111,7 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
 
-        $lieu = new Lieu();
-        $lieuForm = $this->createForm(LieuType::class, $lieu);
-        $lieuForm->handleRequest($request);
+        $lieuForm = $this->handleLieuForm($request, $em);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
@@ -144,14 +135,6 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a bien été modifié');
 
             return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
-        }
-
-        if($lieuForm->isSubmitted())
-        {
-            $em->persist($lieu);
-            $em->flush();
-
-            $this->addFlash('success', 'Le lieu a bien été créé');
         }
 
 
@@ -225,5 +208,29 @@ class SortieController extends AbstractController
         $userRepository->save($user, true);
 
         return $this->redirectToRoute('sorties');
+    }
+
+    private function handleLieuForm(Request $request, EntityManagerInterface $em): \Symfony\Component\Form\FormInterface
+    {
+        $lieu = new Lieu();
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $lieuForm->handleRequest($request);
+
+        if($lieuForm->isSubmitted())
+        {
+            if ($lieuForm->isValid())
+            {
+                $em->persist($lieu);
+                $em->flush();
+
+                $this->addFlash('success', 'Le lieu a bien été créé');
+            }
+            else{
+                $this->addFlash('error', 'Une erreur est survenue');
+            }
+
+        }
+
+        return $lieuForm;
     }
 }

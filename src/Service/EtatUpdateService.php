@@ -46,7 +46,9 @@ class EtatUpdateService
         $now = new \DateTime();
 
         foreach ($sorties as $sortie){
-            $dateFin = $sortie->getDateHeureDebut()->add(new \DateInterval('PT'.$sortie->getDuree().'H'));
+            $dateFinClone = clone $sortie->getDateHeureDebut();
+            $dateFin = $dateFinClone->add(new \DateInterval('PT'.$sortie->getDuree().'H'));
+
             $shouldArchive = $now > $dateFin->add(new \DateInterval('P1M'));
 
             // Clôture des sorties en cours quand la date de find d'inscription est dépassée
