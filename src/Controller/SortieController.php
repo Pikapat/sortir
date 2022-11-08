@@ -42,14 +42,8 @@ class SortieController extends AbstractController
 
         $sortiesFilterForm->handleRequest($request);
 
-        if($sortiesFilterForm->isSubmitted()&& $sortiesFilterForm->isValid())
-        {
-            $user=($this->getUser());
-            $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
-        }
-        else{
-            $sorties = $sortieRepository->findAllPubliee();
-        }
+        $user=($this->getUser());
+        $sorties = $sortieRepository->findByFilters($sortieFilters, $user);
 
         return $this->render('sortie/list.html.twig', [
             'sortiesFiltersForm' => $sortiesFilterForm->createView(),
@@ -116,7 +110,7 @@ class SortieController extends AbstractController
     #[Route('/modify/{id}', name: 'modifierSortie', requirements: ['id' => '\d+'])]
     public function modifier(EtatRepository $etatRepository, EntityManagerInterface $em,Request $request,Sortie $sortie): Response
     {
-        if ($this->getUser() !== $sortie->getOrganisateur()) {
+        if ($this->getUser() != $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
         }
         
@@ -172,9 +166,11 @@ class SortieController extends AbstractController
     #[Route('/annuler/{id}', name: 'annulerSortie', requirements: ['id' => '\d+'])]
     public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
     {
-        if ($this->getUser() !== $sortie->getOrganisateur()) {
+        if ($this->getUser() != $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
         }
+
+
         elseif ($sortie->getEtat()->getCode() == 'ENC' ||
             $sortie->getEtat()->getCode() == 'TER' ||
             $sortie->getEtat()->getCode() == 'ANN' ||

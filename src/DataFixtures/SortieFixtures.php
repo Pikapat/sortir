@@ -113,7 +113,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $populator = new Populator($generator, $manager);
         $populator->addEntity(Sortie::class, 100, [
             'titre' => function() use ($generator) {
-                return $generator->title;
+                return $generator->text(80);
             },
             'dateHeureDebut' => function() use ($generator) {
                 return $generator->dateTimeBetween('now', '+ 1 month');

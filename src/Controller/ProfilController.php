@@ -28,13 +28,14 @@ class ProfilController extends AbstractController
     #[Route('/modifier/{id}', name: 'modifierProfil', requirements: ['id' => '\d+'])]
     public function modifierProfil(int $id, UserRepository $repository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploaderService $fileUploader): Response
     {
-        // Deny access if ID doesn't correspond to connected User
-        if ($this->getUser() !== $repository->find($id)) {
-            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à ce profil.');
-        }
-
         // récupére le profil et affiche dans le formulaire
         $user = $repository->find($id);
+
+        // Deny access if ID doesn't correspond to connected User
+        if ($this->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas modifier ce profil.');
+        }
+
         $user->getCampus();
         $user->getPassword();
 
