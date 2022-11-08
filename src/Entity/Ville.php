@@ -15,6 +15,7 @@ class Ville
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['show_product', 'list_product'])]
     private ?int $id = null;
 
     #[Assert\NotBlank(message: 'le nom de la ville ne peut pas être vide')]

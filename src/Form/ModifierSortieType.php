@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -95,11 +96,11 @@ class ModifierSortieType extends AbstractType
             ])
             ->add('publier', SubmitType::class, [
             ])
-            ->add('annuler', ResetType::class,[
+            ->add('reinitialiser', ResetType::class,[
             ])
         ;
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+//        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
 
     protected function addElements(FormInterface $form, Ville $ville = null, bool $clearLieus){
@@ -116,49 +117,52 @@ class ModifierSortieType extends AbstractType
             "multiple" => false,
             "attr" => ['onChange' => 'changeLieu()'],
             'data' => $ville,
-            'placeholder' => 'Choisir une ville...'
+
 
         ]);
 
-        if ($clearLieus)
-        {
-            $lieus = [];
-        }
-        else{
-            $lieus = $ville->getLieus();
-        }
-
-        $form->add('lieu', EntityType::class, [
-            'label' => 'Lieu : ',
-            "class" => Lieu::class,
-            "query_builder" => function(EntityRepository $er){
-                return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
-            },
-            "choice_label" => "nom",
-            "expanded" => false,
-            "multiple" => false,
-            "attr" => ['onChange' => 'changeInfo()'],
-            'choices' => $lieus,
-            'placeholder' => 'Choisir une ville d\'abord...'
-        ]);
+//        if ($clearLieus)
+//        {
+//            $lieus = [];
+//        }
+//        else{
+//            $lieus = $ville->getLieus();
+//        }
+//
+//        $form->add('lieu', EntityType::class, [
+//            'label' => 'Lieu : ',
+//            "class" => Lieu::class,
+//            "query_builder" => function(EntityRepository $er){
+//                return $er->createQueryBuilder("s")->orderBy("s.nom", "ASC");
+//            },
+//            "choice_label" => "nom",
+//            "expanded" => false,
+//            "multiple" => false,
+//            "attr" => ['onChange' => 'changeInfo()'],
+//            'choices' => $lieus,
+//
+//        ]);
     }
-
-    function onPreSubmit(FormEvent $event){
-
-        $form = $event->getForm();
-        $data = $event->getData();
-
-        $ville = $this->em->getRepository(Ville::class)->find($data['ville']);
-
-        $this->addElements($form, $ville, false);
-
-    }
+//
+//    function onPreSubmit(FormEvent $event){
+//
+//        $form = $event->getForm();
+//        $data = $event->getData();
+//
+//        $ville = $this->em->getRepository(Ville::class)->find($data['ville']);
+//
+//        $this->addElements($form, $ville, false);
+//
+//    }
     function onPreSetData(FormEvent $event){
 
-        $sortie = $event->getData();
+        $idVille = $event->getData()->getLieu()->getVille();
         $form = $event->getForm();
 
         $ville = null;
+//            $villeRepository->find($idVille);
+
+        dump($idVille);
 
         $this->addElements($form, $ville, true);
 
