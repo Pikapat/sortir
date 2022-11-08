@@ -4,25 +4,29 @@
     - Campus
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+
+{% endblock %}
+
 {% block body %}
+    <div class="baseForm">
+
     <h1>Gérer les campus</h1>
 
-    <h2>Filtrer les campus</h2>
-
-<div>
+    <div>
     {% for camp in campus %}
         {#        Nom des campus#}
         <div class="adminVille">
-            <p>
-                {{ camp.nom }}
-            </p>
+            <div>
+                <p class="ville">{{ camp.nom }}</p>
+            </div>
 
             <div>
+                <button class="form-button-modifer" onclick="modifierLieu()">Modifier</button>
             <form action="{{ path('campus_delete', {'id' : camp.id}) }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ camp.id) }}">
-                <button>Modifier</button>
-                -
-                <button>Supprimer</button></form>
+                <button class="form-button-supprimer">Supprimer</button></form>
             </div>
         </div>
 
@@ -31,16 +35,16 @@
 
     {{ form_start(campusForm) }}
     <div class="adminVille">
-        <p>
+        <div class="label-ville">
             {{ form_label(campusForm.nom) }}
             {{ form_widget(campusForm.nom) }}
             {{ form_errors(campusForm.nom) }}
-        </p>
-        <p>
+        </div>
+        <div>
             {{ form_label(campusForm.ajouter) }}
             {{ form_widget(campusForm.ajouter) }}
+        </div>
 
-        </p>
 
 
     </div>
@@ -48,8 +52,26 @@
     {{ form_end(campusForm) }}
 
     </div>
-
+        </div>
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+
+        function modifierLieu(){
+
+            let ville = document.querySelector('.ville')
+
+            ville.innerHTML='<div></div>'
+
+        }
+
+
+    </script>
+
+
+
+
+{% endblock %}
 
 
