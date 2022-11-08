@@ -11,6 +11,8 @@ use Faker\ORM\Doctrine\Populator;
 
 class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
+
+
     public function load(ObjectManager $manager): void
     {
         $sortie = new Sortie();
@@ -106,44 +108,44 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
 
 
-//        //        // Utilisation de Faker
-//        $generator = Factory::create('fr_FR');
-//        $populator = new Populator($generator, $manager);
-//        $populator->addEntity(Sortie::class, 100, [
-//            'titre' => function() use ($generator) {
-//                return $generator->title;
-//            },
-//            '$dateHeureDebut' => function() use ($generator) {
-//                return $generator->dateTimeBetween('+ 1 month', 'now');
-//            },
-//            'dateLimiteInscription' => function() use ($generator) {
-//                return $generator->dateTimeBetween('+ 1 month', 'now');
-//            },
-//            '$duree' => function() use ($generator) {
-//                return $generator->numberBetween(1,5);
-//            },
-//            '$nbInscriptionsMax' => function() use ($generator) {
-//                return $generator->numberBetween(3,20);
-//            },
-//            '$infosSortie' => function() use ($generator) {
-//                return $generator->text;
-//            },
-//            '$usersInscrits' => null,
-//
-//            'organisateur' => function(){
-//            return $this->getReference('admin');
-//            },
-//            'siteOrganisateur' => function() {
-//                return ($this->getReference('campus-rennes'));
-//            },
-//            'etat' => function(){
-//               return $this->getReference('publier');
-//            },
-//            'lieu' => function(){
-//                return $this->getReference('gaumont');
-//            }
-//        ]);
-//        $populator->execute();
+        //        // Utilisation de Faker
+        $generator = Factory::create('fr_FR');
+        $populator = new Populator($generator, $manager);
+        $populator->addEntity(Sortie::class, 100, [
+            'titre' => function() use ($generator) {
+                return $generator->title;
+            },
+            'dateHeureDebut' => function() use ($generator) {
+                return $generator->dateTimeBetween('now', '+ 1 month');
+            },
+            'dateLimiteInscription' => function() use ($generator) {
+                return $generator->dateTimeBetween('now', '+ 1 month');
+            },
+            'duree' => function() use ($generator) {
+                return $generator->numberBetween(1,5);
+            },
+            'nbInscriptionsMax' => function() use ($generator) {
+                return $generator->numberBetween(3,20);
+            },
+            'infosSortie' => function() use ($generator) {
+                return $generator->text;
+            },
+            'usersInscrits' => null,
+
+            'organisateur' => function(){
+            return $this->getReference('admin');
+            },
+            'siteOrganisateur' => function() {
+                return ($this->getReference('campus-rennes'));
+            },
+            'etat' => function(){
+               return $this->getReference('publier');
+            },
+            'lieu' => function(){
+                return $this->getReference('gaumont');
+            }
+        ]);
+        $populator->execute();
 
         $manager->flush();
     }

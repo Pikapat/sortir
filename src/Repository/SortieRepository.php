@@ -61,12 +61,14 @@ class SortieRepository extends ServiceEntityRepository
         //Query Builder
         $qb = $this->createQueryBuilder('s');
 
-        $qb->andWhere("s.siteOrganisateur = :campusId")
+        $qb->leftJoin('s.etat', 'e')
+            ->addSelect('e')
+            ->andWhere("s.siteOrganisateur = :campusId")
             ->setParameter('campusId', $campus);
 
         if ($textfilter != null) {
             $qb->andWhere("s.titre LIKE :textfilter")
-                ->setParameter('textfilter', '%'.$textfilter.'%');
+                ->setParameter('textfilter', '%' . $textfilter . '%');
         }
 
         if ($dateDebut != null && $dateLimiteinscription != null) {
@@ -80,52 +82,43 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('orga', $user);
         }
 
-        if($userInscrit) {
+        if ($userInscrit) {
             $qb->andWhere(':user member of s.usersInscrits')
-            ->setParameter('user', $user);
+                ->setParameter('user', $user);
         }
 
-        if($userNonInscrit) {
+        if ($userNonInscrit) {
             $qb->andWhere(':user not member of s.usersInscrits')
                 ->setParameter('user', $user);
         }
 
-        if($sortiePassee) {
-            $qb->leftJoin('s.etat', 'e')
-                ->addSelect('e')
-               ->andWhere('e.id = 5');
-        }
-        else{
-            $qb->andWhere('s.etat IN(2,3,4,5)');
+        if ($sortiePassee) {
+            $qb->andWhere("e.code = 'TER'");
+        } else {
+            $qb->andWhere("e.code IN('PUB','CLO','ENC','TER')");
         }
 
-            return $qb->getQuery()->getResult();
-        }
+        return $qb->getQuery()->getResult();
+    }
 
 
     public function findAllPubliee()
     {
         return $this->createQueryBuilder('s')
-
-            ->join('s.etat', 'e')
+            ->leftJoin('s.etat', 'e')
             ->addSelect('e')
-            ->andWhere('s.etat IN(2,3,4,5,6)')
-
+            ->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')")
             ->join('s.organisateur', 'u')
             ->addSelect('u')
             ->andWhere('s.organisateur = u.id')
-
             ->leftJoin('s.usersInscrits', 'i')
             ->addSelect('i')
-
             ->join('s.siteOrganisateur', 'c')
             ->addSelect('c')
             ->andWhere('s.siteOrganisateur = c.id')
-
             ->orderBy('s.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
 
     }
 
@@ -138,4 +131,4 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    }
+}
