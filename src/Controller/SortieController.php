@@ -73,12 +73,12 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
 
-
         if($sortieForm->isSubmitted()){
             if ($sortieForm->isValid()){
                 if($sortieForm->get('enregistrer')->isClicked()){
                     $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
                     $sortie->setEtat($etat);
+
                 }
                 elseif ($sortieForm->get('publier')->isClicked()) {
                     $etat = $etatRepository->findOneBy(['libelle' => 'Publiée']);
@@ -115,7 +115,8 @@ class SortieController extends AbstractController
 
         $lieuForm = $this->handleLieuForm($request, $em);
 
-        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            if($sortieForm->isSubmitted()){
+                if ($sortieForm->isValid()){
 
             if($sortieForm->get('enregistrer')->isClicked()){
                 $etat = $etatRepository->findOneBy(['libelle' => 'Enregistrée']);
@@ -135,6 +136,9 @@ class SortieController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'La sortie a bien été modifié');
+            } else{
+            $this->addFlash('error', 'Une erreur est survenue');
+            }
 
             return $this->redirectToRoute('afficherSortie', ['id' => $sortie->getId()]);
         }
@@ -155,7 +159,6 @@ class SortieController extends AbstractController
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
         }
 
-
         elseif ($sortie->getEtat()->getCode() == 'ENC' ||
             $sortie->getEtat()->getCode() == 'TER' ||
             $sortie->getEtat()->getCode() == 'ANN' ||
@@ -167,19 +170,24 @@ class SortieController extends AbstractController
             $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
 
             $sortieForm->handleRequest($request);
+             $motif = $request->get('motif');
 
-            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+        if($sortieForm->isSubmitted()){
+            if ($sortieForm->isValid()){
 
                 if($sortieForm->get('enregistrer')->isClicked()){
 
                     $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
                     $sortie->setEtat($etat);
+                    $sortie->setInfosSortie((string)$motif);
                 }
 
                 $em->flush();
 
                 $this->addFlash('success', 'La sortie a bien été annulée');
-
+            } else{
+                $this->addFlash('error', 'Une erreur est survenue');
+            }
                 return $this->redirectToRoute('sorties');
             }
 
@@ -188,9 +196,6 @@ class SortieController extends AbstractController
             'sortieForm' => $sortieForm->createView()
         ]);
     }
-
-
-
 
     #[Route('/inscrire/{id}', name: 'sInscrireSortie', requirements: ['id' => '\d+'])]
     public function inscrire(UserRepository $userRepository, $id, SortieRepository $sortieRepository)

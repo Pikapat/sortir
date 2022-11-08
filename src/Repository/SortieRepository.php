@@ -68,8 +68,6 @@ class SortieRepository extends ServiceEntityRepository
         $userNonInscrit = $filters->getUserNonInscrit();
         $sortiePassee = $filters->getSortiePassee();
 
-        dump($campus);
-
 
         //Query Builder
         $qb = $this->createQueryBuilder('s')

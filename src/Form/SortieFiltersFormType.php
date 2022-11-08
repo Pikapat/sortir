@@ -22,10 +22,16 @@ class SortieFiltersFormType extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
                 'label' => 'Campus : ',
+                'empty_data' => function(EntityRepository $er){
+                    return $er->createQueryBuilder("u")->join('u.campus', 'u')
+                        ->addSelect('c')
+                        ->where("u.campus = c.id");
+                },
                 'class' => Campus::class,
                 "choice_label" => "nom",
                 "expanded" => false,
-                "multiple" => false
+                "multiple" => false,
+
             ])
             ->add('textFilter', TextType::class, [
                 'label' => 'Le nom de la sortie contient : ',

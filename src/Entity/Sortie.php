@@ -21,9 +21,9 @@ class Sortie
     #[Assert\NotNull(message: 'Une erreur est survenue')]
     #[Assert\Length(
         min: 2,
-        max: 15,
+        max: 50,
         minMessage: 'Le titre doit contenir au moins 2 caractères',
-        maxMessage: 'Le titre ne peut pas contenir plus de 15 caractères')]
+        maxMessage: 'Le titre ne peut pas contenir plus de 50 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
