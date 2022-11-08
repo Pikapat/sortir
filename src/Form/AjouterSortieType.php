@@ -98,7 +98,7 @@ class AjouterSortieType extends AbstractType
                     ])
                 ->add('ajouterLieu', ButtonType::class, [
                     'label' => '+',
-                    "attr" => ['onclick' => 'openForm()']
+                    "attr" => ['onclick' => 'openForm()', 'class' => 'btn_ajouterLieu']
                 ])
                 ->add('enregistrer', SubmitType::class, [
                 ])

@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class SortieFiltersFormType extends AbstractType
 {
@@ -29,7 +30,9 @@ class SortieFiltersFormType extends AbstractType
             ->add('textFilter', TextType::class, [
                 'label' => 'Le nom de la sortie contient : ',
                 'attr' => ['placeholder' => 'Rechercher'],
-                'required' => false
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotNull(message: 'Une erreur est survenue')],
             ])
             ->add('dateDebut',DateType::class, [
                 'label' => 'Entre',

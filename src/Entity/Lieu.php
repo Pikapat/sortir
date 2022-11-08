@@ -40,10 +40,15 @@ class Lieu
     #[ORM\Column(length: 255)]
     private ?string $rue = null;
 
+
+    #[Assert\Regex(pattern:'^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)^',
+        message: 'Ce format de latitude n\'est pas valide')]
     #[Groups(['show_product', 'list_product'])]
     #[ORM\Column(nullable: true)]
     private ?float $latitude = null;
 
+    #[Assert\Regex(pattern:'^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)^',
+        message: 'Ce format de longitude n\'est pas valide')]
     #[ORM\Column(nullable: true)]
     #[Groups(['show_product', 'list_product'])]
     private ?float $longitude = null;
@@ -54,11 +59,6 @@ class Lieu
 
     #[Assert\NotBlank(message: 'le motif d\'annulation doit être indiqué')]
     #[Assert\NotNull(message: 'Une erreur est survenue')]
-    #[Assert\Length(
-        min: 2,
-        max: 20 ,
-        minMessage: 'le nom de la ville doit avoir au moins 2 caractères',
-        maxMessage: 'le nom de la ville ne peut pas contenir plus de 20 caractères')]
     #[ORM\ManyToOne(inversedBy: 'lieus')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['show_product', 'list_product'])]

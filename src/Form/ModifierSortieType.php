@@ -100,7 +100,7 @@ class ModifierSortieType extends AbstractType
                 'label' => '+',
                "attr" => [
                    'onclick' => 'openForm()',
-                   'id' => 'btnAjouterLieu'
+                   'class' => 'btn_ajouterLieu'
                ]
             ])
             ->add('enregistrer', SubmitType::class, [

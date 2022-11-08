@@ -88,9 +88,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sortiesOrganisees;
 
-//    #[Assert\File(
+//    #[Assert\Image(
 //        maxSize: '2048k',
-//        mimeTypes: ['png, jpg, jpeg'],
+//        mimeTypes: ['image/png, image/jpg, image/jpeg'],
 //        mimeTypesMessage: 'Seuls les formats .jpg, .jpeg et .png sont acceptés ',
 //    )]
     #[ORM\Column(length: 255, nullable: true)]
