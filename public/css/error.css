@@ -8,8 +8,8 @@
 }
 
 .double-border {
-    background-color: #f1f1f1;
-    border: 6px solid #f1f1f1;
+    background-color: indianred;
+    border: 3px solid #f1f1f1;
     padding: 35px;;
     position: relative;
     margin: 0 auto;

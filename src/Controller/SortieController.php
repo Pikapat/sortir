@@ -164,7 +164,7 @@ class SortieController extends AbstractController
             $sortie->getEtat()->getCode() == 'ANN' ||
             $sortie->getEtat()->getCode() == 'ARC')
         {
-            throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
+            throw $this->createAccessDeniedException('Cette sortie ne peut plus être annulée');
         }
 
             $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
