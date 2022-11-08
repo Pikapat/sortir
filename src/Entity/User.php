@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -70,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max: 10,
         minMessage: 'Votre nom doit contenir au moins 2 caractères',
         maxMessage: 'Votre nom ne peut pas contenir plus de 10 caractères')]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100, unique: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(nullable: true)]
@@ -88,11 +89,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private Collection $sortiesOrganisees;
 
-//    #[Assert\Image(
-//        maxSize: '2048k',
-//        mimeTypes: ['image/png, image/jpg, image/jpeg'],
-//        mimeTypesMessage: 'Seuls les formats .jpg, .jpeg et .png sont acceptés ',
-//    )]
+    #[Assert\Image(
+        maxSize: '2048k',
+        mimeTypes: ['image/png, image/jpg, image/jpeg'],
+        mimeTypesMessage: 'Seuls les formats .jpg, .jpeg et .png sont acceptés ',
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 

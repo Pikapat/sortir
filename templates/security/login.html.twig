@@ -11,7 +11,7 @@
 
     <form method="post" class="baseForm">
         {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="alert alert-danger">Votre identifiant e/ou mot de passe n\'est pas correct </div>
         {% endif %}
 
         {% if app.user %}
@@ -22,7 +22,7 @@
         {% endif %}
 
 
-        <h1 style="text-align: center" class="h3 mb-3 font-weight-normal">Bienvenu(e) <br> <br> Veuillez vous connecter</h1>
+        <h1 style="text-align: center" class="h3 mb-3 font-weight-normal">Bienvenu(e) sur Sortir <br> <br> Veuillez vous connecter</h1>
         <label for="inputEmail">Email ou Pseudo</label>
         <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required
                autofocus>
