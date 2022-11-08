@@ -35,8 +35,10 @@ class ProfilController extends AbstractController
 
         // récupére le profil et affiche dans le formulaire
         $user = $repository->find($id);
-        $user->getCampus();
-        $user->getPassword();
+//        $user = $repository->findAllAboutUser($id);
+
+//        $user->getCampus();
+//        $user->getPassword();
 
         $userForm = $this->createForm(ProfilType::class, $user);
 
@@ -45,9 +47,8 @@ class ProfilController extends AbstractController
         if ($userForm->isSubmitted()) {
             if ($userForm->isValid()) {
                 $newPass = $userForm->get('password')->getData();
-                dump($newPass);
+
                 if ($newPass == null) {
-                    dump($newPass);
                     $user->setPassword($user->getPassword());
                     $entityManager->persist($user);
                     $entityManager->flush();
@@ -88,11 +89,9 @@ class ProfilController extends AbstractController
     #[Route('/afficher/{id}', name: 'afficherProfil', requirements: ['id' => '\d+'])]
     public function affficherProfil(UserRepository $userRepository, int $id)
     {
+//        $user = $userRepository->findAllAboutUser($id);
 
-        // Récupérer la série à afficher en base de données
         $user = $userRepository->find($id);
-
-        $userForm = $this->createForm(ProfilType::class, $user);
 
         return $this->render('user/afficherProfil.html.twig', [
             'user' => $user
