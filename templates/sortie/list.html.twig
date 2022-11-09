@@ -12,13 +12,12 @@
 
     <div class="baseForm">
         <div id="btn-newSortie">
-
             <form action="{{ path('newSortie') }}">
                 <input type="submit" value="Créer une sortie">
             </form>
         </div>
 
-        <div class="background">
+        <div style="border: 1px black solid">
             <div style="display: flex; justify-content: center; padding: 2em">
                 <h2>Filtrer les sorties</h2>
             </div>
@@ -40,7 +39,7 @@
                     {{ form_label(sortiesFiltersForm.textFilter) }}
                     {{ form_widget(sortiesFiltersForm.textFilter) }}
                     {{ form_errors(sortiesFiltersForm.textFilter) }}
-
+                    <br>
                 </div>
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.dateDebut) }}
@@ -90,22 +89,10 @@
 
                 </div>
                 {{ form_end(sortiesFiltersForm) }}
-
             </div>
 
 
         <div class="sortieContainer">
-
-            <div class="sortie">
-                <p class="field-titre">Titre</p>
-                <p class="field-dateDebut">Date de début</p>
-                <p class="field-dateFin">Date limite d'inscription</p>
-                <p class="field-Inscriptions">Inscriptions</p>
-                <p class="field-etat">Etat</p>
-                <p class="field-isInscrit">Utilisateur inscrit ?</p>
-                <p class="field-orga">Organisateur</p>
-                <p class="field-desist">Actions</p>
-            </div>
 
             {% if sorties|length == 0 %}
 
@@ -121,39 +108,67 @@
                     <article class="sortie">
                         {#                    Titre + lien modif / affichage #}
 
-                        <button>
-                            <a class="field-titre"
+                        <button class="field-titre">
+                            <a
                                href="{{ path('afficherSortie', {'id': sortie.id}) }}">{{ sortie.titre }}
                             </a>
                         </button>
+
                         {#                    Date début sortie #}
-                        <p class="field-dateDebut">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
-                        {#                    Clôture #}
-                        <p>{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
-                        {#                    inscrits/places #}
-                        <p class="field-Inscriptions">{{ sortie.usersInscrits.count }}
-                            / {{ sortie.nbInscriptionsMax }}</p>
-
-
-                        {#                    Etat #}
-                        <p class="field-etat">{{ sortie.etat.libelle }}</p>
-
-
-                        {#                    Inscrit #}
-                        {% if sortie.usersInscrits.contains(app.user) %}
-                            <p class="field-isInscrit">Inscrit</p>
+                        {% if sortie.etat.code == 'ANN' %}
+                            <div class="field-dateDebut">
+                                <p class="field-dateDebut"> Motif d'annulation : {{ sortie.motif }}</p>
+                            </div>
+                        {% else %}
+                            <div class="field-dateDebut">
+                                <p class="field-dateDebut"> Descriptif : {{ sortie.infosSortie }}</p>
+                            </div>
                         {% endif %}
 
 
+                        {#                    Date début sortie #}
+                        <div class="field-dateDebut">
+                            <p class="field-dateDebut"> Début : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
+                        </div>
+
+                        {#                    Clôture #}
+                        <div>
+                            <p> Limite d'inscription : {{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
+
+                        </div>
+
+                        {#                    inscrits/places #}
+                        <div>
+                            <p class="field-Inscriptions"> Nombre d'inscrits : {{ sortie.usersInscrits.count }}
+                                / {{ sortie.nbInscriptionsMax }}</p>
+                        </div>
+
+
+                        {#                    Etat #}
+                        <div>
+                             <p class="field-etat">  {{ sortie.etat.libelle }}</p>
+                        </div>
+
+
+                        {#                    Inscrit #}
+                        <div>
+                            {% if sortie.usersInscrits.contains(app.user) %}
+                            {% endif %}
+                        </div>
+
                         {#                    Organisateur #}
-                        <a class="field-orga" href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
-                            {{ sortie.organisateur.pseudo }}</a>
+                        <div>
+                            <a class="field-orga" href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
+                                {{ sortie.organisateur.pseudo }}</a>
+                        </div>
+
                         {#                    <p class="field-orga">{{ sortie.organisateur.pseudo }}</p> #}
 
-
                         {#                    Actions #}
+                        {% if sortie.etat.code != 'ANN' %}
                         {% if sortie.dateLimiteInscription > now %}
                             {% if sortie.usersInscrits.contains(app.user) %}
+
                                 <button>
                                     <a class="field-actions" href="{{ path('seDesisterSortie', {'id': sortie.id}) }}">Se
                                         désister</a>
@@ -165,7 +180,7 @@
                                 </button>
                             {% endif %}
                         {% endif %}
-
+                        {% endif %}
                         {% if sortie.organisateur == app.user and sortie.etat.code == 'ENR' %}
                             <button>
                                 <a class="field-actions"
