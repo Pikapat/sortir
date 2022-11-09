@@ -38,13 +38,17 @@ form{
     flex-direction: row;
     border-left: solid;
 }
+
+.baseForm .fo
+
 .baseForm .form-button-modifer{
+    height: 50px;
     background-color: #8ebf42;
     font-weight: bold;
     color: white;
 }
 .baseForm .form-button-supprimer{
-
+    height: 50px;
     background-color: #cc0000;
     font-weight: bold;
     color: white;

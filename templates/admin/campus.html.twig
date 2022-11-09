@@ -29,7 +29,7 @@
                 <form method="get" action="{{ path('campus_modify') }}">
                     <input name="label" type="text" value="{{ camp.nom }}">
                     <input name="id" type="hidden" value="{{ camp.id }}">
-                    <button class="form-button-modifer" type="submit">Valider</button>
+                    <button id="btnValid" class="form-button-modifer" type="submit">Valider</button>
                 </form>
 
                 <button class="form-button-supprimer" onclick="resetCampus('{{ 'campus-'~camp.nom }}', '{{ 'mod-'~camp.nom}}')">Annuler</button>
@@ -70,14 +70,26 @@
 
         function modifierCampus(idCampus, idMod){
 
-                document.getElementById(idMod).style.display = "flex";
-                document.getElementById(idCampus).style.display = 'none';
+                let modCamp = document.getElementById(idMod);
+                modCamp.style.display = "flex";
+                modCamp.style.height = "50px";
+            let idCamp = document.getElementById(idCampus)
+            idCamp.style.display = 'none';
+            idCamp.style.height = "50px";
+
+            let btnValid = document.getElementById('btnValid');
+            btnValid.style.display = 'flex';
+            btnValid.style.height = "50px";
             }
 
         function resetCampus(idCampus, idMod){
 
-                document.getElementById(idMod).style.display = "none";
-                document.getElementById(idCampus).style.display = 'flex';
+            let modCamp = document.getElementById(idMod);
+            modCamp.style.display = "none";
+            modCamp.style.height = "50px";
+            let idCamp = document.getElementById(idCampus)
+            idCamp.style.display = 'flex';
+            idCamp.style.height = "50px";
         }
 
     </script>
