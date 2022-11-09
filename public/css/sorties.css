@@ -7,14 +7,39 @@ body > .container {
 }
 a{
     text-decoration: none;
+    color: white;
+    font-weight: bold;
 }
 
 a:hover{
     color: orange;
 }
-.divSortie p {
+.divSortie{
     display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+.divEtat {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+
+}
+.title{
+    font-weight: bold;
+    border-bottom: solid;
+    border-color: black;
+    padding: 1em ;
+    background-color: #768799;
+}
+.title-etat {
+    font-weight: bold;
+    padding: 1em ;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: black;
     justify-content: center;
+    background-color: #8ebf42;
 }
 
 
@@ -52,15 +77,18 @@ a:hover{
 .sortie{
     padding: 1em;
     margin-bottom: 0em;
-    border-radius: 5px;
+    border-radius: 20px;
     background-color: rgba(143, 175, 192, 0.5);
     border: 2px rgba(86, 129, 97, 0.5) solid;
-
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-content: center;
     align-content: space-around;
+    box-shadow: 10px 5px 5px #111111;
+}
+.sortie:hover{
+    background-color: green;
 }
 
 .field-titre{
@@ -74,6 +102,7 @@ a:hover{
     grid-column: 2 / 3 ;
     text-align: center;
     align-content: center;
+    font-weight: bold;
 }
 
 .field-dateFin{
@@ -85,6 +114,7 @@ a:hover{
 .field-Inscriptions{
     grid-column: 4 / 5 ;
     text-align: center;
+    font-weight: bold;
 }
 
 .field-etat{
@@ -100,6 +130,16 @@ a:hover{
 .field-orga{
     grid-column: 7 / 8 ;
     text-align: center;
+    border-color: black;
+    border-radius: 30px;
+    border-style: solid;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #0F7795 ;
+}
+.field-orga a{
+    text-decoration: none;
+    color: white;
 }
 
 .field-actions{

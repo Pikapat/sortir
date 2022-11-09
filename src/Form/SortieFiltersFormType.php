@@ -34,7 +34,7 @@ class SortieFiltersFormType extends AbstractType
 
             ])
             ->add('textFilter', TextType::class, [
-                'label' => 'Le nom de la sortie contient : ',
+                'label' => 'Mot clé : ',
                 'attr' => ['placeholder' => 'Rechercher'],
                 'required' => false
             ])

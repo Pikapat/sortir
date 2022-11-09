@@ -105,7 +105,8 @@
                 {% for sortie in sorties %}
 
 
-                    <article class="sortie">
+                   <div class="sortie">
+
                         {#                    Titre + lien modif / affichage #}
 
                         <button class="field-titre">
@@ -120,38 +121,42 @@
 
                         {#                    Date début sortie #}
                         <div class="divSortie">
-                            <p class="field-dateDebut"> Début : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
+                            <p class="title"> Début sortie</p>
+                            <p class="field-dateDebut">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
                         </div>
 
                         {#                    Clôture #}
                         <div class="divSortie">
-                            <p> Limite d'inscription : {{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
+                            <p class="title"> Limite d'inscription</p>
+                            <p class="field-dateDebut">{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
 
                         </div>
 
                         {#                    inscrits/places #}
                         <div class="divSortie">
-                            <p class="field-Inscriptions"> Nombre d'inscrits : {{ sortie.usersInscrits.count }}
+                            <p class="title">Nombre d'inscrits</p>
+                            <p class="field-Inscriptions">{{ sortie.usersInscrits.count }}
                                 / {{ sortie.nbInscriptionsMax }}</p>
                         </div>
 
+                       {#                    Organisateur #}
+                       <div class="divSortie">
+                           <p class="title">Organisateur Sortie</p>
+                           <a class="field-orga" href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
+                               {{ sortie.organisateur.pseudo|capitalize }}</a>
+                       </div>
 
                         {#                    Etat #}
-                        <div class="divSortie">
-                             <p class="field-etat">  {{ sortie.etat.libelle }}</p>
+                        <div class="divEtat">
+                             <p class="title-etat">{{ sortie.etat.libelle }}</p>
                         </div>
 
 
                         {#                    Inscrit #}
-                        <div class="divSortie">
+                        <div class="divEtat">
                             {% if sortie.usersInscrits.contains(app.user) %}
+                                <p class="title-etat">Inscrit</p>
                             {% endif %}
-                        </div>
-
-                        {#                    Organisateur #}
-                        <div class="divSortie">
-                            <a class="field-orga" href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
-                                {{ sortie.organisateur.pseudo }}</a>
                         </div>
 
                         {#                    <p class="field-orga">{{ sortie.organisateur.pseudo }}</p> #}
@@ -181,7 +186,7 @@
                         {% endif %}
 
 
-                    </article>
+                    </div>
 
                 {% endfor %}
             {% endif %}
