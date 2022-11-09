@@ -31,21 +31,16 @@
                 <p>Date limite d'inscription : {{ sortie.dateLimiteInscription|date }}</p>
                 <p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
                 <p>Durée : {{ sortie.duree }}</p>
-                {% if sortie.etat.code == 'ANN' %}
-                    <div class="field-dateDebut">
-                        <p class="field-dateDebut"> Motif d'annulation : {{ sortie.motif }}</p>
-                    </div>
-                {% else %}
-                    <div class="field-dateDebut">
-                        <p class="field-dateDebut"> Descriptif : {{ sortie.infosSortie }}</p>
-                    </div>
-                {% endif %}
+                <p>Description et infos : {{ sortie.infosSortie }}</p>
                 <h2>Etat : {{ sortie.etat.libelle }}</h2>
                 {% if sortie.motif != null %}
                     <p>Motif d'annulation : {{ sortie.motif }}</p>
                 {% endif %}
             </div>
         </div>
+
+        {% if sortie.etat.code != 'ANN' %}
+
 
         {% if app.user == sortie.organisateur %}
             <div id="sortieActions">
@@ -58,6 +53,7 @@
                         <input type="submit" value="Annuler la sortie">
                     </form>
                 {% endif %}
+        {% endif %}
             </div>
         {% endif %}
 
