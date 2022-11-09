@@ -171,6 +171,8 @@ class SortieController extends AbstractController
 
             $sortieForm->handleRequest($request);
              $motif = $request->get('motif');
+             dump($motif);
+
 
         if($sortieForm->isSubmitted()){
             if ($sortieForm->isValid()){

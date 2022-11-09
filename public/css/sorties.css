@@ -13,7 +13,7 @@
 
 .sortie{
     padding: 1em;
-
+    margin-bottom: 0em;
     border-radius: 5px;
     background-color: rgba(143, 175, 192, 0.5);
     border: 2px rgba(86, 129, 97, 0.5) solid;
@@ -22,7 +22,7 @@
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     justify-content: center;
-    align-content: center;
+    align-content: space-around;
 }
 
 .field-titre{

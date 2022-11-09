@@ -73,7 +73,6 @@ class SortieRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s')
             ->join('s.etat', 'e')
             ->addSelect('e')
-            ->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')")
             ->join('s.organisateur', 'u')
             ->addSelect('u')
             ->andWhere('s.organisateur = u.id')
@@ -118,7 +117,7 @@ class SortieRepository extends ServiceEntityRepository
             $qb->andWhere("e.code = 'TER'");
         }
         else {
-            $qb->andWhere("e.code IN('PUB','CLO','ENC','TER')");
+            $qb->andWhere("e.code IN('PUB','CLO','ENC','TER','ANN')");
         }
 
         return $qb->getQuery()->getResult();
