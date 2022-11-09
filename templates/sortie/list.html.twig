@@ -25,6 +25,10 @@
             <div id="filtersContainer">
                 {{ form_start(sortiesFiltersForm) }}
 
+
+                    <div class="filtre-sortie">
+
+
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.campus) }}
                     {{ form_widget(sortiesFiltersForm.campus) }}
@@ -50,39 +54,43 @@
                     {{ form_errors(sortiesFiltersForm.dateFin) }}
                     <br>
                 </div>
+                    </div>
+
+                <div class="filtre-case">
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.userOrga) }}
                     {{ form_widget(sortiesFiltersForm.userOrga) }}
                     {{ form_errors(sortiesFiltersForm.userOrga) }}
                     <br>
-                </div>
-                <div class="form-field">
+
                     {{ form_label(sortiesFiltersForm.userInscrit) }}
                     {{ form_widget(sortiesFiltersForm.userInscrit) }}
                     {{ form_errors(sortiesFiltersForm.userInscrit) }}
                     <br>
-                </div>
 
-                <div class="form-field">
+
+
                     {{ form_label(sortiesFiltersForm.userNonInscrit) }}
                     {{ form_widget(sortiesFiltersForm.userNonInscrit) }}
                     {{ form_errors(sortiesFiltersForm.userNonInscrit) }}
                     <br>
-                </div>
 
-                <div class="form-field">
+
+
                     {{ form_label(sortiesFiltersForm.sortiePassee) }}
                     {{ form_widget(sortiesFiltersForm.sortiePassee) }}
                     {{ form_errors(sortiesFiltersForm.sortiePassee) }}
                     <br>
                 </div>
-
+                    </div>
+            </div>
                 <div class="form-buttons">
                     {{ form_widget(sortiesFiltersForm.submit) }}
+
                 </div>
                 {{ form_end(sortiesFiltersForm) }}
             </div>
-        </div>
+
 
         <div class="sortieContainer">
 
