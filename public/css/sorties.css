@@ -28,6 +28,8 @@
 .field-titre{
     grid-column: 1 / 2 ;
     text-align: center;
+    display: table-column-group;
+
 }
 
 .field-dateDebut{

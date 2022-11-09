@@ -1,7 +1,11 @@
 <nav>
     <section>
+    <div class="navSup">
+        <img class="nav-logo" src="{{ asset('images/nav/My project-1.png') }}" alt="logo sortir"
+             width="200"></a>
         <div class="navBar">
             <button class="nav-button"><a href="{{ path('homepage') }}">Accueil</a></button>
+
             {% if is_granted('ROLE_ADMIN') %}
                 <button class="nav-button"><a href="{{ path('villes') }}">Villes</a></button>
                 <button class="nav-button"><a href="{{ path('campus') }}">Campus</a></button>
@@ -11,6 +15,8 @@
             {% endif %}
 
         </div>
+
+    </div>
 
 
         <div class="connexion">

@@ -22,6 +22,7 @@ nav section{
     box-shadow: 5px 2px 5px #333333;
 
 }
+
 .mon-profil-profil {
     display: flex;
     flex-direction: column;
@@ -63,11 +64,23 @@ nav section{
     border: 1px black solid;
     border-radius: 5px;
     box-shadow: 5px 2px 5px #333333;
-    background-color: #768799;
+    background-color: #97D6A6;
+
+}
+.navSup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nav-logo{
+    display: flex;
+    flex-direction: column ;
+    justify-content: space-around;
 
 }
 .nav-button:hover{
     background-color: gray;
+    color: orange;
 }
 
 nav p:last-child{
