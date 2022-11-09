@@ -52,6 +52,13 @@ a:hover{
     border-radius: 5px;
     border: 2px rgba(86, 129, 97, 0.5) solid;
 }
+.filtersContainer{
+    margin: 2rem;
+}
+.filtre {
+    font-size: 40px;
+}
+
 .filtre-sortie{
     display: flex;
     flex-wrap: wrap;
@@ -60,6 +67,8 @@ a:hover{
     justify-content: center;
 }
 .background{
+
+    flex-direction: row;
     background: url(../images/bois.png);
     border-radius: 30px;
     border-style: solid;
