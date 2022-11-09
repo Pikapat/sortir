@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Accueil{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block title %}{{ parent() }} - Accueil {% endblock %}
 
 {% block body %}
+    <main>
+        <div class = 'home-logo'>
+            <img class="nav-logo" src="{{ asset('images/logo5.png') }}" alt="logo sortir"
+                 width="500">
+        </div>
+
+    </main>
 
 
 {% endblock %}

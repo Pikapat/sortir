@@ -1,11 +1,13 @@
 <nav>
     <section>
-    <div class="navSup">
-        <img class="nav-logo" src="{{ asset('images/logo5.png') }}" alt="logo sortir"
-             width="250">
-        <div class="navBar">
-            <a href="{{ path('homepage') }}"><button class="nav-button">Accueil</button></a>
+        {% if app.user %}
+            <div class="navSup">
+                <img class="nav-logo" src="{{ asset('images/logo5.png') }}" alt="logo sortir"
+                     width="250">
+            <div class="navBar">
+                    <a href="{{ path('homepage') }}"><button class="nav-button">Accueil</button></a>
 
+            {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('villes') }}"><button class="nav-button">Villes</button></a>
                 <a href="{{ path('campus') }}"><button class="nav-button">Campus</button></a>
