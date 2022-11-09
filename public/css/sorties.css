@@ -113,8 +113,8 @@ a:hover{
 .detailsSortie{
     height: min-content;
     font-style: italic;
-    color: #B0413E;
-    background-color: rgba(33, 51, 66, 0.83);
+    color: #171515;
+    background-color: #4f92a9;
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
     grid-template-rows: auto;
