@@ -16,15 +16,14 @@ class AnnulerSortieType extends AbstractType
         $builder
 
             ->add('motif', TextareaType::class)
-            ->add('enregistrer', SubmitType::class, [
-            ])
+            ->add('enregistrer', SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Sortie::class,
+//            'data_class' => Sortie::class,
         ]);
     }
 }

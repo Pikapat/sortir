@@ -153,7 +153,7 @@ class SortieController extends AbstractController
 
 
     #[Route('/annuler/{id}', name: 'annulerSortie', requirements: ['id' => '\d+'])]
-    public function annulerSortie(Request $request, EntityManagerInterface $em, Sortie $sortie, EtatRepository $etatRepository): Response
+    public function annulerSortie(Request $request, EntityManagerInterface $em, EtatRepository $etatRepository, Sortie $sortie): Response
     {
         if ($this->getUser() != $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'organisateur de cette sortie');
@@ -167,31 +167,28 @@ class SortieController extends AbstractController
             throw $this->createAccessDeniedException('Cette sortie ne peut plus être annulée');
         }
 
-            $sortieForm = $this->createForm(AnnulerSortieType::class, $sortie);
+            $sortieForm = $this->createForm(AnnulerSortieType::class);
 
             $sortieForm->handleRequest($request);
-             $motif = $request->get('motif');
-             dump($motif);
 
+        if($sortieForm->isSubmitted()) {
 
-        if($sortieForm->isSubmitted()){
-            if ($sortieForm->isValid()){
+            if ($sortieForm->isValid()) {
+                dump($sortieForm->getTransformationFailure());
 
-                if($sortieForm->get('enregistrer')->isClicked()){
+                if ($sortieForm->get('enregistrer')->isClicked()) {
 
                     $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
                     $sortie->setEtat($etat);
-                    $sortie->setInfosSortie((string)$motif);
                 }
 
+                $em->persist($sortie);
                 $em->flush();
-
                 $this->addFlash('success', 'La sortie a bien été annulée');
-            } else{
-                $this->addFlash('error', 'Une erreur est survenue');
+            } else {
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'annulation');
             }
-                return $this->redirectToRoute('sorties');
-            }
+        }
 
         return $this->render('sortie/annulerSortie.html.twig',[
             'sortie' => $sortie,
