@@ -119,37 +119,37 @@
 
 
                         {#                    Date début sortie #}
-                        <div class="field-dateDebut">
+                        <div class="divSortie">
                             <p class="field-dateDebut"> Début : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
                         </div>
 
                         {#                    Clôture #}
-                        <div>
+                        <div class="divSortie">
                             <p> Limite d'inscription : {{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
 
                         </div>
 
                         {#                    inscrits/places #}
-                        <div>
+                        <div class="divSortie">
                             <p class="field-Inscriptions"> Nombre d'inscrits : {{ sortie.usersInscrits.count }}
                                 / {{ sortie.nbInscriptionsMax }}</p>
                         </div>
 
 
                         {#                    Etat #}
-                        <div>
+                        <div class="divSortie">
                              <p class="field-etat">  {{ sortie.etat.libelle }}</p>
                         </div>
 
 
                         {#                    Inscrit #}
-                        <div>
+                        <div class="divSortie">
                             {% if sortie.usersInscrits.contains(app.user) %}
                             {% endif %}
                         </div>
 
                         {#                    Organisateur #}
-                        <div>
+                        <div class="divSortie">
                             <a class="field-orga" href="{{ path('afficherProfil', {'id' : sortie.organisateur.id}) }}">
                                 {{ sortie.organisateur.pseudo }}</a>
                         </div>

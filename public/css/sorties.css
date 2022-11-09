@@ -1,9 +1,23 @@
 body > .container {
     display: flex;
+    flex-direction: column;
     grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 80px 100px 2fr 50px;
     min-height: 100vh;
 }
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color: orange;
+}
+.divSortie p {
+    display: flex;
+    justify-content: center;
+}
+
+
 .sortieContainer{
     padding: 1em;
     margin: 1em;

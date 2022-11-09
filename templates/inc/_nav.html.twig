@@ -4,14 +4,14 @@
         <img class="nav-logo" src="{{ asset('images/logo.png') }}" alt="logo sortir"
              width="250">
         <div class="navBar">
-            <button class="nav-button"><a href="{{ path('homepage') }}">Accueil</a></button>
+            <a href="{{ path('homepage') }}"><button class="nav-button">Accueil</button></a>
 
             {% if is_granted('ROLE_ADMIN') %}
-                <button class="nav-button"><a href="{{ path('villes') }}">Villes</a></button>
-                <button class="nav-button"><a href="{{ path('campus') }}">Campus</a></button>
+                <a href="{{ path('villes') }}"><button class="nav-button">Villes</button></a>
+                <a href="{{ path('campus') }}"><button class="nav-button">Campus</button></a>
             {% endif %}
             {% if app.user %}
-                <button class="nav-button"><a href="{{ path('sorties') }}">Sorties</a></button>
+            <a href="{{ path('sorties') }}"><button class="nav-button">Sorties</button></a>
             {% endif %}
 
         </div>
@@ -40,8 +40,8 @@
                         <div class="mon-profil-logo">
                             <a href="{{ path('afficherProfil', {'id': app.user.id}) }}">
                                 <img class="image-profil" src="{{ asset('images/nav/profil.png') }}" alt="profil"> </a>
-                            <p>{{ app.user.pseudo }}</p>
-                            <a href="{{ path('afficherProfil', {'id': app.user.id}) }}">Profil </a>
+                            <a href="{{ path('afficherProfil', {'id': app.user.id}) }}">{{ app.user.pseudo }}</a>
+
                         </div>
 
                     </div>
@@ -52,7 +52,7 @@
                                                                     alt="deconnexion"></a>
                         </div>
                         <div>
-                            <p>Se déconnecter</p>
+                            <a href="{{ path('app_logout') }}">Se déconnecter</a>
                         </div>
 
                     </div>

@@ -15,7 +15,7 @@ class AnnulerSortieType extends AbstractType
     {
         $builder
 
-            ->add('motif', TextareaType::class)
+            ->add('motif')
             ->add('enregistrer', SubmitType::class, [
             ])
         ;
