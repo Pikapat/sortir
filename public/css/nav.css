@@ -4,7 +4,7 @@ nav section{
     align-items: center;
 }
 nav a{
-    color: black;
+    color: white;
     text-decoration: none;
 }
 nav a:hover{
@@ -68,6 +68,8 @@ nav a:hover{
 }
 
 .nav-button{
+    color: white;
+    font-weight: bold;
     cursor: pointer;
     height: 50px;
     width: 100px;
