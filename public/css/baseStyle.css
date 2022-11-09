@@ -23,7 +23,7 @@ button{
     padding: 10px;
     border-style: none;
     border-radius: 2px;
-    background-color: #768799;
+    background-color: #0065a2;
 }
 button:hover{
     color: orange;
@@ -87,6 +87,7 @@ footer{
 
 footer > section{
     display: flex;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -94,4 +95,3 @@ footer div{
     display: flex;
     align-items: center;
 }
-

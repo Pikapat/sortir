@@ -1,4 +1,15 @@
 main{
     display: flex;
+    justify-content: center;
+    grid-area: 1 / 1 / 4 / 4;
     align-items: center;
+}
+
+h1{
+    display: flex;
+    text-justify: kashida;
+    overflow: unset;
+    font-family: 'Kaushan Script', cursive;
+    font-size: xxx-large;
+    color: #0065a3;
 }

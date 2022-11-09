@@ -28,7 +28,7 @@
         </div>
     </section>
 
-    <div class ='detail'>
+    <div class = 'profil'>
         <p>{{ user.pseudo }}</p>
         <p>{{ user.nom }}</p>
         <p>{{ user.prenom }}</p>
@@ -37,11 +37,9 @@
         <p>{{ user.campus.nom }}</p>
     </div>
 
-    <div class="divButton">
 
     {% if app.user == user %}
-        <button class="modifier"><a href="{{ path('modifierProfil', {'id': app.user.id}) }}">Modifier mon profil</a></button>
+        <button><a href="{{ path('modifierProfil', {'id': app.user.id}) }}">Modifier mon profil</a></button>
     {% endif %}
-    </div>
 </section>
 {% endblock %}
