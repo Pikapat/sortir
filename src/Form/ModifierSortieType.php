@@ -147,17 +147,7 @@ class ModifierSortieType extends AbstractType
 
         ]);
     }
-//
-//    function onPreSubmit(FormEvent $event){
-//
-//        $form = $event->getForm();
-//        $data = $event->getData();
-//
-//        $ville = $this->em->getRepository(Ville::class)->find($data['ville']);
-//
-//        $this->addElements($form, $ville, false);
-//
-//    }
+
     function onPreSetData(FormEvent $event){
 
         $ville = $event->getData()->getLieu()->getVille();

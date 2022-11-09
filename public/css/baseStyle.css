@@ -5,6 +5,12 @@ h1{
     margin-bottom: 3rem;
     color: white;
 }
+h2 {
+    font-weight: bold;
+    background-color: white;
+    padding: 1rem;
+    border-style: solid;
+}
 
 body > .container {
     display: grid;

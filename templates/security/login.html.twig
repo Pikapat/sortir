@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 {% endblock %}
 
 
@@ -24,6 +25,7 @@
 
         <h1 style="text-align: center" class="h3 mb-3 font-weight-normal">Bienvenu(e) sur Sortir <br> <br> Veuillez vous connecter</h1>
         <label for="inputEmail">Email ou Pseudo</label>
+        <br>
         <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required
                autofocus>
         <label for="inputPassword">Mot de passe</label>
