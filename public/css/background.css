@@ -2,7 +2,6 @@ body {
     animation: scroll 120s linear infinite;
     background: url('../images/sandbg.jpg'), #111111;
     height: 100vh;
-
 }
 
 @keyframes scroll {

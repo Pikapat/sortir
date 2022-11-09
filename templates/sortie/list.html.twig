@@ -12,18 +12,23 @@
 
     <div class="baseForm">
         <div id="btn-newSortie">
+
             <form action="{{ path('newSortie') }}">
                 <input type="submit" value="Créer une sortie">
             </form>
         </div>
 
-        <div style="border: 1px black solid">
+        <div class="background">
             <div style="display: flex; justify-content: center; padding: 2em">
                 <h2>Filtrer les sorties</h2>
             </div>
 
             <div id="filtersContainer">
                 {{ form_start(sortiesFiltersForm) }}
+
+
+                    <div class="filtre-sortie">
+
 
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.campus) }}
@@ -35,7 +40,7 @@
                     {{ form_label(sortiesFiltersForm.textFilter) }}
                     {{ form_widget(sortiesFiltersForm.textFilter) }}
                     {{ form_errors(sortiesFiltersForm.textFilter) }}
-                    <br>
+
                 </div>
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.dateDebut) }}
@@ -50,39 +55,44 @@
                     {{ form_errors(sortiesFiltersForm.dateFin) }}
                     <br>
                 </div>
+                    </div>
+
+                <div class="filtre-case">
                 <div class="form-field">
                     {{ form_label(sortiesFiltersForm.userOrga) }}
                     {{ form_widget(sortiesFiltersForm.userOrga) }}
                     {{ form_errors(sortiesFiltersForm.userOrga) }}
                     <br>
-                </div>
-                <div class="form-field">
+
                     {{ form_label(sortiesFiltersForm.userInscrit) }}
                     {{ form_widget(sortiesFiltersForm.userInscrit) }}
                     {{ form_errors(sortiesFiltersForm.userInscrit) }}
                     <br>
-                </div>
 
-                <div class="form-field">
+
+
                     {{ form_label(sortiesFiltersForm.userNonInscrit) }}
                     {{ form_widget(sortiesFiltersForm.userNonInscrit) }}
                     {{ form_errors(sortiesFiltersForm.userNonInscrit) }}
                     <br>
-                </div>
 
-                <div class="form-field">
+
+
                     {{ form_label(sortiesFiltersForm.sortiePassee) }}
                     {{ form_widget(sortiesFiltersForm.sortiePassee) }}
                     {{ form_errors(sortiesFiltersForm.sortiePassee) }}
                     <br>
                 </div>
-
+                    </div>
+            </div>
                 <div class="form-buttons">
                     {{ form_widget(sortiesFiltersForm.submit) }}
+
                 </div>
                 {{ form_end(sortiesFiltersForm) }}
+
             </div>
-        </div>
+
 
         <div class="sortieContainer">
 
@@ -117,9 +127,9 @@
                             </a>
                         </button>
                         {#                    Date début sortie #}
-                        <p class="field-dateDebut">{{ sortie.dateHeureDebut|date }}</p>
+                        <p class="field-dateDebut">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
                         {#                    Clôture #}
-                        <p>{{ sortie.dateLimiteInscription|date }}</p>
+                        <p>{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
                         {#                    inscrits/places #}
                         <p class="field-Inscriptions">{{ sortie.usersInscrits.count }}
                             / {{ sortie.nbInscriptionsMax }}</p>

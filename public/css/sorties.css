@@ -10,6 +10,27 @@
     border-radius: 5px;
     border: 2px rgba(86, 129, 97, 0.5) solid;
 }
+.filtre-sortie{
+    display: flex;
+    flex-wrap: wrap;
+    width: max-content;
+
+    justify-content: center;
+}
+.background{
+    background: url(../images/bois.png);
+    border-radius: 30px;
+    border-style: solid;
+}
+.form-field{
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 .sortie{
     padding: 1em;
