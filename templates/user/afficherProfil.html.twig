@@ -39,7 +39,9 @@
 
 
     {% if app.user == user %}
-        <button><a href="{{ path('modifierProfil', {'id': app.user.id}) }}">Modifier mon profil</a></button>
+        <div class="divButton">
+        <button class="modifier"><a href="{{ path('modifierProfil', {'id': app.user.id}) }}">Modifier mon profil</a></button>
+        </div>
     {% endif %}
 </section>
 {% endblock %}
