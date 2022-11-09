@@ -40,9 +40,8 @@ class Sortie
     #[Assert\NotNull(message: 'La durée doit être renseigné')]
     #[Assert\Range(
         minMessage: 'La durée de ne peut pas être inférieur à 1 heure',
-        maxMessage: 'La durée de ne peut pas être supérieur à 24 heures',
-        min: '1',
-        max: '24')]
+        min: '1'
+        )]
     #[ORM\Column]
     private ?int $duree = null;
 

@@ -1,4 +1,39 @@
-.profil{
-    color: #111111;
+.titre-profil{
+    display: flex;
+    align-items: center;
+    border-bottom: solid;
+    margin-bottom: 1rem;
+}
+.modifier {
+
     font-size: 25px;
+    font-weight: bold;
+    color: white;
+    background-color: #8ebf42;
+    margin: 1rem;
+    padding: 1rem;
+}
+.divButton{
+    display: flex;
+    justify-content: center;
+
+}
+
+a{
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+}
+a:hover {
+    color: orange;
+}
+
+p{
+    border-radius: 20px;
+    padding: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: white;
+    font-size: 25px;
+    font-weight: bold;
 }

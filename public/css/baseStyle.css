@@ -1,6 +1,10 @@
 *{
     font-family: 'Quicksand', cursive;
 }
+h1{
+    margin-bottom: 3rem;
+    color: white;
+}
 
 body > .container {
     display: grid;
@@ -20,6 +24,9 @@ button{
     border-style: none;
     border-radius: 2px;
     background-color: #768799;
+}
+button:hover{
+    color: orange;
 }
 button a{
     -webkit-appearance: button;

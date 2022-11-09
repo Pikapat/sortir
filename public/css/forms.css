@@ -64,9 +64,28 @@
     flex: 1 1 160px;
     margin: 10px;
 }
-
+label {
+    background-color: #8FAFC07F;
+    color: white;
+    margin-right: 1rem;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0.5rem;
+    border-style: solid;
+}
+select{
+    font-size: 20px;
+}
+.titre-sortie {
+    display: flex;
+    align-items: center;
+    border-bottom: solid;
+    margin-bottom: 1rem;
+}
 
 .form-row{
+    font-size: 20px;
+    font-weight: bold;
  display: flex;
  flex-direction: column;
 }
@@ -77,6 +96,7 @@
 }
 
 .form-button{
+    border-top: solid;
     display: flex;
     justify-content: center;
 }
@@ -94,14 +114,25 @@ button {
     color: red;
 }
 
+
 .baseForm button[type="submit"]{
-    color: #FFFFFF;
+
     background-color: #8ebf42;
+    margin: 1rem;
+    padding: 1rem;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
 }
 
 .baseForm button[type="reset"]{
-    color: #FFFFFF;
+
     background-color: #cc0000;
+    margin: 1rem;
+    padding: 1rem;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
 }
 
 #btn-newSortie{

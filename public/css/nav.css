@@ -68,11 +68,12 @@ nav a:hover{
 }
 
 .nav-button{
+    display: flex;
+    align-items: center;
     color: white;
     font-weight: bold;
     cursor: pointer;
     height: 50px;
-    width: 100px;
     border: 1px black solid;
     border-radius: 5px;
     box-shadow: 5px 2px 5px #333333;

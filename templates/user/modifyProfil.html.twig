@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
 {% endblock %}
 
 
@@ -12,8 +13,9 @@
 {% block body %}
     <section class="baseForm">
 
+        <div class="titre-profil">
         <h1>Modification Profil</h1>
-
+        </div>
         <div class="form-fields">
 
             {{ form_start(user_profil) }}
@@ -69,7 +71,7 @@
                 <br>
             </div>
 
-            <div class="form-buttons">
+            <div class="form-button">
                 {{ form_widget(user_profil.submit) }}
                 {{ form_widget(user_profil.reset) }}
                 {{ form_end(user_profil) }}

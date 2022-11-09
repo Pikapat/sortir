@@ -1,0 +1,93 @@
+.detail-sortie{
+    background-color: #0F7795;
+    border-radius: 30px;
+    padding: 5rem;
+    border-color: #111111;
+    border-style: solid;
+}
+h1{
+    margin-bottom: 3rem;
+    color: white;
+}
+h2 {
+    border-bottom: solid;
+}
+p{
+    border-radius: 20px;
+    padding: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.titre-sortie {
+    display: flex;
+    align-items: center;
+    border-bottom: solid;
+    margin-bottom: 1rem;
+}
+
+.sortie-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.info-titre{
+    background-color: #8FAFC07F;
+    color: white;
+    margin-right: 1rem;
+    font-weight: bold;
+    border-style: solid;
+    border-color: black;
+    border-radius: 15px;
+    padding: 0.5rem;
+
+}
+.sortie-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.etat{
+    font-weight: bold;
+    padding: 0.5rem;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: black;
+    justify-content: center;
+    background-color: #8ebf42;
+}
+
+
+
+.buttons{
+    border-top: solid;
+    display: flex;
+    justify-content: center;
+
+}
+
+.modifier {
+
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    background-color: #8ebf42;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.annuler {
+
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    background-color: #cc0000;
+    margin: 1rem;
+    padding: 1rem;
+}
