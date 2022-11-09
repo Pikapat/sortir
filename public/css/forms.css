@@ -1,7 +1,7 @@
 .baseForm{
     height: min-content;
     padding: 5em;
-    background-color: lightslategray;
+    background-color: #0F7795;
 
     border-radius: 5px;
     border: 3px solid black;
@@ -112,10 +112,18 @@ button {
 
 #btn-newSortie input[type="submit"]{
     border: 3px black solid;
+    font-weight: bold;
     font-size: xx-large;
     padding: 30px 100px;
-    background-color: #829bac;
+    border-radius: 30px;
+    background-color: green;
+    box-shadow: 10px 5px 5px #111111;
     color: #f1f1f1;
+}
+#btn-newSortie input[type="submit"]:hover {
+    background-color: #8ebf42;
+    color: black;
+
 }
 .button-form-annuler{
     display: flex;
