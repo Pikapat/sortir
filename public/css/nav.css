@@ -1,3 +1,4 @@
+
 nav section{
     display: flex;
     justify-content: space-between;
@@ -6,6 +7,7 @@ nav section{
 .navBar{
     display: flex;
     gap: 5px;
+    padding-top: 4em;
 }
 
 .connexion{
@@ -16,9 +18,9 @@ nav section{
     align-items: center;
     font-weight: bold;
     font-size: large;
-    background-color: #768799;
+    background-color: #0583a2;
     border-radius: 5px;
-    border: 3px black solid;
+    border: 2px black solid;
     box-shadow: 5px 2px 5px #333333;
 
 }
@@ -64,23 +66,17 @@ nav section{
     border: 1px black solid;
     border-radius: 5px;
     box-shadow: 5px 2px 5px #333333;
-    background-color: #97D6A6;
+    background-color: #0583a2;
 
 }
 .navSup{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
-.nav-logo{
-    display: flex;
-    flex-direction: column ;
-    justify-content: space-around;
 
-}
 .nav-button:hover{
-    background-color: gray;
-    color: orange;
+    background-color: #3ac0de;
+
 }
 
 nav p:last-child{
