@@ -143,7 +143,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
             },
             'lieu' => function(){
                 return $this->getReference('gaumont');
-            }
+            },
+            'motif' => null,
         ]);
         $populator->execute();
 

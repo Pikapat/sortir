@@ -1,6 +1,6 @@
 .baseForm{
     height: min-content;
-    padding: em;
+    padding: 5em;
     background-color: lightslategray;
 
     border-radius: 5px;
@@ -116,6 +116,10 @@ button {
     padding: 30px 100px;
     background-color: #829bac;
     color: #f1f1f1;
+}
+.button-form-annuler{
+    display: flex;
+    justify-content: center;
 }
 
 #filtersContainer{
