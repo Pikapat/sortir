@@ -1,12 +1,15 @@
-
+body > .container {
+    display: flex;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 80px 100px 2fr 50px;
+    min-height: 100vh;
+}
 .sortieContainer{
     padding: 1em;
     margin: 1em;
-
     display: flex;
     flex-direction: column;
     gap: 1em;
-
     border-radius: 5px;
     border: 2px rgba(86, 129, 97, 0.5) solid;
 }
