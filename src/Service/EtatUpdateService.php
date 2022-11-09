@@ -41,7 +41,7 @@ class EtatUpdateService
 //        $qb =  $em->createQuery(
 //            'UPDATE sortie s SET s.etat_id = 7 WHERE s.etat_id = 5 AND now() < DATE_ADD(s.date_heure_debut, INTERVAL 1 MONTH)');
 
-        $sorties = $this->sortieRepository->findAll();
+        $sorties = $this->sortieRepository->findSortiesWithEtats();
         $etats = $this->etatRepository->findAll();
         $now = new \DateTime();
 
@@ -71,7 +71,8 @@ class EtatUpdateService
                 $sortie->setEtat($etats[6]);
                 $this->em->persist($sortie);
             }
-            $this->em->flush();
+
         }
+        $this->em->flush();
     }
 }
