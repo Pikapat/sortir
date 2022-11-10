@@ -15,7 +15,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $users = [$this->getReference('admin'), $this->getReference('user'), $this->getReference('nino')];
+        $users = [$this->getReference('admin'), $this->getReference('user'), $this->getReference('nino'), $this->getReference('marcela'), $this->getReference('antonio')];
         $lieux = [$this->getReference('pont-caf'), $this->getReference('planete-sauvage'), $this->getReference('gaumont')];
         $etats = [$this->getReference('publier'), $this->getReference('enregistrer')];
         $campuses = [$this->getReference('campus-nantes'), $this->getReference('campus-rennes')];

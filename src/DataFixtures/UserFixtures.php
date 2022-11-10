@@ -59,13 +59,42 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user3->setPassword($this->hasher->hashpassword($user3, "nino"));
         $user3->setEmail('nino@gmail.com');
         $user3->setCampus($this->getReference('campus-rennes'));
-        $user3->setPseudo('Pikapat');
+        $user3->setPseudo('Nino');
         $user3->setTelephone('050281215208');
         $user3->setActif(true);
 
         $this->addReference('nino', $user3);
-
         $manager->persist($user3);
+
+        $user4 = new User();
+        $user4->setPrenom('Marcela');
+        $user4->setNom('Dorel');
+        $user4->setRoles(['ROLE_USER']);
+        $user4->setPassword($this->hasher->hashpassword($user3, "marcela"));
+        $user4->setEmail('marcela@gmail.com');
+        $user4->setCampus($this->getReference('campus-rennes'));
+        $user4->setPseudo('Marcela');
+        $user4->setTelephone('054551215208');
+        $user4->setActif(true);
+
+        $this->addReference('marcela', $user4);
+        $manager->persist($user4);
+
+        $user5 = new User();
+        $user5->setPrenom('Antonio');
+        $user5->setNom('Gozalo');
+        $user5->setRoles(['ROLE_USER']);
+        $user5->setPassword($this->hasher->hashpassword($user3, "antonio"));
+        $user5->setEmail('antonio@gmail.com');
+        $user5->setCampus($this->getReference('campus-rennes'));
+        $user5->setPseudo('antonio');
+        $user5->setTelephone('054551215208');
+        $user5->setActif(true);
+
+        $this->addReference('antonio', $user5);
+        $manager->persist($user5);
+
+
 
         $manager->flush();
     }
