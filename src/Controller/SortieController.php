@@ -174,7 +174,6 @@ class SortieController extends AbstractController
         if($sortieForm->isSubmitted()) {
 
             if ($sortieForm->isValid()) {
-                dump($sortieForm->getTransformationFailure());
 
                 if ($sortieForm->get('enregistrer')->isClicked()) {
 
